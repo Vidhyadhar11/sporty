@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
               'Welcome Back',
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
-            Image.asset('assets/assets/logo1.jpeg'), // Replace with your logo asset
+            Image.asset('assets/logo1.jpeg'), // Replace with your logo asset
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
