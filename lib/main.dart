@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:sporty/screens/splash.dart'; // Import the splash screen
-import 'package:sporty/screens/login.dart';
-import 'package:sporty/screens/registration.dart';
-import 'package:sporty/screens/forgot1.dart'; // Import the forgot password screen
-import 'package:sporty/login/enterphn.dart'; // Import the enter phone number screen
+import 'package:flutter/material.dart'; // Import the forgot password screen
+import 'package:sporty/login/enterphn.dart';
+import 'package:sporty/homepage/home.dart'; // Import the enter phone number screen
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +20,8 @@ class MyApp extends StatelessWidget {
         //  '/login': (context) => const LoginScreen(),
         //  '/register': (context) => const RegisterScreen(),
         //  '/forgot-password': (context) => const ForgotPasswordScreen(), // Added route for forgot password screen
-        '/enter-phone': (context) => EnterPhoneNumberScreen(), // Added route for enter phone number screen
+        '/enter-phone': (context) => EnterPhoneNumberScreen(),
+        //'/home': (context) =>HomePage(), // Added route for enter phone number screen
       },
     );
   }

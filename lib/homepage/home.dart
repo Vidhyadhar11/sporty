@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(60.0),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -302,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 10,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),

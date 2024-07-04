@@ -36,8 +36,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                   keyboardType: TextInputType.phone,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(
-                        10), // Limit input to 10 digits
+                    LengthLimitingTextInputFormatter(10), // Limit input to 10 digits
                   ],
                   style: const TextStyle(color: Colors.white),
                   obscureText: true, // Hides entered digits with '*'
@@ -62,8 +61,8 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                 ),
                 const SizedBox(height: 8),
                 if (!_phoneNumberValid)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8),
                     child: Text(
                       'Enter a valid 10-digit number',
                       style: TextStyle(color: Colors.red),

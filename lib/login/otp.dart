@@ -36,7 +36,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                   children: List.generate(
                     4,
                     (index) => Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
                       width: 50,
                       height: 50,
                       alignment: Alignment.center,
@@ -46,41 +46,42 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                       ),
                       child: Text(
                         _enteredOTP.length > index ? _enteredOTP[index] : '',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+                        style: const TextStyle(color: Colors.white, fontSize: 24),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(4), // Limit input to 4 digits
-                  ],
-                  style: const TextStyle(color: Colors.white),
-                  obscureText: true, // Hides entered digits with '*'
-                  decoration: const InputDecoration(
-                    labelText: 'OTP',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _otpValid = value.length == 4; // Validate OTP format
-                      _enteredOTP = value; // Store entered OTP
-                    });
-                  },
-                ),
+                // const SizedBox(height: 20),
+                // TextField(
+                //   keyboardType: TextInputType.number,
+                //   inputFormatters: <TextInputFormatter>[
+                //     FilteringTextInputFormatter.digitsOnly,
+                //     LengthLimitingTextInputFormatter(4), // Limit input to 4 digits
+                //   ],
+                //   style: const TextStyle(color: Colors.white),
+                //   obscureText: true, // Hides entered digits with '*'
+                //   decoration: const InputDecoration(
+                //     labelText: 'OTP',
+                //     labelStyle: TextStyle(color: Colors.white),
+                //     enabledBorder: OutlineInputBorder(
+                //       borderSide: BorderSide(color: Colors.grey),
+                //     ),
+                //     focusedBorder: OutlineInputBorder(
+                //       borderSide: BorderSide(color: Colors.white),
+                //     ),
+                //   ),
+                //   onChanged: (value) {
+                //     setState(() {
+                //       _otpValid = value.length == 4; // Validate OTP format
+                //       _enteredOTP = value; // Store entered OTP
+                //     });
+                //   },
+                // ),
+
                 const SizedBox(height: 8),
                 if (!_otpValid)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8),
                     child: Text(
                       'Enter a valid 4-digit OTP',
                       style: TextStyle(color: Colors.red),

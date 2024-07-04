@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sporty/screens/login.dart'; // Import your login screen
+// import 'package:sporty/screens/login.dart';
+import 'package:sporty/login/onboarding.dart'; // Import your login screen
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,14 +11,14 @@ class SplashScreen extends StatelessWidget {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => const Onboarding()),
       );
     });
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.asset('assets/assets/file_2024-06-17_16.48.13.png', height: 70), // Corrected file path
+        child: Image.asset('assets/playlink.png', height: 250), // Corrected file path
       ),
     );
   }

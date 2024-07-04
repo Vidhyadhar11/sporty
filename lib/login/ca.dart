@@ -19,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _cricket = false;
   bool _swimming = false;
   bool _basketball = false;
+  
 
   @override
   Widget build(BuildContext context) {
