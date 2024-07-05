@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Required for TextInputFormatter
+import 'package:flutter/services.dart';
+import 'package:sporty/homepage/home.dart'; // Import the HomePage
 
 class EnterOTPScreen extends StatefulWidget {
   @override
@@ -7,8 +8,32 @@ class EnterOTPScreen extends StatefulWidget {
 }
 
 class _EnterOTPScreenState extends State<EnterOTPScreen> {
-  String _enteredOTP = ''; // Holds the entered OTP
-  bool _otpValid = true; // Validation flag for OTP format
+  final List<TextEditingController> _otpControllers = List.generate(4, (index) => TextEditingController());
+
+  void _handleVerifyOTP() {
+    String otp = _otpControllers.map((controller) => controller.text).join();
+    if (otp == '1234') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      for (var controller in _otpControllers) {
+        controller.clear();
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid OTP')),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _otpControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,49 +69,30 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(
-                        _enteredOTP.length > index ? _enteredOTP[index] : '',
+                      child: TextFormField(
+                        controller: _otpControllers[index],
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(1),
+                        ],
+                        textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white, fontSize: 24),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) {
+                          if (value.length == 1 && index < 3) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                          if (value.isEmpty && index > 0) {
+                            FocusScope.of(context).previousFocus();
+                          }
+                        },
                       ),
                     ),
                   ),
                 ),
-                // const SizedBox(height: 20),
-                // TextField(
-                //   keyboardType: TextInputType.number,
-                //   inputFormatters: <TextInputFormatter>[
-                //     FilteringTextInputFormatter.digitsOnly,
-                //     LengthLimitingTextInputFormatter(4), // Limit input to 4 digits
-                //   ],
-                //   style: const TextStyle(color: Colors.white),
-                //   obscureText: true, // Hides entered digits with '*'
-                //   decoration: const InputDecoration(
-                //     labelText: 'OTP',
-                //     labelStyle: TextStyle(color: Colors.white),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Colors.grey),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Colors.white),
-                //     ),
-                //   ),
-                //   onChanged: (value) {
-                //     setState(() {
-                //       _otpValid = value.length == 4; // Validate OTP format
-                //       _enteredOTP = value; // Store entered OTP
-                //     });
-                //   },
-                // ),
-
-                const SizedBox(height: 8),
-                if (!_otpValid)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Text(
-                      'Enter a valid 4-digit OTP',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  ),
               ],
             ),
           ),
@@ -94,10 +100,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
             bottom: 20,
             right: 20,
             child: GestureDetector(
-              onTap: () {
-                // Verify OTP logic here
-                _handleVerifyOTP();
-              },
+              onTap: _handleVerifyOTP,
               child: const Text(
                 'Verify',
                 style: TextStyle(
@@ -111,41 +114,5 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
         ],
       ),
     );
-  }
-
-  // Handle verify OTP action (e.g., check against server)
-  void _handleVerifyOTP() {
-    // Simulated verification logic - Replace with actual logic
-    if (_enteredOTP == '1234') {
-      // OTP is valid, proceed to next screen or action
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('OTP Verified'),
-            content: const Text('You have successfully verified your OTP.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // Navigate to the next screen after OTP verification
-                  // Example:
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => NextPage()),
-                  // );
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // OTP is invalid, show error message
-      setState(() {
-        _otpValid = false;
-      });
-    }
   }
 }

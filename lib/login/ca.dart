@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sporty/uicomponents/elements.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _cricket = false;
   bool _swimming = false;
   bool _basketball = false;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -51,38 +51,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        TextField(
+                        CustomTextField(
                           controller: _firstNameController,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: 'First Name',
-                            labelStyle: const TextStyle(color: Colors.white),
-                            filled: true,
-                            fillColor: Colors.black,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                          ),
+                          label: 'First Name',
                         ),
-                        const SizedBox(height: 10),
-                        TextField(
+                        CustomTextField(
                           controller: _lastNameController,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: 'Last Name',
-                            labelStyle: const TextStyle(color: Colors.white),
-                            filled: true,
-                            fillColor: Colors.black,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                          ),
+                          label: 'Last Name',
                         ),
                         const SizedBox(height: 10),
                         const Text(
-                          'Intrested sports',
+                          'Interested sports',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         const SizedBox(height: 10),
@@ -212,31 +191,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        TextField(
+                        CustomTextField(
                           controller: _ageController,
+                          label: 'Age',
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: 'Age',
-                            labelStyle: const TextStyle(color: Colors.white),
-                            filled: true,
-                            fillColor: Colors.black,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                          ),
                         ),
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
                             // Handle sign up logic
                           },
-                          child: const Text('Signup', style: TextStyle(color: Colors.green)),
+                           child: const Text('Signup', style: TextStyle(color: Colors.green)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             foregroundColor: Colors.green,
