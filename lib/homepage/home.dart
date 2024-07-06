@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sporty/uicomponents/cards.dart';
+import 'package:sporty/homepage/bookings1.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -87,29 +88,25 @@ class _HomePageState extends State<HomePage> {
           SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Expanded(
-                            child: TextField(
-                              style: const TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                hintText: 'Interested Sport in',
-                                hintStyle: const TextStyle(color: Colors.white),
-                                filled: true,
-                                fillColor: Colors.grey[800],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  borderSide: BorderSide.none,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                'Interested Sport in',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          const Icon(Icons.location_on, color: Colors.white),
+                          Icon(Icons.location_on, color: Colors.white),
                         ],
                       ),
                     ],
@@ -166,13 +163,14 @@ class _HomePageState extends State<HomePage> {
                       ListTile(
                         leading: const Icon(Icons.book, color: Colors.white),
                         title: const Text('Bookings', style: TextStyle(color: Colors.white)),
-                        // Add navigation logic to the onTap function of the ListTile
-                        // onTap: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(builder: (context) => BookingsPage()), // Replace BookingsPage with the actual page to navigate to
-                        //     );
-                        //   },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookingScreen(),
+                            ),
+                          );
+                        },
                       ),
                       ListTile(
                         leading: const Icon(Icons.star, color: Colors.white),
@@ -206,51 +204,46 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-          Positioned(
-            bottom: 20,
-            left: 60,
-            right: 60,
-            child: Opacity(
-              opacity: 0.9,
-              child: Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(30.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.home, color: Colors.green),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.sports_soccer, color: Colors.grey),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.event, color: Colors.grey),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.people, color: Colors.grey),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ],
+      ),
+      bottomNavigationBar: Opacity(
+        opacity: 0.9,
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(30.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.home, color: Colors.green),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.sports_soccer, color: Colors.grey),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.event, color: Colors.grey),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.people, color: Colors.grey),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
