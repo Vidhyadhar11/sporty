@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   bool _showDrawer = false;
+  bool isPressed = false; // Define isPressed variable at the beginning of _HomePageState class
 
   @override
   Widget build(BuildContext context) {
@@ -234,9 +235,21 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {},
               ),
               IconButton(
-                icon: const Icon(Icons.event, color: Colors.grey),
-                onPressed: () {},
+                icon: Icon(
+                  Icons.event,
+                  color: isPressed ? Colors.green : Colors.grey,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isPressed = true;
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => eventscreen()),
+                  );
+                },
               ),
+
               IconButton(
                 icon: const Icon(Icons.people, color: Colors.grey),
                 onPressed: () {},
