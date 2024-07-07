@@ -35,7 +35,7 @@ class _BookingPageState extends State<BookingPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
             // Handle back button press
           },
@@ -86,16 +86,16 @@ class _BookingPageState extends State<BookingPage> {
       focusedDay: _focusedDay,
       calendarFormat: CalendarFormat.week,
       availableCalendarFormats: const {CalendarFormat.week: ''},
-      calendarStyle: CalendarStyle(
+      calendarStyle: const CalendarStyle(
         outsideDaysVisible: false,
       ),
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleTextStyle: TextStyle(color: Colors.white),
         leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
         rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
       ),
-      daysOfWeekStyle: DaysOfWeekStyle(
+      daysOfWeekStyle: const DaysOfWeekStyle(
         weekdayStyle: TextStyle(color: Colors.white),
         weekendStyle: TextStyle(color: Colors.white),
       ),
@@ -127,13 +127,13 @@ class _BookingPageState extends State<BookingPage> {
 
   Widget _buildDateBox(DateTime date, bool isSelected) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
       decoration: BoxDecoration(
         color: isSelected ? Colors.white : Colors.black,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.white),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -202,7 +202,7 @@ class _BookingPageState extends State<BookingPage> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.white),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   slots[index],
                   style: TextStyle(
@@ -239,7 +239,7 @@ class _BookingPageState extends State<BookingPage> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.white),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   (index + 1).toString(),
                   style: TextStyle(
@@ -282,8 +282,8 @@ class _BookingPageState extends State<BookingPage> {
           // Handle next action
         },
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Icon(Icons.arrow_forward, color: Colors.green),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: const Icon(Icons.arrow_forward, color: Colors.green),
         ),
       ),
     );

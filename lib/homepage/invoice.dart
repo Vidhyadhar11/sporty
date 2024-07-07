@@ -22,7 +22,7 @@ class InvoicePage extends StatelessWidget {
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -33,8 +33,8 @@ class InvoicePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text("Invoice", style: TextStyle(color: Colors.green, fontSize: 24)),
+            const Center(
+              child: const Text("Invoice", style: TextStyle(color: Colors.green, fontSize: 24)),
             ),
             const SizedBox(height: 20),
             _buildInvoiceDetail("Date", DateFormat('d EEEE').format(selectedDate)),
@@ -51,7 +51,7 @@ class InvoicePage extends StatelessWidget {
             const SizedBox(height: 10),
             _buildInvoiceDetail("Location", "KPHB, Hyderabad"),
             const SizedBox(height: 20),
-            Center(child: const Text("Booked", style: TextStyle(color: Colors.green, fontSize: 24))),
+            const Center(child: Text("Booked", style: TextStyle(color: Colors.green, fontSize: 24))),
           ],
         ),
       ),
@@ -62,8 +62,8 @@ class InvoicePage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: TextStyle(color: Colors.white, fontSize: 18)),
-        Text(value, style: TextStyle(color: Colors.white, fontSize: 18)),
+        Text(title, style: const TextStyle(color: Colors.white, fontSize: 18)),
+        Text(value, style: const TextStyle(color: Colors.white, fontSize: 18)),
       ],
     );
   }

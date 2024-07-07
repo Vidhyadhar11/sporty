@@ -22,7 +22,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
         controller.clear();
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid OTP')),
+        const SnackBar(content: const Text('Invalid OTP')),
       );
     }
   }
@@ -78,7 +78,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                         ],
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white, fontSize: 24),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                         ),
                         onChanged: (value) {

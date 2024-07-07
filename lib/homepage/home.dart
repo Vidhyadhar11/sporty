@@ -243,10 +243,10 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     isPressed = true;
                   });
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => eventscreen()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => eventscreen()),
+                  // );
                 },
               ),
 
