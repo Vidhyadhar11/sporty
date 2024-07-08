@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sporty/homepage/home.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -36,17 +37,11 @@ class CustomTextField extends StatelessWidget {
 
 //add navbar component here with new class
 
-class CustomNavBar extends StatefulWidget {
-  final Function(int) onTap;
+class CustomNavBar extends StatelessWidget {
   final int currentIndex;
 
-  const CustomNavBar({Key? key, required this.onTap, required this.currentIndex}) : super(key: key);
+  const CustomNavBar({Key? key, required this.currentIndex}) : super(key: key);
 
-  @override
-  _CustomNavBarState createState() => _CustomNavBarState();
-}
-
-class _CustomNavBarState extends State<CustomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Opacity(
@@ -68,25 +63,35 @@ class _CustomNavBarState extends State<CustomNavBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              icon: Icon(Icons.home, color: widget.currentIndex == 0 ? Colors.green : Colors.grey),
-              onPressed: () => widget.onTap(0),
-            ),
-            IconButton(
-              icon: Icon(Icons.sports_soccer, color: widget.currentIndex == 1 ? Colors.green : Colors.grey),
-              onPressed: () => widget.onTap(1),
-            ),
-            IconButton(
-              icon: Icon(Icons.event, color: widget.currentIndex == 2 ? Colors.green : Colors.grey),
-              onPressed: () => widget.onTap(2),
-            ),
-            IconButton(
-              icon: Icon(Icons.people, color: widget.currentIndex == 3 ? Colors.green : Colors.grey),
-              onPressed: () => widget.onTap(3),
-            ),
+            _buildNavItem(Icons.home, 0, context),
+            _buildNavItem(Icons.sports_soccer, 1, context),
+            _buildNavItem(Icons.event, 2, context),
+            _buildNavItem(Icons.people, 3, context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, int index, BuildContext context) {
+    return IconButton(
+      icon: Icon(icon, color: currentIndex == index ? Colors.green : Colors.grey),
+      onPressed: () {
+        switch (index) {
+          case 0:
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            break;
+          case 1:
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => SportsPage()));
+            break;
+          case 2:
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => Events\Page()));
+            break;
+          case 3:
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => PeoplePage()));
+            break;
+        }
+      },
     );
   }
 }
