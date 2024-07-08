@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/homepage/bookings1.dart';
-import 'package:sporty/uicomponents/elements.dart';
-import 'package:sporty/homepage/details.dart'; // Import the custom navbar
+import 'package:sporty/uicomponents/elements.dart'; // Import the custom navbar
+import 'package:sporty/homepage/details_page.dart'; // Import the details page
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,16 +43,16 @@ class _HomePageState extends State<HomePage> {
     // Navigate to different screens based on the index
     switch (index) {
       case 0:
-        // Navigate to Home
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
       case 1:
-        // Navigate to Sports
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => SportsPage()));
         break;
       case 2:
-        // Navigate to Events
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => EventsPage()));
         break;
       case 3:
-        // Navigate to People
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => PeoplePage()));
         break;
     }
   }
@@ -64,7 +64,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        automaticallyImplyLeading: false, // Add this line to remove the back button
         title: Row(
           children: [
             IconButton(
@@ -235,7 +234,6 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: CustomNavBar(
-        onTap: _onNavBarTap,
         currentIndex: _currentIndex,
       ),
     );
