@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sporty/homepage/bookings1.dart';
 import 'package:sporty/homepage/home.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -82,13 +83,13 @@ class CustomNavBar extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
             break;
           case 1:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => SportsPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen()));
             break;
           case 2:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => Events\Page()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen()));
             break;
           case 3:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => PeoplePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen()));
             break;
         }
       },
