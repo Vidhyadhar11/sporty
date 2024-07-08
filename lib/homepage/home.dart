@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/homepage/bookings1.dart';
-import 'package:sporty/uicomponents/elements.dart'; // Import the custom navbar
+import 'package:sporty/uicomponents/elements.dart';
+import 'package:sporty/homepage/details.dart'; // Import the custom navbar
 
 class HomePage extends StatefulWidget {
   @override
@@ -63,6 +64,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
+        automaticallyImplyLeading: false, // Add this line to remove the back button
         title: Row(
           children: [
             IconButton(
@@ -235,33 +237,6 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: CustomNavBar(
         onTap: _onNavBarTap,
         currentIndex: _currentIndex,
-      ),
-    );
-  }
-}
-
-class DetailsPage extends StatelessWidget {
-  final SportsField sportsField;
-
-  const DetailsPage({Key? key, required this.sportsField}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${sportsField.name}, ${sportsField.location}'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(sportsField.imageUrl),
-            const SizedBox(height: 10),
-            Text('Rating: ${sportsField.rating}'),
-            Text('Price: ₹${sportsField.price}/hr'),
-            Text('Discount: ${sportsField.discount}'),
-          ],
-        ),
       ),
     );
   }
