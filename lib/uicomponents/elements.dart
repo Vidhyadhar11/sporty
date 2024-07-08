@@ -32,3 +32,61 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
+
+//add navbar component here with new class
+
+class CustomNavBar extends StatefulWidget {
+  final Function(int) onTap;
+  final int currentIndex;
+
+  const CustomNavBar({Key? key, required this.onTap, required this.currentIndex}) : super(key: key);
+
+  @override
+  _CustomNavBarState createState() => _CustomNavBarState();
+}
+
+class _CustomNavBarState extends State<CustomNavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: 0.9,
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(30.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home, color: widget.currentIndex == 0 ? Colors.green : Colors.grey),
+              onPressed: () => widget.onTap(0),
+            ),
+            IconButton(
+              icon: Icon(Icons.sports_soccer, color: widget.currentIndex == 1 ? Colors.green : Colors.grey),
+              onPressed: () => widget.onTap(1),
+            ),
+            IconButton(
+              icon: Icon(Icons.event, color: widget.currentIndex == 2 ? Colors.green : Colors.grey),
+              onPressed: () => widget.onTap(2),
+            ),
+            IconButton(
+              icon: Icon(Icons.people, color: widget.currentIndex == 3 ? Colors.green : Colors.grey),
+              onPressed: () => widget.onTap(3),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

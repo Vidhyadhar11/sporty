@@ -1,6 +1,9 @@
+// home_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/homepage/bookings1.dart';
+import 'package:sporty/uicomponents/elements.dart'; // Import the custom navbar
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,6 +33,28 @@ class _HomePageState extends State<HomePage> {
 
   bool _showDrawer = false;
   bool isPressed = false; // Define isPressed variable at the beginning of _HomePageState class
+  int _currentIndex = 0;
+
+  void _onNavBarTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    // Navigate to different screens based on the index
+    switch (index) {
+      case 0:
+        // Navigate to Home
+        break;
+      case 1:
+        // Navigate to Sports
+        break;
+      case 2:
+        // Navigate to Events
+        break;
+      case 3:
+        // Navigate to People
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,56 +232,9 @@ class _HomePageState extends State<HomePage> {
             ),
         ],
       ),
-      bottomNavigationBar: Opacity(
-        opacity: 0.9,
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(30.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.home, color: Colors.green),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.sports_soccer, color: Colors.grey),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.event,
-                  color: isPressed ? Colors.green : Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isPressed = true;
-                  });
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => eventscreen()),
-                  // );
-                },
-              ),
-
-              IconButton(
-                icon: const Icon(Icons.people, color: Colors.grey),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: CustomNavBar(
+        onTap: _onNavBarTap,
+        currentIndex: _currentIndex,
       ),
     );
   }

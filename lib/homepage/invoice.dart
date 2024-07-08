@@ -34,7 +34,7 @@ class InvoicePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Center(
-              child: const Text("Invoice", style: TextStyle(color: Colors.green, fontSize: 24)),
+              child: Text("Invoice", style: TextStyle(color: Colors.green, fontSize: 24)),
             ),
             const SizedBox(height: 20),
             _buildInvoiceDetail("Date", DateFormat('d EEEE').format(selectedDate)),

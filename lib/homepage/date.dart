@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'invoice.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +11,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BookingPage(),
-    );
-  }
+      );
+      }
 }
 
 class BookingPage extends StatefulWidget {
@@ -92,7 +93,7 @@ class _BookingPageState extends State<BookingPage> {
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleTextStyle: TextStyle(color: Colors.white),
-        leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
+        leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.white),
         rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
       ),
       daysOfWeekStyle: const DaysOfWeekStyle(
@@ -279,7 +280,19 @@ class _BookingPageState extends State<BookingPage> {
       alignment: Alignment.bottomRight,
       child: GestureDetector(
         onTap: () {
-          // Handle next action
+          if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InvoicePage(
+                  selectedDate: selectedDate!,
+                  selectedSlot: _getSlotString(selectedSlotIndex!),
+                  selectedCourt: selectedCourtIndex! + 1,
+                  playWithStrangers: playWithStrangers,
+                ),
+              ),
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -287,5 +300,10 @@ class _BookingPageState extends State<BookingPage> {
         ),
       ),
     );
+  }
+
+  String _getSlotString(int index) {
+    List<String> slots = ["8am-10am", "10am-12pm", "12pm-2pm", "6pm-7pm"];
+    return slots[index];
   }
 }
