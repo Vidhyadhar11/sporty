@@ -1,10 +1,11 @@
 // home_page.dart
 
 import 'package:flutter/material.dart';
+import 'package:sporty/homepage/details.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/homepage/bookings1.dart';
 import 'package:sporty/uicomponents/elements.dart'; // Import the custom navbar
-import 'package:sporty/homepage/details_page.dart'; // Import the details page
+// import 'package:sporty/homepage/details_page.dart'; // Import the details page
 
 class HomePage extends StatefulWidget {
   @override
@@ -46,13 +47,13 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
       case 1:
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => SportsPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
       case 2:
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => EventsPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
       case 3:
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => PeoplePage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
     }
   }
