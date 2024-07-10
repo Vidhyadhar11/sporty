@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sporty/homepage/bookings1.dart';
+import 'package:sporty/booking/bookings1.dart';
+import 'package:sporty/homepage/communityscreen.dart';
 import 'package:sporty/homepage/home.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -89,10 +90,102 @@ class CustomNavBar extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen()));
             break;
           case 3:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CommunityScreen()));
             break;
         }
       },
+    );
+  }
+}
+
+class ToggleButton extends StatefulWidget {
+  final String leftLabel;
+  final String rightLabel;
+  final ValueChanged<bool> onToggle;
+
+  ToggleButton({
+    required this.leftLabel,
+    required this.rightLabel,
+    required this.onToggle,
+  });
+
+  @override
+  _ToggleButtonState createState() => _ToggleButtonState();
+}
+
+class _ToggleButtonState extends State<ToggleButton> {
+  bool isLeftSelected = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 260,
+      height: 40,
+      decoration: BoxDecoration(
+        color: const Color(0xFF2C2C2C),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(50),
+        ),
+      ),
+      padding: const EdgeInsets.all(4.0), // Adjust padding
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isLeftSelected = true;
+                });
+                widget.onToggle(true);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                decoration: BoxDecoration(
+                  color: isLeftSelected ? const Color(0xFF39FF14) : Colors.transparent,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(50),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    widget.leftLabel,
+                    style: TextStyle(
+                      color: isLeftSelected ? Colors.black : Colors.grey, // Adjust text color
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isLeftSelected = false;
+                });
+                widget.onToggle(false);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                decoration: BoxDecoration(
+                  color: isLeftSelected ? Colors.transparent : const Color(0xFF39FF14),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(50),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    widget.rightLabel,
+                    style: TextStyle(
+                      color: isLeftSelected ? Colors.grey : Colors.black, // Adjust text color
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

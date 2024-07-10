@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sporty/booking/bookings1.dart';
+//import 'package:sporty/homepage/home.dart';
 
 class InvoicePage extends StatelessWidget {
   final DateTime selectedDate;
@@ -24,7 +26,8 @@ class InvoicePage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context,MaterialPageRoute(builder: (context) => BookingScreen()),
+            );
           },
         ),
       ),

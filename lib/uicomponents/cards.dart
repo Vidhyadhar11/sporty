@@ -8,6 +8,7 @@ class SportsField {
   final double price;
   final String imageUrl;
   final String discount;
+  final String sportType; // Add sportType property
   final String? slot;
   final int? players;
   final int? maxPlayers;
@@ -19,6 +20,7 @@ class SportsField {
     required this.price,
     required this.imageUrl,
     required this.discount,
+    required this.sportType, // Initialize sportType
     this.slot,
     this.players,
     this.maxPlayers,
@@ -26,16 +28,23 @@ class SportsField {
 }
 
 // Define the first type of sports field card
-class SportsFieldCard extends StatelessWidget {
+class SportsFieldCard extends StatefulWidget {
   final SportsField sportsField;
   final VoidCallback onTap;
 
   const SportsFieldCard({Key? key, required this.sportsField, required this.onTap}) : super(key: key);
 
   @override
+  _SportsFieldCardState createState() => _SportsFieldCardState();
+}
+
+class _SportsFieldCardState extends State<SportsFieldCard> {
+  bool isFavorite = false;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Card(
         color: Colors.grey[900],
         shape: RoundedRectangleBorder(
@@ -48,7 +57,7 @@ class SportsFieldCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
-                  child: Image.network(sportsField.imageUrl, height: 150, width: double.infinity, fit: BoxFit.cover),
+                  child: Image.network(widget.sportsField.imageUrl, height: 150, width: double.infinity, fit: BoxFit.cover),
                 ),
                 Positioned(
                   bottom: 8,
@@ -56,16 +65,22 @@ class SportsFieldCard extends StatelessWidget {
                   child: Container(
                     color: Colors.black54,
                     padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-                    child: const Text('Football', style: TextStyle(color: Colors.white)),
+                    child: Text(widget.sportsField.sportType, style: const TextStyle(color: Colors.white)), // Use sportType
                   ),
                 ),
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: Container(
-                    color: Colors.black54,
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-                    child: Text(sportsField.discount, style: const TextStyle(color: Colors.white)),
+                  child: IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isFavorite = !isFavorite;
+                      });
+                    },
                   ),
                 ),
               ],
@@ -75,15 +90,21 @@ class SportsFieldCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${sportsField.name}, ${sportsField.location}', style: const TextStyle(color: Colors.white)),
+                  Text('${widget.sportsField.name}, ${widget.sportsField.location}', style: const TextStyle(color: Colors.white)),
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.yellow, size: 20),
                       const SizedBox(width: 5),
-                      Text('${sportsField.rating}', style: const TextStyle(color: Colors.white)),
+                      Text('${widget.sportsField.rating}', style: const TextStyle(color: Colors.white)),
                       const SizedBox(width: 10),
-                      Text('₹${sportsField.price}/hr', style: const TextStyle(color: Colors.white)),
+                      Text('₹${widget.sportsField.price}/hr', style: const TextStyle(color: Colors.white)),
                     ],
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    color: Colors.black54,
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                    child: Text(widget.sportsField.discount, style: const TextStyle(color: Colors.white)),
                   ),
                 ],
               ),
@@ -126,7 +147,7 @@ class SportsFieldCardV2 extends StatelessWidget {
                   child: Container(
                     color: Colors.black54,
                     padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-                    child: const Text('Football', style: TextStyle(color: Colors.white)),
+                    child: Text(sportsField.sportType, style: const TextStyle(color: Colors.white)), // Use sportType
                   ),
                 ),
                 Positioned(
@@ -221,7 +242,7 @@ class SportsFieldCardV3 extends StatelessWidget {
                   child: Container(
                     color: Colors.black54,
                     padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-                    child: const Text('Football', style: TextStyle(color: Colors.white)),
+                    child: Text(sportsField.sportType, style: const TextStyle(color: Colors.white)), // Use sportType
                   ),
                 ),
               ],
@@ -252,60 +273,3 @@ class SportsFieldCardV3 extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-//this is how you call card1
-// final List<SportsField> sportsFields = [
-//     SportsField(
-//       name: 'KPHB',
-//       location: 'Hyderabad',
-//       rating: 4.4,
-//       price: 120,
-//       imageUrl: 'https://via.placeholder.com/150', // Replace with your image URL
-//       discount: '15% Off',
-//     ),
-
-//this is how you call cardv2
-// Create a SportsField object
-// final sportsField = SportsField(
-//   name: 'KPHB, Hyderabad',
-//   location: '', // Add location if needed
-//   rating: 4.5,
-//   price: 100,
-//   imageUrl: 'https://picsum.photos/200/300', // Replace with your image URL
-//   discount: '', // Add discount if needed
-//   slot: '29-09-24 At 6pm-7pm',
-//   players: 5, // Add players count
-//   maxPlayers: 10, // Add max players count
-// );
-
-// // Build the SportsFieldCardV2 widget
-// SportsFieldCardV2(
-//   sportsField: sportsField,
-//   onTap: () {
-//   },
-// )
-
-
-//this is how you call the cardv3
-// // Create a SportsField object
-// final sportsField = SportsField(
-//   name: 'KPHB, Hyderabad',
-//   location: '', // Add location if needed
-//   rating: 4.5,
-//   price: 100,
-//   imageUrl: 'https://picsum.photos/200/300', // Replace with your image URL
-//   discount: '', // Add discount if needed
-//   slot: '29-09-24 At 6pm-7pm',
-// );
-
-// // Build the SportsFieldCardV3 widget
-// SportsFieldCardV3(
-//   sportsField: sportsField,
-//   onTap: () {
-//     // Handle the tap event here
-//   },
-// )

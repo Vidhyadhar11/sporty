@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart'; // Import the forgot password screen
-import 'package:sporty/login/enterphn.dart';
+import 'package:flutter/material.dart';
 //import 'package:sporty/homepage/home.dart';
+import 'package:sporty/login/enterphn.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         //  '/': (context) => const SplashScreen(),
        '/enter-phone': (context) => EnterPhoneNumberScreen(),
+       //'/home': (context) => HomePage(),
       },
     );
   }

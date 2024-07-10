@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sporty/homepage/home.dart'; // Import the HomePage
+//import 'package:sporty/homepage/home.dart';
+import 'package:sporty/login/ca.dart'; // Import the HomePage
 
 class EnterOTPScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     if (otp == '1234') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => RegisterScreen()),
       );
     } else {
       for (var controller in _otpControllers) {
