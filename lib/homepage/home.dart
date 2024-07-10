@@ -125,12 +125,12 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.white),
-              title: Center(child: const Text('Your Profile', style: TextStyle(color: Colors.white))),
+              title: const Center(child: Text('Your Profile', style: TextStyle(color: Colors.white))),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.book, color: Colors.white),
-              title: Center(child: const Text('Bookings', style: TextStyle(color: Colors.white))),
+              title: const Center(child: Text('Bookings', style: TextStyle(color: Colors.white))),
               onTap: () {
                 Navigator.push(
                   context,
@@ -142,30 +142,30 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.star, color: Colors.white),
-              title: Center(child: const Text('Rewards', style: TextStyle(color: Colors.white))),
+              title: const Center(child: Text('Rewards', style: TextStyle(color: Colors.white))),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.favorite, color: Colors.white),
-              title: Center(child: const Text('Your Wishlist', style: TextStyle(color: Colors.white))),
+              title: const Center(child: Text('Your Wishlist', style: TextStyle(color: Colors.white))),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.help, color: Colors.white),
-              title: Center(child: const Text('Help desk', style: TextStyle(color: Colors.white))),
+              title: const Center(child: Text('Help desk', style: TextStyle(color: Colors.white))),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.settings, color: Colors.white),
-              title: Center(child: const Text('Settings', style: TextStyle(color: Colors.white))),
+              title: const Center(child: Text('Settings', style: TextStyle(color: Colors.white))),
               onTap: () {},
             ),
-            Spacer(),
+            const Spacer(),
             Align(
               alignment: Alignment.bottomCenter,
               child: ListTile(
                 leading: const Icon(Icons.logout, color: Colors.green),
-                title: Center(child: const Text('Logout', style: TextStyle(color: Colors.green))),
+                title: const Center(child: Text('Logout', style: TextStyle(color: Colors.green))),
                 onTap: () {
                   // Handle logout logic
                 },
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: TextField(
                 controller: searchController,
-                style: TextStyle(color: Colors.white), // Set the text color to white
+                style: const TextStyle(color: Colors.white), // Set the text color to white
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[800],
@@ -190,8 +190,8 @@ class _HomePageState extends State<HomePage> {
                     borderSide: BorderSide.none,
                   ),
                   hintText: 'Search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
                 ),
               ),
             ),

@@ -121,9 +121,9 @@ class _ToggleButtonState extends State<ToggleButton> {
     return Container(
       width: 260,
       height: 40,
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C2C2C),
-        borderRadius: const BorderRadius.all(
+      decoration: const BoxDecoration(
+        color: Color(0xFF2C2C2C),
+        borderRadius: BorderRadius.all(
           Radius.circular(50),
         ),
       ),

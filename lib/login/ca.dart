@@ -84,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   items: _sports.map((String sport) {
                     return DropdownMenuItem<String>(
                       value: sport,
-                      child: Text(sport, style: TextStyle(color: Colors.white, fontSize: 14)),
+                      child: Text(sport, style: const TextStyle(color: Colors.white, fontSize: 14)),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -92,11 +92,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _selectedSport = newValue;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Interested sports',
                     labelStyle: TextStyle(color: Colors.white),
                   ),
-                  dropdownColor: Color(0xFF2C2C2C), // Set dropdown background color
+                  dropdownColor: const Color(0xFF2C2C2C), // Set dropdown background color
                   isDense: true,
                   itemHeight: 48, // Adjust the height of each dropdown item
                 ),
@@ -106,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   items: _levels.map((String level) {
                     return DropdownMenuItem<String>(
                       value: level,
-                      child: Text(level, style: TextStyle(color: Colors.white, fontSize: 14)),
+                      child: Text(level, style: const TextStyle(color: Colors.white, fontSize: 14)),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -114,11 +114,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _selectedLevel = newValue;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Level',
                     labelStyle: TextStyle(color: Colors.white),
                   ),
-                  dropdownColor: Color(0xFF2C2C2C), // Set dropdown background color
+                  dropdownColor: const Color(0xFF2C2C2C), // Set dropdown background color
                   isDense: true,
                   itemHeight: 48, // Adjust the height of each dropdown item
                 ),

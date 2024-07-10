@@ -50,7 +50,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavBar(currentIndex: 3), // Use CustomNavBar
+      bottomNavigationBar: const CustomNavBar(currentIndex: 3), // Use CustomNavBar
     );
   }
 
@@ -59,18 +59,18 @@ class _CommunityScreenState extends State<CommunityScreen> {
       itemCount: people.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             backgroundColor: Colors.grey,
             child: Icon(Icons.person, color: Colors.black),
           ),
           title: Text(
             people[index]['name']!,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           subtitle: people[index]['description'] != null
               ? Text(
                   people[index]['description']!,
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 )
               : null,
           trailing: TextButton(
@@ -80,7 +80,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               //   SnackBar(content: Text('${people[index]['name']} added to contacts')),
               // );
             },
-            child: Text(
+            child: const Text(
               'add',
               style: TextStyle(color: Colors.green),
             ),
@@ -88,7 +88,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
         );
       },
       separatorBuilder: (context, index) {
-        return Divider(
+        return const Divider(
           color: Colors.grey,
           thickness: 0.5,
           height: 0.5,
@@ -104,18 +104,18 @@ class _CommunityScreenState extends State<CommunityScreen> {
       itemCount: groups.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             backgroundColor: Colors.grey,
             child: Icon(Icons.group, color: Colors.black),
           ),
           title: Text(
             groups[index]['name']!,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           subtitle: groups[index]['description'] != null
               ? Text(
                   groups[index]['description']!,
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 )
               : null,
           trailing: TextButton(
@@ -125,7 +125,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 SnackBar(content: Text('Joined ${groups[index]['name']}')),
               );
             },
-            child: Text(
+            child: const Text(
               'Join',
               style: TextStyle(color: Colors.green),
             ),
@@ -133,7 +133,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
         );
       },
       separatorBuilder: (context, index) {
-        return Divider(
+        return const Divider(
           color: Colors.grey,
           thickness: 0.5,
           height: 0.5,

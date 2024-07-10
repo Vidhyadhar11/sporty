@@ -16,7 +16,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     if (otp == '1234') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => RegisterScreen()),
+        MaterialPageRoute(builder: (context) => const RegisterScreen()),
       );
     } else {
       for (var controller in _otpControllers) {
