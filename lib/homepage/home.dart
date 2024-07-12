@@ -1,11 +1,10 @@
-// home_page.dart
-
 import 'package:flutter/material.dart';
-//import 'package:sporty/homepage/communityscreen.dart';
+import 'package:sporty/homepage/testpage.dart';
+import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/uicomponents/elements.dart';
-import 'package:sporty/homepage/details.dart'; // Import the custom navbar
+import 'package:sporty/homepage/details.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -102,132 +101,174 @@ class _HomePageState extends State<HomePage> {
             const Spacer(),
             IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
-              onPressed: () {},
+              onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TestPage()),
+            );
+          },
             ),
           ],
         ),
       ),
       drawer: Drawer(
-        backgroundColor: Colors.black,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: const Text('Salman Khan', style: TextStyle(color: Colors.white)),
-              accountEmail: const Text('salmankhan@gmail.com', style: TextStyle(color: Colors.white)),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.grey[800],
-                child: const Icon(Icons.person, color: Colors.white),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.grey[900],
-              ),
-            ),
-            ListTile(
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.person, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('Your Profile', style: TextStyle(color: Colors.white)),
-                  ],
+        backgroundColor: Colors.grey[800],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: const Text('Salman Khan', style: TextStyle(color: Colors.white)),
+                accountEmail: const Text('salmankhan@gmail.com', style: TextStyle(color: Colors.white)),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.grey[800],
+                  child: const Icon(Icons.person, color: Colors.white),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
                 ),
               ),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.book, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('Bookings', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BookingScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.star, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('Rewards', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.favorite, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('Your Wishlist', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.help, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('Help desk', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.settings, color: Colors.white),
-                    SizedBox(width: 8),
-                    Text('Settings', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              onTap: () {},
-            ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ListTile(
+              ListTile(
                 title: const Center(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(Icons.logout, color: Colors.green),
+                      Icon(Icons.person, color: Colors.white),
                       SizedBox(width: 8),
-                      Text('Logout', style: TextStyle(color: Colors.green)),
+                      Text('Your Profile', style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ),
                 onTap: () {
-                  // Handle logout logic
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TestPage()),
+                  );
                 },
               ),
-            ),
-          ],
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.book, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Bookings', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookingScreen(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.star, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Rewards', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TestPage()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.favorite, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Your Wishlist', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TestPage()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.help, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Help desk', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TestPage()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.settings, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Settings', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TestPage()),
+                  );
+                },
+              ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ListTile(
+                  title: const Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.logout, color: Colors.green),
+                        SizedBox(width: 8),
+                        Text('Logout', style: TextStyle(color: Colors.green)),
+                      ],
+                    ),
+                  ),
+                   onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EnterPhoneNumberScreen()),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -251,11 +292,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Interested Sport in',
                       style: TextStyle(
@@ -264,12 +305,24 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Icon(Icons.location_on, color: Colors.white),
-                  Text(
-                    'Location',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TestPage()), // Replace with your target screen
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(Icons.location_on, color: Colors.white),
+                        const Text(
+                          'Location',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -280,7 +333,6 @@ class _HomePageState extends State<HomePage> {
               child: SportsFieldCard(
                 sportsField: field,
                 onTap: () {
-                  // Handle the click event, e.g., navigate to the details page
                   Navigator.push(
                     context,
                     MaterialPageRoute(

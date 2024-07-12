@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/uicomponents/elements.dart'; 
 
 class CommunityScreen extends StatefulWidget {
@@ -77,10 +78,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
               : null,
           trailing: TextButton(
             onPressed: () {
-              // Save contact info logic here
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(content: Text('${people[index]['name']} added to contacts')),
-              // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TestPage()),
+            );
             },
             child: const Text(
               'add',

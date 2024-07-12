@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:sporty/homepage/home.dart';
-// import 'package:sporty/login/enterphn.dart';
+import 'package:get/get.dart';
+import 'package:sporty/homepage/home.dart';
+import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/login/splash.dart';
 
 void main() {
@@ -8,19 +9,19 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       initialRoute: '/',
-      routes: {
-         '/': (context) => const SplashScreen(),
-       //'/enter-phone': (context) => EnterPhoneNumberScreen(),
-       //'/home': (context) => HomePage(),
-      },
+      getPages: [
+        GetPage(name: '/', page: () => const SplashScreen()),
+        // GetPage(name: '/enter-phone', page: () => EnterPhoneNumberScreen()),
+        // GetPage(name: '/home', page: () => HomePage()),
+      ],
     );
   }
 }

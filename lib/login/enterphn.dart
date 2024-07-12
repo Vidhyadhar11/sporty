@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart'; // Import GetX package
 import 'package:sporty/login/otp.dart'; // Required for TextInputFormatter
 
 class EnterPhoneNumberScreen extends StatefulWidget {
@@ -110,10 +111,6 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
       _maskedPhoneNumber = ''; // Clear masked phone number
       _phoneNumberValid = true; // Reset validation state if needed
     });
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => EnterOTPScreen()), // Replace _EnterOTPScreenState() with EnterOTPScreen
-    );
+    Get.to(() => EnterOTPScreen()); // Use GetX for navigation
   }
 }

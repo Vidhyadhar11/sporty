@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/homepage/communityscreen.dart';
 import 'package:sporty/homepage/eventscreen.dart';
 import 'package:sporty/homepage/home.dart';
+import 'package:sporty/homepage/sportsscreen.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -85,7 +85,7 @@ class CustomNavBar extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
             break;
           case 1:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SportsScreen()));
             break;
           case 2:
             Navigator.push(context, MaterialPageRoute(builder: (context) => EventScreen()));
