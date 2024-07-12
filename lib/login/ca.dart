@@ -78,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height : 10),
                 DropdownButtonFormField<String>(
                   value: _selectedSport,
                   items: _sports.map((String sport) {
