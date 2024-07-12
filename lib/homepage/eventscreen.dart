@@ -142,9 +142,11 @@ class _EventScreenState extends State<EventScreen> {
           ),
           // Use your existing event cards or other widgets here
           Expanded(
-            child: isJoinSelected 
-              ? JoinEvents(sportsFields: sportsFields) 
-              : CompeteEvents(sportsFields: sportsFields),
+            child: SingleChildScrollView(
+              child: isJoinSelected 
+                ? JoinEvents(sportsFields: sportsFields) 
+                : CompeteEvents(sportsFields: sportsFields),
+            ),
           ),
         ],
       ),

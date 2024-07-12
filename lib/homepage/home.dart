@@ -124,13 +124,29 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.person, color: Colors.white),
-              title: const Center(child: Text('Your Profile', style: TextStyle(color: Colors.white))),
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.person, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Your Profile', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.book, color: Colors.white),
-              title: const Center(child: Text('Bookings', style: TextStyle(color: Colors.white))),
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.book, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Bookings', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
               onTap: () {
                 Navigator.push(
                   context,
@@ -141,31 +157,71 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.star, color: Colors.white),
-              title: const Center(child: Text('Rewards', style: TextStyle(color: Colors.white))),
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.star, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Rewards', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.favorite, color: Colors.white),
-              title: const Center(child: Text('Your Wishlist', style: TextStyle(color: Colors.white))),
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.favorite, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Your Wishlist', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.help, color: Colors.white),
-              title: const Center(child: Text('Help desk', style: TextStyle(color: Colors.white))),
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.help, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Help desk', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.settings, color: Colors.white),
-              title: const Center(child: Text('Settings', style: TextStyle(color: Colors.white))),
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.settings, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Settings', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
               onTap: () {},
             ),
             const Spacer(),
             Align(
               alignment: Alignment.bottomCenter,
               child: ListTile(
-                leading: const Icon(Icons.logout, color: Colors.green),
-                title: const Center(child: Text('Logout', style: TextStyle(color: Colors.green))),
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.logout, color: Colors.green),
+                      SizedBox(width: 8),
+                      Text('Logout', style: TextStyle(color: Colors.green)),
+                    ],
+                  ),
+                ),
                 onTap: () {
                   // Handle logout logic
                 },
