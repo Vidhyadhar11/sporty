@@ -19,9 +19,10 @@ A new Flutter project for managing sports activities and bookings.
   - `uicomponents/`: Contains reusable UI components.
 
 ## Screenshots
+![image](https://github.com/Vidhyadhar11/sporty/assets/145692530/deba4812-a7dd-4a06-b6da-e0358369b018)
+![image](https://github.com/Vidhyadhar11/sporty/assets/145692530/b2805d95-c56b-455a-8ce6-dfe53b807043)
+![image](https://github.com/Vidhyadhar11/sporty/assets/145692530/87273325-9961-4637-980b-8f67504c2607)
 
-![Home Page](screenshots/home_page.png)
-![Booking Page](screenshots/booking_page.png)
 
 ## Contributing
 
