@@ -21,7 +21,6 @@ class _OnboardingState extends State<Onboarding> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: PageView.builder(
@@ -34,40 +33,66 @@ class _OnboardingState extends State<Onboarding> {
             ),
           ),
           const SizedBox(height: 20),
-          const Text(
-            'WELCOME TO THE CLUB!',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 10),
+              Text(
+                'WELCOME TO THE CLUB!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
           const SizedBox(height:10),
-          const Text(
-            'book places',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 26,
-            ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 10),
+              Text(
+                'book places',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
-          const Text(
-            'play games',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 26,
-            ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 10),
+              Text(
+                'play games',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EnterPhoneNumberScreen()),
-              );
-            },
-            child: const Text('Get Started'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EnterPhoneNumberScreen()),
+                  );
+                },
+                child: const Icon(Icons.arrow_forward),
+              ),
+            ],
           ),
         ],
       ),
@@ -91,7 +116,6 @@ class _CarouselImageState extends State<CarouselImage> {
       child: Center(
         child: Image.asset(
           widget.imagePath,
-          key: UniqueKey(), // Forces the widget to rebuild and reload the GIF
           fit: BoxFit.cover,
           width: MediaQuery.of(context).size.width,
         ),
