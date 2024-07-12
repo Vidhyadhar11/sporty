@@ -128,13 +128,12 @@ class _BookingPageState extends State<BookingPage> {
 
   Widget _buildDateBox(DateTime date, bool isSelected) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+      // margin: const EdgeInsets.symmetric( vertical: 4.0),
       decoration: BoxDecoration(
         color: isSelected ? Colors.white : Colors.black,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.white),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

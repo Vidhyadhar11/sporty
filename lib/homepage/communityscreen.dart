@@ -32,25 +32,27 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          ToggleButton(
-            leftLabel: 'People',
-            rightLabel: 'Groups',
-            onToggle: (isLeftSelected) {
-              setState(() {
-                showPeople = isLeftSelected;
-              });
-            },
-          ),
-          Expanded(
-            child: showPeople ? buildPeopleList() : buildGroupsList(),
-          ),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Column(
+          children: [
+            ToggleButton(
+              leftLabel: 'People',
+              rightLabel: 'Groups',
+              onToggle: (isLeftSelected) {
+                setState(() {
+                  showPeople = isLeftSelected;
+                });
+              },
+            ),
+            Expanded(
+              child: showPeople ? buildPeopleList() : buildGroupsList(),
+            ),
+          ],
+        ),
+        bottomNavigationBar: const CustomNavBar(currentIndex: 3), // Use CustomNavBar
       ),
-      bottomNavigationBar: const CustomNavBar(currentIndex: 3), // Use CustomNavBar
     );
   }
 
