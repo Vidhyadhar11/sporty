@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sporty/drawer/rewards.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/homepage/details.dart';
+import 'package:sporty/drawer/profile.dart'; // Import the ProfilePage
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,7 +20,8 @@ class _HomePageState extends State<HomePage> {
       location: 'Hyderabad',
       rating: 4.4,
       price: 120,
-      imageUrl: 'https://via.placeholder.com/150', // Replace with your image URL
+      imageUrl:
+          'https://via.placeholder.com/150', // Replace with your image URL
       discount: '15% Off',
       sportType: 'Football', // Pass the sportType
     ),
@@ -27,7 +30,8 @@ class _HomePageState extends State<HomePage> {
       location: 'Hyderabad',
       rating: 4.4,
       price: 120,
-      imageUrl: 'https://via.placeholder.com/150', // Replace with your image URL
+      imageUrl:
+          'https://via.placeholder.com/150', // Replace with your image URL
       discount: '10% Off',
       sportType: 'Cricket', // Pass the sportType
     ),
@@ -36,7 +40,8 @@ class _HomePageState extends State<HomePage> {
       location: 'chepak',
       rating: 4.4,
       price: 120,
-      imageUrl: 'https://via.placeholder.com/150', // Replace with your image URL
+      imageUrl:
+          'https://via.placeholder.com/150', // Replace with your image URL
       discount: '10% Off',
       sportType: 'Tennis', // Pass the sportType
     ),
@@ -44,7 +49,8 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List<SportsField> filteredSportsFields = [];
-  bool isPressed = false; // Define isPressed variable at the beginning of _HomePageState class
+  bool isPressed =
+      false; // Define isPressed variable at the beginning of _HomePageState class
   int _currentIndex = 0;
   TextEditingController searchController = TextEditingController();
 
@@ -66,8 +72,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       filteredSportsFields = sportsFields.where((field) {
         return field.name.toLowerCase().contains(query) ||
-                field.location.toLowerCase().contains(query) ||
-                field.sportType.toLowerCase().contains(query);
+            field.location.toLowerCase().contains(query) ||
+            field.sportType.toLowerCase().contains(query);
       }).toList();
     });
   }
@@ -84,7 +90,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             Builder(
               builder: (context) => IconButton(
-                icon: const Icon(Icons.menu, color: Colors.white), // Set the color to white
+                icon: const Icon(Icons.menu,
+                    color: Colors.white), // Set the color to white
                 onPressed: () {
                   Scaffold.of(context).openDrawer(); // Open the drawer
                 },
@@ -102,11 +109,11 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
               onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TestPage()),
-            );
-          },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TestPage()),
+                );
+              },
             ),
           ],
         ),
@@ -118,8 +125,10 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               UserAccountsDrawerHeader(
-                accountName: const Text('Salman Khan', style: TextStyle(color: Colors.white)),
-                accountEmail: const Text('salmankhan@gmail.com', style: TextStyle(color: Colors.white)),
+                accountName: const Text('Salman Khan',
+                    style: TextStyle(color: Colors.white)),
+                accountEmail: const Text('salmankhan@gmail.com',
+                    style: TextStyle(color: Colors.white)),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.grey[800],
                   child: const Icon(Icons.person, color: Colors.white),
@@ -136,14 +145,23 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(Icons.person, color: Colors.white),
                       SizedBox(width: 8),
-                      Text('Your Profile', style: TextStyle(color: Colors.white)),
+                      Text('Your Profile',
+                          style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TestPage()),
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(
+                        userName: 'Salman Khan', // Pass user details here
+                        email: 'salmanshaik123@gmail.com',
+                        phoneNumber: '+91 9876543210',
+                        matchesPlayed: 10,
+                        // Example matches played
+                      ),
+                    ),
                   );
                 },
               ),
@@ -180,10 +198,10 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                 onTap: () {
+                onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TestPage()),
+                    MaterialPageRoute(builder: (context) => RewardsPage()),
                   );
                 },
               ),
@@ -195,11 +213,12 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(Icons.favorite, color: Colors.white),
                       SizedBox(width: 8),
-                      Text('Your Wishlist', style: TextStyle(color: Colors.white)),
+                      Text('Your Wishlist',
+                          style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ),
-                 onTap: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => TestPage()),
@@ -218,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                 onTap: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => TestPage()),
@@ -237,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                 onTap: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => TestPage()),
@@ -259,10 +278,11 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                   onTap: () {
+                  onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EnterPhoneNumberScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => EnterPhoneNumberScreen()),
                     );
                   },
                 ),
@@ -275,10 +295,12 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: TextField(
                 controller: searchController,
-                style: const TextStyle(color: Colors.white), // Set the text color to white
+                style: const TextStyle(
+                    color: Colors.white), // Set the text color to white
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[800],
@@ -293,7 +315,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Row(
                 children: [
                   const Expanded(
@@ -309,7 +332,9 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => TestPage()), // Replace with your target screen
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TestPage()), // Replace with your target screen
                       );
                     },
                     child: Row(
@@ -329,19 +354,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ...filteredSportsFields.map((field) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: SportsFieldCard(
-                sportsField: field,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailsPage(sportsField: field),
-                    ),
-                  );
-                },
-              ),
-            )),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                  child: SportsFieldCard(
+                    sportsField: field,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(sportsField: field),
+                        ),
+                      );
+                    },
+                  ),
+                )),
             const SizedBox(height: 200), // Adding space for the floating navbar
           ],
         ),
