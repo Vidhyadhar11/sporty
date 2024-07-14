@@ -14,7 +14,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       favoritesList.add(sportsField);
     });
   }
-
   void removeFromFavorites(SportsField sportsField) {
     setState(() {
       favoritesList.remove(sportsField);

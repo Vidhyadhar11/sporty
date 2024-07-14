@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sporty/login/enterphn.dart';
+import 'package:sporty/login/otp.dart';
 import 'package:sporty/uicomponents/elements.dart';
 
 
@@ -17,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _noController = TextEditingController();
   String? _selectedSport;
   String? _selectedLevel;
   bool _termsAccepted = false;
@@ -135,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                  CustomTextField(
-                  controller: _ageController,
+                  controller: _noController,
                   label: 'Mobile Number',
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -175,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onPressed: _termsAccepted
                     ? () {
                         // Handle sign up logic
-                        Get.to(() => EnterPhoneNumberScreen());
+                        Get.to(() => EnterOTPScreen());
                       }
                     : () {
                         setState(() {

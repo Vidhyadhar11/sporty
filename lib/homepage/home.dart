@@ -150,14 +150,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Get.to(() => ProfilePage(
-                        userName: 'Salman Khan', // Pass user details here
-                        email: 'salmanshaik123@gmail.com',
-                        phoneNumber: '+91 9876543210',
-                        matchesPlayed: 10,
-                        // Example matches played
-                      ),
-                    );
+                  Get.to(() => TestPage());
                 },
               ),
               ListTile(
@@ -189,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Get.to(() => RewardsPage());
+                  Get.to(() => TestPage());
                 },
               ),
               ListTile(
@@ -256,7 +249,7 @@ class _HomePageState extends State<HomePage> {
               child: TextField(
                 controller: searchController,
                 style: const TextStyle(
-                    color: Colors.white), // Set the text color to white
+                    color: Colors.white),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[800],
