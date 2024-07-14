@@ -6,12 +6,12 @@ class RewardsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black, // Set background color to black
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Rewards',
           style: TextStyle(color: Colors.green),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white, // Set arrow icon color to white
           ),
@@ -75,7 +75,7 @@ Widget _buildRewardCard(BuildContext context,
     required String category,
     bool isNew = false}) {
   return Card(
-    color: Color.fromARGB(
+    color: const Color.fromARGB(
         244, 42, 41, 41), // Set card background color to light grey
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -84,29 +84,29 @@ Widget _buildRewardCard(BuildContext context,
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white), // Set text color to white
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
             children: <Widget>[
-              Icon(icon, color: Colors.black), // Set icon color to black
-              SizedBox(width: 16),
+              Icon(icon, color: Colors.green), // Set icon color to black
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white), // Set text color to white
                     ),
                     Text(
                       category,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white), // Set text color to white
                     ),
@@ -114,7 +114,7 @@ Widget _buildRewardCard(BuildContext context,
                 ),
               ),
               isNew
-                  ? Chip(
+                  ? const Chip(
                       label: Text('New'),
                       backgroundColor: Colors.black,
                       labelStyle: TextStyle(color: Colors.white),

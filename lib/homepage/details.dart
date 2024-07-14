@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/date.dart';
+import 'package:get/get.dart';
 
 class DetailsPage extends StatefulWidget { // Change to StatefulWidget
   final SportsField sportsField;
@@ -241,10 +242,7 @@ class _DetailsPageState extends State<DetailsPage> { // Create State class
                         padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BookingPage()),
-                        );
+                        Get.to(() => BookingPage());
                       },
                       child: const Text('Book Now',
                           style: TextStyle(fontSize: 18, color: Colors.green)),

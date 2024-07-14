@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sporty/homepage/details.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/uicomponents/cards.dart';
+
 
 class EventScreen extends StatefulWidget {
   @override
@@ -128,10 +130,7 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TestPage()),
-                    );
+                        Get.to(() => TestPage());
                     },
                     icon: const Icon(Icons.location_on, color: Colors.white),
                     label: const Text('Location', style: TextStyle(color: Colors.white)),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart'; // Import GetX package
+import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart'; // Required for TextInputFormatter
 
 class EnterPhoneNumberScreen extends StatefulWidget {
@@ -69,6 +70,22 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
+                const SizedBox(height: 20), // Add some space before the new text
+                GestureDetector(
+                  onTap: () {
+                    // Handle create account action here
+                    Get.to(() => RegisterScreen()); // Navigate to CreateAccountScreen
+                  },
+                  child: const Text(
+                    'Create Account',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

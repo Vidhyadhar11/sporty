@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporty/drawer/favorite.dart';
 
 // Define the SportsField class to handle both types of cards
 class SportsField {
@@ -41,6 +42,14 @@ class SportsFieldCard extends StatefulWidget {
 class _SportsFieldCardState extends State<SportsFieldCard> {
   bool isFavorite = false;
 
+  void addToFavorites(SportsField sportsField) {
+    // Implement your logic to add to favorites
+  }
+
+  void removeFromFavorites(SportsField sportsField) {
+    // Implement your logic to remove from favorites
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -79,6 +88,13 @@ class _SportsFieldCardState extends State<SportsFieldCard> {
                     onPressed: () {
                       setState(() {
                         isFavorite = !isFavorite;
+                        if (isFavorite) {
+                          // Add the card to favorites
+                          addToFavorites(widget.sportsField);
+                        } else {
+                          // Remove the card from favorites
+                          removeFromFavorites(widget.sportsField);
+                        }
                       });
                     },
                   ),

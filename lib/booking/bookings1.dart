@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:sporty/uicomponents/elements.dart'; // Import the ToggleButton widget
 
@@ -19,8 +20,7 @@ class _BookingScreenState extends State<BookingScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
          onPressed: () {
-            Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            Get.to(() => HomePage());
          }
         ),
         title: Container(), // Remove the title from the AppBar

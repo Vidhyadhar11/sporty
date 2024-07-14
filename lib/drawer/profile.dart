@@ -19,12 +19,12 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Profile',
           style: TextStyle(color: Colors.green),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
@@ -41,34 +41,34 @@ class ProfilePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.white,
                 backgroundImage: AssetImage('assets/playlink.jpg'),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               ListTile(
-                leading: Icon(Icons.person, color: Colors.green),
+                leading: const Icon(Icons.person, color: Colors.green),
                 title: Text('Username: $userName',
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
               ),
-              Divider(color: Colors.grey),
+              const Divider(color: Colors.grey),
               ListTile(
-                leading: Icon(Icons.email, color: Colors.green),
+                leading: const Icon(Icons.email, color: Colors.green),
                 title: Text('Email: $email',
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
               ),
-              Divider(color: Colors.grey),
+              const Divider(color: Colors.grey),
               ListTile(
-                leading: Icon(Icons.phone, color: Colors.green),
+                leading: const Icon(Icons.phone, color: Colors.green),
                 title: Text('Phone Number: $phoneNumber',
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
               ),
-              Divider(color: Colors.grey),
+              const Divider(color: Colors.grey),
               ListTile(
-                leading: Icon(Icons.sports_soccer, color: Colors.green),
+                leading: const Icon(Icons.sports_soccer, color: Colors.green),
                 title: Text('Matches Played: $matchesPlayed',
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
               ),
             ],
           ),

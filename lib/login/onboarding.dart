@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:sporty/screens/login.dart';
 import 'package:sporty/login/enterphn.dart';
+import 'package:get/get.dart';
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key}) : super(key: key);
 
@@ -85,10 +86,7 @@ class _OnboardingState extends State<Onboarding> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EnterPhoneNumberScreen()),
-                  );
+                  Get.to(() => EnterPhoneNumberScreen());
                 },
                 child: const Icon(Icons.arrow_forward),
               ),

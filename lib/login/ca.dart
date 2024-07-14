@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sporty/homepage/home.dart';
+import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/elements.dart';
+
+
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -131,6 +134,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FilteringTextInputFormatter.digitsOnly
                   ],
                 ),
+                 CustomTextField(
+                  controller: _ageController,
+                  label: 'Mobile Number',
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
@@ -164,10 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onPressed: _termsAccepted
                     ? () {
                         // Handle sign up logic
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
+                        Get.to(() => EnterPhoneNumberScreen());
                       }
                     : () {
                         setState(() {

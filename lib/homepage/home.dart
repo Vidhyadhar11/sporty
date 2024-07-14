@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sporty/drawer/favorite.dart';
 import 'package:sporty/drawer/rewards.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/login/enterphn.dart';
@@ -6,7 +8,7 @@ import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/homepage/details.dart';
-import 'package:sporty/drawer/profile.dart'; // Import the ProfilePage
+import 'package:sporty/drawer/profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -109,10 +111,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TestPage()),
-                );
+                Get.to(() => TestPage());
               },
             ),
           ],
@@ -151,18 +150,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(
+                  Get.to(() => ProfilePage(
                         userName: 'Salman Khan', // Pass user details here
                         email: 'salmanshaik123@gmail.com',
                         phoneNumber: '+91 9876543210',
                         matchesPlayed: 10,
                         // Example matches played
                       ),
-                    ),
-                  );
+                    );
                 },
               ),
               ListTile(
@@ -178,12 +173,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BookingScreen(),
-                    ),
-                  );
+                  Get.to(() => BookingScreen());
                 },
               ),
               ListTile(
@@ -199,10 +189,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RewardsPage()),
-                  );
+                  Get.to(() => RewardsPage());
                 },
               ),
               ListTile(
@@ -213,56 +200,16 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(Icons.favorite, color: Colors.white),
                       SizedBox(width: 8),
-                      Text('Your Wishlist',
+                      Text('Liked',
                           style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TestPage()),
-                  );
+                  Get.to(() => FavoriteScreen());
                 },
               ),
-              ListTile(
-                title: const Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.help, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text('Help desk', style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TestPage()),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.settings, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text('Settings', style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TestPage()),
-                  );
-                },
-              ),
+              
               const Spacer(),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -279,12 +226,21 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EnterPhoneNumberScreen()),
-                    );
+                    Get.to(() => EnterPhoneNumberScreen());
                   },
+                ),
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.help, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Contact Support +91 9550249061', style: TextStyle(color: Colors.white,fontSize: 10.0)),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -330,12 +286,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                TestPage()), // Replace with your target screen
-                      );
+                      Get.to(() => TestPage());
                     },
                     child: Row(
                       children: [
@@ -359,15 +310,11 @@ class _HomePageState extends State<HomePage> {
                   child: SportsFieldCard(
                     sportsField: field,
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailsPage(sportsField: field),
-                        ),
-                      );
+                      Get.to(() => DetailsPage(sportsField: field));
                     },
                   ),
-                )),
+                  ),
+                ),
             const SizedBox(height: 200), // Adding space for the floating navbar
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/uicomponents/elements.dart';
@@ -23,45 +24,27 @@ class _SportsScreenState extends State<SportsScreen> {
     switch (sportImage) {
       case 'assets/Cricket.gif':
         // Navigate to Cricket screen or perform Cricket-specific action
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestPage()),
-        );
+        Get.to(() => TestPage());
         break;
       case 'assets/Badminton.gif':
         // Navigate to Badminton screen or perform Badminton-specific action
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestPage()),
-        );
+       Get.to(() => TestPage());
         break;
       case 'assets/Beach volleyball.gif':
         // Navigate to Beach Volleyball screen or perform Beach Volleyball-specific action
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestPage()),
-        );
+        Get.to(() => TestPage());
         break;
       case 'assets/Soccer.gif':
         // Navigate to Soccer screen or perform Soccer-specific action
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestPage()),
-        );
+        Get.to(() => TestPage());
         break;
       case 'assets/Golf.gif':
         // Navigate to Golf screen or perform Golf-specific action
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestPage()),
-        );
+        Get.to(() => TestPage());
         break;
       case 'assets/Grand slam.gif':
         // Navigate to Grand Slam screen or perform Grand Slam-specific action
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestPage()),
-        );
+        Get.to(() => TestPage());
         break;
     }
   }
