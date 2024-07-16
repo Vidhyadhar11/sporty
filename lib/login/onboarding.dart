@@ -11,10 +11,14 @@ class Onboarding extends StatefulWidget {
 
 class _OnboardingState extends State<Onboarding> {
   final List<String> imgList = [
-    'assets/Cricket.gif',
-    'assets/Badminton.gif',
-    'assets/Beach volleyball.gif',
-    'assets/Soccer.gif'
+    'assets/Cricket-pana.png', 
+    'assets/Badminton-bro.png',
+    'assets/Beach volleyball-bro.png',
+    'assets/Soccer-bro.png',
+    'assets/basketball player-bro.png',
+    'assets/Soccer-bro.png',
+    'assets/Tennis-bro.png',
+    'assets/Golf-bro.png',
   ];
 
   @override
@@ -88,6 +92,12 @@ class _OnboardingState extends State<Onboarding> {
                 onPressed: () {
                   Get.to(() => EnterPhoneNumberScreen());
                 },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.green,
+                  backgroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
                 child: const Icon(Icons.arrow_forward),
               ),
             ],
