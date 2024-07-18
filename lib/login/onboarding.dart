@@ -16,9 +16,10 @@ class _OnboardingState extends State<Onboarding> {
     'assets/Beach volleyball-bro.png',
     'assets/Soccer-bro.png',
     'assets/basketball player-bro.png',
-    'assets/Soccer-bro.png',
+    'assets/swimming.png',
     'assets/Tennis-bro.png',
     'assets/Golf-bro.png',
+    'assets/Grand slam-bro.png',
   ];
 
   @override

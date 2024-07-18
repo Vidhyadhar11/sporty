@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       rating: 4.4,
       price: 120,
       imageUrl:
-          'https://via.placeholder.com/150', // Replace with your image URL
+          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
       discount: '15% Off',
       sportType: 'Football', // Pass the sportType
     ),
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       rating: 4.4,
       price: 120,
       imageUrl:
-          'https://via.placeholder.com/150', // Replace with your image URL
+          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
       discount: '10% Off',
       sportType: 'Cricket', // Pass the sportType
     ),
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       rating: 4.4,
       price: 120,
       imageUrl:
-          'https://via.placeholder.com/150', // Replace with your image URL
+          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
       discount: '10% Off',
       sportType: 'Tennis', // Pass the sportType
     ),
@@ -119,40 +119,26 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: Drawer(
         backgroundColor: Colors.grey[800],
-        child: Center(
+        child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              UserAccountsDrawerHeader(
-                accountName: const Text('Salman Khan',
-                    style: TextStyle(color: Colors.white)),
-                accountEmail: const Text('salmankhan@gmail.com',
-                    style: TextStyle(color: Colors.white)),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.grey[800],
-                  child: const Icon(Icons.person, color: Colors.white),
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.grey[800],
-                ),
+              const CircleAvatar(
+                radius: 50,
+                // backgroundColor: Colors.grey[800],
+                backgroundImage: NetworkImage('https://imgs.search.brave.com/EcbeGlqXlo-1UsUTCdkF0yVSwJa2x_xL3p66MTvzPns/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtZ2xvYmFsLndl/YnNpdGUtZmlsZXMu/Y29tLzVlYzdkYWQy/ZTZmNjI5NWE5ZTJh/MjNkZC81ZWRmYTdj/NmY5NzhlNzUzNzJk/YzMzMmVfcHJvZmls/ZXBob3RvMS5qcGVn'),
               ),
-              ListTile(
-                title: const Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.person, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text('Your Profile',
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Get.to(() => TestPage());
-                },
+              const SizedBox(height: 15),
+              const Text('Salman Khan',
+                  style: TextStyle(color: Colors.white)),
+                  const SizedBox(height: 10),
+              const Text('salmankhan@gmail.com',
+                  style: TextStyle(color: Colors.white)),
+              const SizedBox(height: 10),
+              const Divider(
+                color: Colors.grey,
               ),
+              const SizedBox(height: 10),
               ListTile(
                 title: const Center(
                   child: Row(
@@ -182,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Get.to(() => TestPage());
+                  Get.to(() => RewardsPage());
                 },
               ),
               ListTile(
@@ -223,8 +209,8 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              ListTile(
-                title: const Center(
+              const ListTile(
+                title: Center(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -281,10 +267,10 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Get.to(() => TestPage());
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
-                        const Icon(Icons.location_on, color: Colors.white),
-                        const Text(
+                        Icon(Icons.location_on, color: Colors.white),
+                        Text(
                           'Location',
                           style: TextStyle(
                             color: Colors.white,

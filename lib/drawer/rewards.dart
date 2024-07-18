@@ -22,47 +22,50 @@ class RewardsPage extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: ListView(
-        children: <Widget>[
-          _buildRewardCard(
-            context,
-            icon: Icons.card_giftcard,
-            title: 'Brand Vouchers',
-            subtitle: 'Up to ₹300 cashback*',
-            category: 'Fashion & Clothing',
-            isNew: true,
-          ),
-          _buildRewardCard(
-            context,
-            icon: Icons.local_grocery_store,
-            title: 'Swiggy Instamart',
-            subtitle: 'Get Free Combo worth ₹150*',
-            category: 'Daily Needs',
-            isNew: true,
-          ),
-          _buildRewardCard(
-            context,
-            icon: Icons.shopping_bag,
-            title: 'Myntra',
-            subtitle: 'Get FLAT 15% Extra Off*',
-            category: 'Fashion & Clothing',
-          ),
-          _buildRewardCard(
-            context,
-            icon: Icons.movie,
-            title: 'AHA',
-            subtitle: 'Flat 25% Off*',
-            category: 'Entertainment',
-          ),
-          _buildRewardCard(
-            context,
-            icon: Icons.local_pizza,
-            title: 'Domino\'s',
-            subtitle: 'Get 33% Off* + Free Delivery',
-            category: 'Food',
-          ),
-          // Add more cards as needed
-        ],
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        child: ListView(
+          children: <Widget>[
+            _buildRewardCard(
+              context,
+              icon: Icons.card_giftcard,
+              title: 'Brand Vouchers',
+              subtitle: 'Up to ₹300 cashback*',
+              category: 'Fashion & Clothing',
+              isNew: true,
+            ),
+            _buildRewardCard(
+              context,
+              icon: Icons.local_grocery_store,
+              title: 'Swiggy Instamart',
+              subtitle: 'Get Free Combo worth ₹150*',
+              category: 'Daily Needs',
+              isNew: true,
+            ),
+            _buildRewardCard(
+              context,
+              icon: Icons.shopping_bag,
+              title: 'Myntra',
+              subtitle: 'Get FLAT 15% Extra Off*',
+              category: 'Fashion & Clothing',
+            ),
+            _buildRewardCard(
+              context,
+              icon: Icons.movie,
+              title: 'AHA',
+              subtitle: 'Flat 25% Off*',
+              category: 'Entertainment',
+            ),
+            _buildRewardCard(
+              context,
+              icon: Icons.local_pizza,
+              title: 'Domino\'s',
+              subtitle: 'Get 33% Off* + Free Delivery',
+              category: 'Food',
+            ),
+            // Add more cards as needed
+          ],
+        ),
       ),
     );
   }

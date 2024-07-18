@@ -39,6 +39,7 @@ class _BookingPageState extends State<BookingPage> {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
             // Handle back button press
+            Navigator.of(context).pop();
           },
         ),
         backgroundColor: Colors.black,
@@ -128,6 +129,10 @@ class _BookingPageState extends State<BookingPage> {
 
   Widget _buildDateBox(DateTime date, bool isSelected) {
     return Container(
+      constraints: const BoxConstraints(
+        minWidth: 30,
+        minHeight: 30,
+      ),
       // margin: const EdgeInsets.symmetric( vertical: 4.0),
       decoration: BoxDecoration(
         color: isSelected ? Colors.white : Colors.black,
