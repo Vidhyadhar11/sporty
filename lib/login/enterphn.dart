@@ -74,7 +74,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                 GestureDetector(
                   onTap: () {
                     // Handle create account action here
-                    Get.to(() => RegisterScreen()); // Navigate to CreateAccountScreen
+                    Get.to(() => const RegisterScreen()); // Navigate to CreateAccountScreen
                   },
                   child: const Text(
                     'Create Account',
@@ -97,14 +97,16 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                 // Proceed button logic here
                 _handleProceed();
               },
-              child: const Text(
-                'Proceed',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: const Row(
+                    children: [
+                      Text('Proceed', style: TextStyle(color: Colors.green,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      )),
+                      SizedBox(width: 10),
+                      Icon(Icons.arrow_forward, color: Colors.green),
+                    ],
+                  ),
             ),
           ),
         ],

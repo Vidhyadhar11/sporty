@@ -39,31 +39,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40, left: 10),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
                           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                           onPressed: () => Navigator.of(context).pop(),
                         ),
-                      ),
-                    ),
-                    const Text(
-                      'Create Account',
-                      style: TextStyle(color: Colors.green, fontSize: 24),
+                        const SizedBox(width: 40),
+                        const Text(
+                          'Create Account',
+                          style: TextStyle(color: Colors.green, fontSize: 24),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     Row(
@@ -100,12 +100,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Interested sports',
                         labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
                       dropdownColor: const Color(0xFF2C2C2C), // Set dropdown background color
                       isDense: true,
                       itemHeight: 48, // Adjust the height of each dropdown item
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     DropdownButtonFormField<String>(
                       value: _selectedLevel,
                       items: _levels.map((String level) {
@@ -122,6 +126,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Level',
                         labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
                       dropdownColor: const Color(0xFF2C2C2C), // Set dropdown background color
                       isDense: true,
@@ -172,38 +180,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  onPressed: _termsAccepted
-                      ? () {
-                          // Handle sign up logic
-                          Get.to(() => EnterOTPScreen());
-                        }
-                      : () {
-                          setState(() {
-                            _showError = true;
-                          });
-                        },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.green,
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                    textStyle: const TextStyle(fontSize: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: _termsAccepted
+                        ? () {
+                            // Handle sign up logic
+                            Get.to(() => EnterOTPScreen());
+                          }
+                        : () {
+                            setState(() {
+                              _showError = true;
+                            });
+                          },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.green,
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                    child: const Row(
+                      children: [
+                        Text('Signup', style: TextStyle(color: Colors.green)),
+                        SizedBox(width: 10),
+                        Icon(Icons.arrow_forward, color: Colors.green),
+                      ],
+                    ),
                   ),
-                  child: const Row(
-                    children: [
-                      Text('Signup', style: TextStyle(color: Colors.green)),
-                      SizedBox(width: 10),
-                      Icon(Icons.arrow_forward, color: Colors.green),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sporty/homepage/home.dart';
@@ -13,7 +15,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
   void _handleVerifyOTP() {
     String otp = _otpControllers.map((controller) => controller.text).join();
-    if (otp == '1234') {
+    if (otp == '') {
       Get.to(() => HomePage());
     } else {
       for (var controller in _otpControllers) {
@@ -99,13 +101,19 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
             right: 20,
             child: GestureDetector(
               onTap: _handleVerifyOTP,
-              child: const Text(
-                'Verify',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: const Row(
+                children: [
+                  Text(
+                    'Verify',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(Icons.arrow_forward, color: Colors.green),
+                ],
               ),
             ),
           ),
