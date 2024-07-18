@@ -127,13 +127,13 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
+  
   Widget _buildDateBox(DateTime date, bool isSelected) {
     return Container(
       constraints: const BoxConstraints(
         minWidth: 35,
         minHeight: 40,
       ),
-      // margin: const EdgeInsets.symmetric( vertical: 4.0),
       decoration: BoxDecoration(
         color: isSelected ? Colors.white : Colors.black,
         borderRadius: BorderRadius.circular(10),
@@ -184,15 +184,14 @@ class _BookingPageState extends State<BookingPage> {
 
   Widget _buildAvailableSlots() {
     List<String> slots = ["8am-10am", "10am-12pm", "12pm-2pm", "6pm-7pm"];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text("Available Slots", style: TextStyle(color: Colors.green, fontSize: 18)),
         const SizedBox(height: 10),
         Wrap(
-          spacing: 4.0,
-          runSpacing: 4.0,
+          spacing: 10.0,
+          runSpacing: 10.0,
           children: List.generate(slots.length, (index) {
             return GestureDetector(
               onTap: () {
@@ -229,8 +228,8 @@ class _BookingPageState extends State<BookingPage> {
         const Text("Court", style: TextStyle(color: Colors.green, fontSize: 18)),
         const SizedBox(height: 10),
         Wrap(
-          spacing: 4.0,
-          runSpacing: 4.0,
+          spacing: 10.0,
+          runSpacing: 10.0,
           children: List.generate(5, (index) {
             return GestureDetector(
               onTap: () {
