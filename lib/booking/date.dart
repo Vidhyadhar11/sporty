@@ -130,8 +130,8 @@ class _BookingPageState extends State<BookingPage> {
   Widget _buildDateBox(DateTime date, bool isSelected) {
     return Container(
       constraints: const BoxConstraints(
-        minWidth: 30,
-        minHeight: 30,
+        minWidth: 35,
+        minHeight: 40,
       ),
       // margin: const EdgeInsets.symmetric( vertical: 4.0),
       decoration: BoxDecoration(
