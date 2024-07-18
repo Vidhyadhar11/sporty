@@ -48,14 +48,12 @@ class _BookingScreenState extends State<BookingScreen> {
                 },
               ),
               const SizedBox(height: 10),
-              SingleChildScrollView(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 10, // Replace this with your actual count of items
-                  itemBuilder: (context, index) {
-                    return BookingCard(showUpcoming);
-                  },
-                ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: 10, // Replace this with your actual count of items
+                itemBuilder: (context, index) {
+                  return BookingCard(showUpcoming);
+                },
               ),
             ],
           ),

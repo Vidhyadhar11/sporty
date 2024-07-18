@@ -21,7 +21,8 @@ class _EventScreenState extends State<EventScreen> {
       location: 'Hyderabad',
       rating: 4.4,
       price: 120,
-      imageUrl: 'https://example.com/image1.jpg',
+      imageUrl:
+          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
       discount: '15% Off',
       sportType: 'Football',
       slot: '6pm-7pm',
@@ -33,7 +34,8 @@ class _EventScreenState extends State<EventScreen> {
       location: 'Hyderabad',
       rating: 4.4,
       price: 120,
-      imageUrl: 'https://example.com/image2.jpg',
+      imageUrl:
+          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
       discount: '15% Off',
       sportType: 'Football',
       slot: '6pm-7pm',

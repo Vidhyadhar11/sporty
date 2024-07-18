@@ -15,13 +15,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
     {'id': '2', 'name': 'Joms'},
     {'id': '3', 'name': 'Joms'},
     {'id': '4', 'name': 'Joms'},
-    {'id': '5', 'name': 'Rohit sharma'},
+    {'id': '5', 'name': 'vidhya'},
   ];
+  
   List<Map<String, String>> groups = [
     {'id': '1', 'name': 'Cricket Enthusiasts', 'description': 'Join us for weekly cricket matches!'},
     {'id': '2', 'name': 'Football Fans', 'description': 'Weekly football games and discussions.'},
     {'id': '3', 'name': 'Tennis Club', 'description': 'Meet up for tennis matches and training.'},
   ];
+
   void addToGroup(Map<String, String> person) {
     if (!groups.contains(person)) {
       setState(() {
