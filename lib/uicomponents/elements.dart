@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
 
-  const CustomTextField({Key? key,required this.controller,required this.label,this.keyboardType = TextInputType.text,this.inputFormatters,}) : super(key: key);
+  const CustomTextField({super.key,required this.controller,required this.label,this.keyboardType = TextInputType.text,this.inputFormatters,});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class CustomTextField extends StatelessWidget {
 class CustomNavBar extends StatelessWidget {
   final int currentIndex;
 
-  const CustomNavBar({Key? key, required this.currentIndex}) : super(key: key);
+  const CustomNavBar({super.key, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -104,13 +104,14 @@ class ToggleButton extends StatefulWidget {
   final String rightLabel;
   final ValueChanged<bool> onToggle;
 
-  ToggleButton({
+  const ToggleButton({super.key, 
     required this.leftLabel,
     required this.rightLabel,
     required this.onToggle,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _ToggleButtonState createState() => _ToggleButtonState();
 }
 

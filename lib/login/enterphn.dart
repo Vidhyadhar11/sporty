@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart'; // Import GetX package
 import 'package:sporty/login/ca.dart';
-import 'package:sporty/login/otp.dart'; // Required for TextInputFormatter
+import 'package:sporty/login/otp.dart';
+import 'package:sporty/uicomponents/mycontroller.dart'; // Required for TextInputFormatter
 
 class EnterPhoneNumberScreen extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class EnterPhoneNumberScreen extends StatefulWidget {
 }
 
 class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
+  final Mycontroller myController = Mycontroller(); // Add this line
   String _maskedPhoneNumber = ''; // Holds the masked phone number
   bool _phoneNumberValid = true; // Validation flag for phone number format
 
@@ -35,10 +37,12 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  controller: myController.phoneNumberController.value, // Add this line
                   keyboardType: TextInputType.phone,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(10), // Limit input to 10 digits
+                    LengthLimitingTextInputFormatter(
+                        10), // Limit input to 10 digits
                   ],
                   style: const TextStyle(color: Colors.white),
                   obscureText: true, // Hides entered digits with '*'
@@ -70,11 +74,13 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
-                const SizedBox(height: 20), // Add some space before the new text
+                const SizedBox(
+                    height: 20), // Add some space before the new text
                 GestureDetector(
                   onTap: () {
                     // Handle create account action here
-                    Get.to(() => const RegisterScreen()); // Navigate to CreateAccountScreen
+                    Get.to(() =>
+                        const RegisterScreen()); // Navigate to CreateAccountScreen
                   },
                   child: const Text(
                     'Create Account',
@@ -98,15 +104,17 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                 _handleProceed();
               },
               child: const Row(
-                    children: [
-                      Text('Proceed', style: TextStyle(color: Colors.green,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                children: [
+                  Text('Proceed',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       )),
-                      SizedBox(width: 10),
-                      Icon(Icons.arrow_forward, color: Colors.green),
-                    ],
-                  ),
+                  SizedBox(width: 10),
+                  Icon(Icons.arrow_forward, color: Colors.green),
+                ],
+              ),
             ),
           ),
         ],
@@ -125,11 +133,20 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
 
   // Handle proceed action (e.g., clear fields)
   void _handleProceed() {
-    // Add your logic here to handle the proceed action
-    setState(() {
-      _maskedPhoneNumber = ''; // Clear masked phone number
-      _phoneNumberValid = true; // Reset validation state if needed
-    });
-    Get.to(() => EnterOTPScreen()); // Use GetX for navigation
+    if (_phoneNumberValid) {
+      String otp = generateRandomOTP();
+      String phoneNumber = myController.phoneNumberController.value.text;
+      sendOTPToPhoneNumber(phoneNumber, otp);
+      Get.to(() => EnterOTPScreen(sentOTPController: TextEditingController(text: otp)));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a valid 10-digit number')),
+      );
+    }
   }
+
+  String generateRandomOTP() {
+    return '';
+  }
+  void sendOTPToPhoneNumber(String phoneNumber, String otp) {}
 }

@@ -3,33 +3,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sporty/homepage/home.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
+import 'package:sporty/uicomponents/mycontroller.dart';
 
 class EnterOTPScreen extends StatefulWidget {
+  final TextEditingController sentOTPController;
+
+  const EnterOTPScreen({super.key, required this.sentOTPController});
+
   @override
+  // ignore: library_private_types_in_public_api
   _EnterOTPScreenState createState() => _EnterOTPScreenState();
 }
 
 class _EnterOTPScreenState extends State<EnterOTPScreen> {
-  final List<TextEditingController> _otpControllers = List.generate(4, (index) => TextEditingController());
+  final Mycontroller myController = Mycontroller();
 
   void _handleVerifyOTP() {
-    String otp = _otpControllers.map((controller) => controller.text).join();
-    if (otp == '') {
-      Get.to(() => HomePage());
+    String otp = myController.otpControllers.map((controller) => controller.text).join();
+    if (otp == widget.sentOTPController.text) {
+      Get.to(() => const HomePage());
     } else {
-      for (var controller in _otpControllers) {
+      for (var controller in myController.otpControllers) {
         controller.clear();
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: const Text('Invalid OTP')),
+      const SnackBar(content: const Text('Invalid OTP')),
       );
     }
   }
 
   @override
   void dispose() {
-    for (var controller in _otpControllers) {
+    for (var controller in myController.otpControllers) {
       controller.dispose();
     }
     super.dispose();
@@ -56,39 +63,38 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    4,
-                    (index) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      width: 50,
-                      height: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextFormField(
-                        controller: _otpControllers[index],
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(1),
-                        ],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white, fontSize: 24),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
+                Obx(() => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(4,(index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        width: 50,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        onChanged: (value) {
-                          if (value.length == 1 && index < 3) {
-                            FocusScope.of(context).nextFocus();
-                          }
-                          if (value.isEmpty && index > 0) {
-                            FocusScope.of(context).previousFocus();
-                          }
-                        },
+                        child: TextFormField(
+                          controller: myController.otpControllers[index],
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(1),
+                          ],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.white, fontSize: 24),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (value) {
+                            if (value.length == 1 && index < 3) {
+                              FocusScope.of(context).nextFocus();
+                            }
+                            if (value.isEmpty && index > 0) {
+                              FocusScope.of(context).previousFocus();
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ),

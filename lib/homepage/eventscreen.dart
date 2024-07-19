@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:sporty/homepage/details.dart';
 import 'package:sporty/homepage/testpage.dart';
@@ -7,7 +8,10 @@ import 'package:sporty/uicomponents/cards.dart';
 
 
 class EventScreen extends StatefulWidget {
+  const EventScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _EventScreenState createState() => _EventScreenState();
 }
 
@@ -72,7 +76,7 @@ class _EventScreenState extends State<EventScreen> {
                 children: [
                   Theme(
                     data: Theme.of(context).copyWith(
-                      popupMenuTheme: PopupMenuThemeData(
+                      popupMenuTheme: const PopupMenuThemeData(
                         color: Color(0xFF2C2C2C),
                       ),
                     ),
@@ -86,7 +90,7 @@ class _EventScreenState extends State<EventScreen> {
                         return [
                           const PopupMenuItem<String>(
                             value: 'football',
-                            child: const Text('football',style: TextStyle(color: Colors.white)),
+                            child:  Text('football',style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'tennis',
@@ -132,7 +136,7 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                        Get.to(() => TestPage());
+                        Get.to(() => const TestPage());
                     },
                     icon: const Icon(Icons.location_on, color: Colors.white),
                     label: const Text('Location', style: TextStyle(color: Colors.white)),
@@ -163,7 +167,7 @@ class _EventScreenState extends State<EventScreen> {
 class JoinEvents extends StatelessWidget {
   final List<SportsField> sportsFields;
 
-  JoinEvents({required this.sportsFields});
+  const JoinEvents({super.key, required this.sportsFields});
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +195,7 @@ class JoinEvents extends StatelessWidget {
 class CompeteEvents extends StatelessWidget {
   final List<SportsField> sportsFields;
 
-  CompeteEvents({required this.sportsFields});
+  const CompeteEvents({super.key, required this.sportsFields});
 
   @override
   Widget build(BuildContext context) {

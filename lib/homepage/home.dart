@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:sporty/drawer/favorite.dart';
 import 'package:sporty/drawer/rewards.dart';
@@ -8,10 +9,13 @@ import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/homepage/details.dart';
-import 'package:sporty/drawer/profile.dart';
+//import 'package:sporty/drawer/profile.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -53,7 +57,7 @@ class _HomePageState extends State<HomePage> {
   List<SportsField> filteredSportsFields = [];
   bool isPressed =
       false; // Define isPressed variable at the beginning of _HomePageState class
-  int _currentIndex = 0;
+  int currentIndex = 0;
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -299,7 +303,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: CustomNavBar(
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
       ),
     );
   }

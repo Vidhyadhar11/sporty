@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sporty/drawer/favorite.dart';
-
+// ignore: depend_on_referenced_packages
+import 'package:get/get.dart';
+import 'package:sporty/uicomponents/mycontroller.dart';
 // Define the SportsField class to handle both types of cards
 class SportsField {
   final String name;
@@ -33,22 +34,16 @@ class SportsFieldCard extends StatefulWidget {
   final SportsField sportsField;
   final VoidCallback onTap;
 
-  const SportsFieldCard({Key? key, required this.sportsField, required this.onTap}) : super(key: key);
+  const SportsFieldCard({super.key, required this.sportsField, required this.onTap});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SportsFieldCardState createState() => _SportsFieldCardState();
 }
 
 class _SportsFieldCardState extends State<SportsFieldCard> {
-  bool isFavorite = false;
-
-  void addToFavorites(SportsField sportsField) {
-    // Implement your logic to add to favorites
-  }
-
-  void removeFromFavorites(SportsField sportsField) {
-    // Implement your logic to remove from favorites
-  }
+  final SportsFieldController controller = Get.put(SportsFieldController());
+  final Mycontroller myController = Mycontroller();
 
   @override
   Widget build(BuildContext context) {
@@ -80,24 +75,15 @@ class _SportsFieldCardState extends State<SportsFieldCard> {
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: IconButton(
+                  child: Obx(() => IconButton(
                     icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      myController.isFavorite.value ? Icons.favorite : Icons.favorite_border,
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      setState(() {
-                        isFavorite = !isFavorite;
-                        if (isFavorite) {
-                          // Add the card to favorites
-                          addToFavorites(widget.sportsField);
-                        } else {
-                          // Remove the card from favorites
-                          removeFromFavorites(widget.sportsField);
-                        }
-                      });
+                      controller.toggleFavorite(widget.sportsField);
                     },
-                  ),
+                  )),
                 ),
               ],
             ),
@@ -137,7 +123,7 @@ class SportsFieldCardV2 extends StatelessWidget {
   final SportsField sportsField;
   final VoidCallback onTap;
 
-  const SportsFieldCardV2({Key? key, required this.sportsField, required this.onTap}) : super(key: key);
+  const SportsFieldCardV2({super.key, required this.sportsField, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -232,7 +218,7 @@ class SportsFieldCardV3 extends StatelessWidget {
   final SportsField sportsField;
   final VoidCallback onTap;
 
-  const SportsFieldCardV3({Key? key, required this.sportsField, required this.onTap}) : super(key: key);
+  const SportsFieldCardV3({super.key, required this.sportsField, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -287,5 +273,28 @@ class SportsFieldCardV3 extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// Controller for managing the favorite state
+class SportsFieldController extends GetxController {
+  
+
+  void toggleFavorite(SportsField sportsField) {
+  final Mycontroller myController = Mycontroller();
+    myController.isFavorite.value = !myController.isFavorite.value;
+    if (myController.isFavorite.value) {
+      addToFavorites(sportsField);
+    } else {
+      removeFromFavorites(sportsField);
+    }
+  }
+
+  void addToFavorites(SportsField sportsField) {
+    // Implement your logic to add to favorites
+  }
+
+  void removeFromFavorites(SportsField sportsField) {
+    // Implement your logic to remove from favorites
   }
 }
