@@ -9,13 +9,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: BookingPage(),
       );
       }
 }
 
 class BookingPage extends StatefulWidget {
+  const BookingPage({super.key});
+
   @override
   _BookingPageState createState() => _BookingPageState();
 }
@@ -27,8 +29,15 @@ class _BookingPageState extends State<BookingPage> {
   bool playWithStrangers = false;
 
   DateTime _focusedDay = DateTime.now();
-  DateTime _firstDay = DateTime(DateTime.now().year - 1);
-  DateTime _lastDay = DateTime(DateTime.now().year + 1);
+  final DateTime _firstDay = DateTime(DateTime.now().year - 1);
+  final DateTime _lastDay = DateTime(DateTime.now().year + 1);
+
+  String get selectedMonth {
+    if (selectedDate != null) {
+      return "${selectedDate!.month}-${selectedDate!.year}";
+    }
+    return "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +103,7 @@ class _BookingPageState extends State<BookingPage> {
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleTextStyle: TextStyle(color: Colors.white),
-        leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.white),
+        leftChevronIcon:  Icon(Icons.chevron_left, color: Colors.white),
         rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
       ),
       daysOfWeekStyle: const DaysOfWeekStyle(
@@ -288,6 +297,7 @@ class _BookingPageState extends State<BookingPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => InvoicePage(
+                  selectedMonth: selectedMonth, // Pass the selected month
                   selectedDate: selectedDate!,
                   selectedSlot: _getSlotString(selectedSlotIndex!),
                   selectedCourt: selectedCourtIndex! + 1,

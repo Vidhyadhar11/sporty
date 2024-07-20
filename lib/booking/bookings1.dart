@@ -24,7 +24,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 child: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                          onPressed: () {
-                  Get.to(() => HomePage());
+                  Get.to(() => const HomePage());
                          }
                         ),
               ),
@@ -86,8 +86,8 @@ class BookingCard extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            Text('KPHB, Hyderabad', style: TextStyle(color: Colors.white)),
-            Text('20 Thursday 6pm-7pm', style: TextStyle(color: Colors.white)),
+            const Text('KPHB, Hyderabad', style: TextStyle(color: Colors.white)),
+            const Text('20 Thursday 6pm-7pm', style: TextStyle(color: Colors.white)),
           ],
         ),
       ],

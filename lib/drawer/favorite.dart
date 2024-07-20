@@ -25,14 +25,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Favorites'),
-        titleTextStyle: TextStyle(
+        title: const Text('Favorites'),
+        titleTextStyle: const TextStyle(
           color: Colors.green,
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },

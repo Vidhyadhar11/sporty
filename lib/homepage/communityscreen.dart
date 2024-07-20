@@ -82,7 +82,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TestPage()),
+              MaterialPageRoute(builder: (context) => const TestPage()),
             );
             },
             child: const Text(

@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:sporty/booking/pushnotification.dart';
 import 'package:sporty/booking/bookings1.dart';
-//import 'package:sporty/homepage/home.dart';
 
 class InvoicePage extends StatelessWidget {
+  final String selectedMonth;
   final DateTime selectedDate;
   final String selectedSlot;
   final int selectedCourt;
   final bool playWithStrangers;
 
-  InvoicePage({
+  const InvoicePage({
+    super.key,
+    required this.selectedMonth,
     required this.selectedDate,
     required this.selectedSlot,
     required this.selectedCourt,
@@ -18,6 +23,17 @@ class InvoicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize the notification plugin
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    // Initialize the NotificationService
+    final NotificationService notificationService =
+        NotificationService(flutterLocalNotificationsPlugin);
+
+    // Schedule notifications
+    notificationService.scheduleNotifications(selectedDate);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -26,8 +42,8 @@ class InvoicePage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
-            Navigator.push(context,MaterialPageRoute(builder: (context) => BookingScreen()),
-            );
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BookingScreen()));
           },
         ),
       ),

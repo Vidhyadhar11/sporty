@@ -27,39 +27,39 @@ class _SportsScreenState extends State<SportsScreen> {
     switch (sportImage) {
       case 'assets/Cricket-pana.png':
         // Navigate to Cricket screen or perform Cricket-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/Badminton-bro.png':
         // Navigate to Badminton screen or perform Badminton-specific action
-       Get.to(() => TestPage());
+       Get.to(() => const TestPage());
         break;
       case 'assets/Beach volleyball-bro.png':
         // Navigate to Beach Volleyball screen or perform Beach Volleyball-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/Soccer-bro.png':
         // Navigate to Soccer screen or perform Soccer-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/Golf-bro.png':
         // Navigate to Golf screen or perform Golf-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/Tennis-bro.png':
         // Navigate to Tennis screen or perform Tennis-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/swimming.png':
         // Navigate to Swimming screen or perform Swimming-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/basketball player-bro.png':
         // Navigate to Basketball screen or perform Basketball-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
       case 'assets/Grand slam-bro.png':
         // Navigate to Grand Slam screen or perform Grand Slam-specific action
-        Get.to(() => TestPage());
+        Get.to(() => const TestPage());
         break;
     }
   }
@@ -149,7 +149,7 @@ class CustomTextField extends StatelessWidget {
         inputFormatters: inputFormatters,
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search, color: Colors.grey),
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
           labelText: label,
           labelStyle: const TextStyle(color: Colors.grey),
           filled: true,

@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
               onPressed: () {
-                Get.to(() => TestPage());
+                Get.to(() => const TestPage());
               },
             ),
           ],
@@ -269,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => TestPage());
+                      Get.to(() => const TestPage());
                     },
                     child: const Row(
                       children: [
