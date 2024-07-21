@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart'; // Import GetX package
+import 'package:get/get.dart';
 import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart';
 import 'package:sporty/uicomponents/mycontroller.dart'; // Required for TextInputFormatter
@@ -102,7 +102,6 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
             right: 20,
             child: GestureDetector(
               onTap: () {
-                // Proceed button logic here
                 _handleProceed();
               },
               child: const Row(
@@ -137,12 +136,22 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   void _handleProceed() async {
     if (_phoneNumberValid) {
       String phoneNumber = myController.phoneNumberController.value.text;
-      bool otpSent = await sendOTPToPhoneNumber(phoneNumber);
-      if (otpSent) {
-        Get.to(() => EnterOTPScreen(sentOTPController: TextEditingController()));
-      } else {
+      print('Phone number: $phoneNumber'); // Debugging line
+
+      try {
+        final response = await sendOTPToPhoneNumber(phoneNumber);
+        if (response != null) {
+          String otp = response['otp']!;
+          Get.to(() => EnterOTPScreen(sentOTPController: TextEditingController(text: otp)));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to send OTP. Please try again.')),
+          );
+        }
+      } catch (e) {
+        print('Error sending OTP: $e'); // Debugging line
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to send OTP. Please try again.')),
+          const SnackBar(content: Text('An error occurred. Please try again.')),
         );
       }
     } else {
@@ -152,17 +161,31 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
     }
   }
 
-  Future<bool> sendOTPToPhoneNumber(String phoneNumber) async {
-    final response = await http.post(
-      Uri.parse('https://9263-39-41-236-138.ngrok-free.app'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'mobileno': '+91$phoneNumber',
-      }),
-    );
+  Future<Map<String, String>?> sendOTPToPhoneNumber(String phoneNumber) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://9263-39-41-236-138.ngrok-free.app'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'mobileno': '+91$phoneNumber',
+        }),
+      );
 
-    return response.statusCode == 200;
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        return {
+          'orderId': responseData['orderId'],
+          'otp': responseData['otp'],
+        };
+      } else {
+        print('Failed to send OTP. Status code: ${response.statusCode}'); // Debugging line
+        return null;
+      }
+    } catch (e) {
+      print('Error in HTTP request: $e'); // Debugging line
+      return null;
+    }
   }
 }

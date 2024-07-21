@@ -1,8 +1,8 @@
-
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,6 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final Mycontroller myController = Mycontroller(); // Create an instance
 
-
   bool _termsAccepted = false;
   bool _showError = false;
 
@@ -34,12 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'basketball'
   ];
 
-  final List<String> _levels = [
-    'select',
-    'beginner',
-    'intermediate',
-    'expert'
-  ];
+  final List<String> _levels = ['select', 'beginner', 'intermediate', 'expert'];
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +42,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: Colors.black,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Obx(() => SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Obx(
+            () => SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SingleChildScrollView(
                     child: Column(
@@ -60,13 +55,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                              icon: const Icon(Icons.arrow_back_ios,
+                                  color: Colors.white),
                               onPressed: () => Navigator.of(context).pop(),
                             ),
                             const SizedBox(width: 40),
                             const Text(
                               'Create Account',
-                              style: TextStyle(color: Colors.green, fontSize: 24),
+                              style:
+                                  TextStyle(color: Colors.green, fontSize: 24),
                             ),
                           ],
                         ),
@@ -75,17 +72,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Expanded(
                               child: CustomTextField(
-                                controller: myController.firstNameController.value, // Use the instance
+                                controller: myController.firstNameController
+                                    .value, // Use the instance
                                 label: 'First Name',
                               ),
                             ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: CustomTextField(
-                                controller: myController.lastNameController.value,
+                                controller:
+                                    myController.lastNameController.value,
                                 label: 'Last Name',
                               ),
-                            
                             ),
                           ],
                         ),
@@ -95,7 +93,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           items: _sports.map((String sport) {
                             return DropdownMenuItem<String>(
                               value: sport,
-                              child: Text(sport, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                              child: Text(sport,
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 14)),
                             );
                           }).toList(),
                           onChanged: (String? newValue) {
@@ -107,13 +107,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'Interested sports',
                             labelStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(color: Colors.white),
                             ),
                           ),
-                          dropdownColor: const Color(0xFF2C2C2C), // Set dropdown background color
+                          dropdownColor: const Color(
+                              0xFF2C2C2C), // Set dropdown background color
                           isDense: true,
-                          itemHeight: 48, // Adjust the height of each dropdown item
+                          itemHeight:
+                              48, // Adjust the height of each dropdown item
                         ),
                         const SizedBox(height: 20),
                         DropdownButtonFormField<String>(
@@ -121,7 +124,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           items: _levels.map((String level) {
                             return DropdownMenuItem<String>(
                               value: level,
-                              child: Text(level, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                              child: Text(level,
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 14)),
                             );
                           }).toList(),
                           onChanged: (String? newValue) {
@@ -133,13 +138,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'Level',
                             labelStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(color: Colors.white),
                             ),
                           ),
-                          dropdownColor: const Color(0xFF2C2C2C), // Set dropdown background color
+                          dropdownColor: const Color(
+                              0xFF2C2C2C), // Set dropdown background color
                           isDense: true,
-                          itemHeight: 48, // Adjust the height of each dropdown item
+                          itemHeight:
+                              48, // Adjust the height of each dropdown item
                         ),
                         const SizedBox(height: 10),
                         CustomTextField(
@@ -193,7 +201,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onPressed: _termsAccepted
                             ? () {
                                 // Handle sign up logic
-                                Get.to(() => EnterPhoneNumberScreen());
+                                //Get.to(() => EnterPhoneNumberScreen());
+                                _handlesignup;
                               }
                             : () {
                                 setState(() {
@@ -203,12 +212,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.green,
                           backgroundColor: Colors.black,
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
                           textStyle: const TextStyle(fontSize: 20),
                         ),
                         child: const Row(
                           children: [
-                            Text('Signup', style: TextStyle(color: Colors.green)),
+                            Text('Signup',
+                                style: TextStyle(color: Colors.green)),
                             SizedBox(width: 10),
                             Icon(Icons.arrow_forward, color: Colors.green),
                           ],
@@ -218,10 +229,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-          ),
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void _handlesignup() {
+    Get.to(() => EnterPhoneNumberScreen());
   }
 }
