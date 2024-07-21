@@ -154,12 +154,12 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
 
   Future<bool> sendOTPToPhoneNumber(String phoneNumber) async {
     final response = await http.post(
-      Uri.parse('https://9263-39-41-236-138.ngrok-free.app/sendotp'),
+      Uri.parse('https://9263-39-41-236-138.ngrok-free.app'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'mobileno': phoneNumber,
+        'mobileno': '+91$phoneNumber',
       }),
     );
 
