@@ -35,7 +35,7 @@ class NotificationService {
           priority: Priority.high,
         ),
       ),
-      androidAllowWhileIdle: true,
+      androidScheduleMode:  AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
 
@@ -54,7 +54,7 @@ class NotificationService {
           priority: Priority.high,
         ),
       ),
-      androidAllowWhileIdle: true,
+      androidScheduleMode:  AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
   }

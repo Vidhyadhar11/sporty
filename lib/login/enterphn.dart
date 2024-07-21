@@ -4,6 +4,8 @@ import 'package:get/get.dart'; // Import GetX package
 import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart';
 import 'package:sporty/uicomponents/mycontroller.dart'; // Required for TextInputFormatter
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class EnterPhoneNumberScreen extends StatefulWidget {
   @override
@@ -132,12 +134,17 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   }
 
   // Handle proceed action (e.g., clear fields)
-  void _handleProceed() {
+  void _handleProceed() async {
     if (_phoneNumberValid) {
-      String otp = generateRandomOTP();
       String phoneNumber = myController.phoneNumberController.value.text;
-      sendOTPToPhoneNumber(phoneNumber, otp);
-      Get.to(() => EnterOTPScreen(sentOTPController: TextEditingController(text: otp)));
+      bool otpSent = await sendOTPToPhoneNumber(phoneNumber);
+      if (otpSent) {
+        Get.to(() => EnterOTPScreen(sentOTPController: TextEditingController()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to send OTP. Please try again.')),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Enter a valid 10-digit number')),
@@ -145,8 +152,17 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
     }
   }
 
-  String generateRandomOTP() {
-    return '';
+  Future<bool> sendOTPToPhoneNumber(String phoneNumber) async {
+    final response = await http.post(
+      Uri.parse('https://e952-39-41-236-138.ngrok-free.app/sendotp'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'mobileno': phoneNumber,
+      }),
+    );
+
+    return response.statusCode == 200;
   }
-  void sendOTPToPhoneNumber(String phoneNumber, String otp) {}
 }

@@ -6,6 +6,8 @@ import 'package:sporty/homepage/home.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:sporty/uicomponents/mycontroller.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class EnterOTPScreen extends StatefulWidget {
   final TextEditingController sentOTPController;
@@ -20,18 +22,36 @@ class EnterOTPScreen extends StatefulWidget {
 class _EnterOTPScreenState extends State<EnterOTPScreen> {
   final Mycontroller myController = Mycontroller();
 
-  void _handleVerifyOTP() {
+  void _handleVerifyOTP() async {
     String otp = myController.otpControllers.map((controller) => controller.text).join();
-    if (otp == widget.sentOTPController.text) {
+    String phoneNumber = widget.sentOTPController.text; // Assuming phone number is stored here
+
+    bool isVerified = await verifyOTP(phoneNumber, otp);
+    if (isVerified) {
       Get.to(() => const HomePage());
     } else {
       for (var controller in myController.otpControllers) {
         controller.clear();
       }
       ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: const Text('Invalid OTP')),
+        const SnackBar(content: Text('Invalid OTP')),
       );
     }
+  }
+
+  Future<bool> verifyOTP(String phoneNumber, String otp) async {
+    final response = await http.post(
+      Uri.parse('https://e952-39-41-236-138.ngrok-free.app/verify'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'mobileno': phoneNumber,
+        'otp': otp,
+      }),
+    );
+
+    return response.statusCode == 200;
   }
 
   @override
@@ -65,7 +85,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                 const SizedBox(height: 20),
                 Obx(() => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(4,(index) => Container(
+                    children: List.generate(4, (index) => Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         width: 50,
                         height: 50,
