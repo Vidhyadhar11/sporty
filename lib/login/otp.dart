@@ -41,7 +41,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
   Future<bool> verifyOTP(String phoneNumber, String otp) async {
     final response = await http.post(
-      Uri.parse('https://e952-39-41-236-138.ngrok-free.app/verify'),
+      Uri.parse('https://9263-39-41-236-138.ngrok-free.app/verify'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
