@@ -34,15 +34,17 @@ class RazorpayService {
   }
 
   void singlePayment(double turfRate) async {
-    double onlinePayment = (turfRate * 0.3) + 3; // Calculate initial online payment amount
+    double onlinePayment = (turfRate * 0.3); // Calculate initial online payment amount
     double remainingAmount = turfRate - onlinePayment; // Calculate remaining amount
     double cashPayment = (remainingAmount / 100).ceil() * 100; // Round up to nearest multiple of 100
-    double adjustedOnlinePayment = turfRate - cashPayment; // Adjust online payment
+    double adjustedOnlinePayment = turfRate - cashPayment + 3;
+     // Adjust online payment
+    double totalAmount = turfRate + 3;
 
     int onlinePaymentInPaise = (adjustedOnlinePayment * 100).toInt(); // Convert to paise
 
     var options = {
-      'key': 'YOUR_KEY_ID',
+      'key': 'rzp_test_wXPYQRUxFCeyIs',
       'amount': onlinePaymentInPaise,
       'name': 'Turf Booking',
       'description': 'Payment for standard turf booking',
@@ -51,7 +53,7 @@ class RazorpayService {
         'email': 'gaurav.kumar@example.com'
       },
       'external': {
-        'wallets': ['paytm']
+        'wallets': ['paytm','gpay','phonepe']
       }
     };
 

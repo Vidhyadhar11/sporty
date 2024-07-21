@@ -242,7 +242,7 @@ class _DetailsPageState extends State<DetailsPage> { // Create State class
                         padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
                       onPressed: () {
-                        Get.to(() => BookingPage());
+                        Get.to(() => BookingPage(turfRate: widget.sportsField.price));
                       },
                       child: const Text('Book Now',
                           style: TextStyle(fontSize: 18, color: Colors.green)),

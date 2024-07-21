@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'invoice.dart';
+import 'package:sporty/payment/singlepay.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BookingPage(),
-      );
-      }
-}
 
 class BookingPage extends StatefulWidget {
-  const BookingPage({super.key});
+  const BookingPage({super.key, required this.turfRate});
+
+  final double turfRate;
 
   @override
   _BookingPageState createState() => _BookingPageState();
 }
 
 class _BookingPageState extends State<BookingPage> {
+
   DateTime? selectedDate;
   int? selectedSlotIndex;
   int? selectedCourtIndex;
@@ -296,7 +288,15 @@ class _BookingPageState extends State<BookingPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InvoicePage(
+                builder: (context) => 
+                // SinglePaymentView(
+                //   turfRate: widget.turfRate,
+                //   selectedDate: selectedDate!,
+                //   selectedSlot: _getSlotString(selectedSlotIndex!),
+                //   selectedCourt: selectedCourtIndex! + 1,
+                //   playWithStrangers: playWithStrangers,
+                // ),
+                InvoicePage(
                   selectedMonth: selectedMonth, // Pass the selected month
                   selectedDate: selectedDate!,
                   selectedSlot: _getSlotString(selectedSlotIndex!),
