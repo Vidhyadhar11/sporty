@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
       title: 'Sporty App',
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const SplashScreen()),
+        GetPage(name: '/onboarding', page: () => const SplashScreen()),
         GetPage(name: '/enter-phone', page: () => EnterPhoneNumberScreen()),
-        GetPage(name: '/home', page: () => const HomePage()),
+        GetPage(name: '/', page: () => const HomePage()),
       ],
     );
   }

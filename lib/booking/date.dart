@@ -1,8 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'invoice.dart';
+// import 'invoice.dart';
 import 'package:sporty/payment/singlepay.dart';
-
+import 'package:sporty/payment/joinpay.dart';
+import 'package:get/get.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key, required this.turfRate});
@@ -14,11 +17,11 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
-
   DateTime? selectedDate;
   int? selectedSlotIndex;
   int? selectedCourtIndex;
   bool playWithStrangers = false;
+  final TextEditingController _numberOfPeopleController = TextEditingController(); // Controller for TextField
 
   DateTime _focusedDay = DateTime.now();
   final DateTime _firstDay = DateTime(DateTime.now().year - 1);
@@ -39,7 +42,6 @@ class _BookingPageState extends State<BookingPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
-            // Handle back button press
             Navigator.of(context).pop();
           },
         ),
@@ -70,6 +72,25 @@ class _BookingPageState extends State<BookingPage> {
                     if (selectedCourtIndex != null) ...[
                       const SizedBox(height: 20),
                       _buildPlayWithStrangers(),
+                      if (playWithStrangers) // Show TextField if checked
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: TextField(
+                            controller: _numberOfPeopleController,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              labelText: 'Number of People',
+                              labelStyle: TextStyle(color: Colors.white),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
                     ],
                   ],
                 ),
@@ -95,14 +116,14 @@ class _BookingPageState extends State<BookingPage> {
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleTextStyle: TextStyle(color: Colors.white),
-        leftChevronIcon:  Icon(Icons.chevron_left, color: Colors.white),
+        leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
         rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
       ),
       daysOfWeekStyle: const DaysOfWeekStyle(
         weekdayStyle: TextStyle(color: Colors.white),
         weekendStyle: TextStyle(color: Colors.white),
       ),
-      daysOfWeekHeight: 0, // Hide the day of the week labels
+      daysOfWeekHeight: 0,
       onDaySelected: (selectedDay, focusedDay) {
         setState(() {
           selectedDate = selectedDay;
@@ -128,7 +149,6 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  
   Widget _buildDateBox(DateTime date, bool isSelected) {
     return Container(
       constraints: const BoxConstraints(
@@ -279,41 +299,69 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
+  // Widget _buildNextButton() {
+  //   return Align(
+  //     alignment: Alignment.bottomRight,
+  //     child: GestureDetector(
+  //       onTap: () {
+  //         if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
+  //           if (playWithStrangers) {
+  //             // Navigate to JoinPaymentView
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) => JoinPaymentView(
+  //                   turfRate: widget.turfRate,
+  //                   numberOfPeople: int.tryParse(_numberOfPeopleController.text) ?? 1, // Default to 1 if parsing fails
+  //                 ),
+  //               ),
+  //             );
+  //           } else {
+  //             // Navigate to SinglePaymentView
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) => SinglePaymentView(
+  //                   turfRate: widget.turfRate,
+  //                 ),
+  //               ),
+  //             );
+  //           }
+  //         }
+  //       },
+  //       child: Container(
+  //         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+  //         child: const Icon(Icons.arrow_forward, color: Colors.green),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Widget _buildNextButton() {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: GestureDetector(
-        onTap: () {
-          if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => 
-                // SinglePaymentView(
-                //   turfRate: widget.turfRate,
-                //   selectedDate: selectedDate!,
-                //   selectedSlot: _getSlotString(selectedSlotIndex!),
-                //   selectedCourt: selectedCourtIndex! + 1,
-                //   playWithStrangers: playWithStrangers,
-                // ),
-                InvoicePage(
-                  selectedMonth: selectedMonth, // Pass the selected month
-                  selectedDate: selectedDate!,
-                  selectedSlot: _getSlotString(selectedSlotIndex!),
-                  selectedCourt: selectedCourtIndex! + 1,
-                  playWithStrangers: playWithStrangers,
-                ),
-              ),
-            );
+  return Align(
+    alignment: Alignment.bottomRight,
+    child: GestureDetector(
+      onTap: () {
+        if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
+          if (playWithStrangers) {
+            Get.to(() => JoinPaymentView(
+              turfRate: widget.turfRate,
+              numberOfPeople: int.parse(_numberOfPeopleController.text),
+            ));
+          } else {
+            Get.to(() => SinglePaymentView(
+              turfRate: widget.turfRate,
+            ));
           }
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: const Icon(Icons.arrow_forward, color: Colors.green),
-        ),
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: const Icon(Icons.arrow_forward, color: Colors.green),
       ),
-    );
-  }
+    ),
+  );
+}
 
   String _getSlotString(int index) {
     List<String> slots = ["8am-10am", "10am-12pm", "12pm-2pm", "6pm-7pm"];

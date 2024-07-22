@@ -5,6 +5,10 @@ class RazorpayService {
   late Razorpay _razorpay;
 
   RazorpayService() {
+    init(); // Initialize Razorpay in the constructor
+  }
+
+  void init() {
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -16,32 +20,22 @@ class RazorpayService {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Handle payment success
     print("Payment Successful: ${response.paymentId}");
-    // You can add further logic here, such as updating the UI or notifying the server
+    // Additional logic can be added here
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Handle payment error
     print("Payment Error: ${response.code} - ${response.message}");
-    // You can add further logic here, such as showing an error message to the user
+    // Additional error handling can be added here
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    // Handle external wallet selection
     print("External Wallet Selected: ${response.walletName}");
-    // You can add further logic here, such as updating the UI or notifying the server
+    // Additional logic can be added here
   }
 
   void singlePayment(double turfRate) async {
-    double onlinePayment = (turfRate * 0.3); // Calculate initial online payment amount
-    double remainingAmount = turfRate - onlinePayment; // Calculate remaining amount
-    double cashPayment = (remainingAmount / 100).ceil() * 100; // Round up to nearest multiple of 100
-    double adjustedOnlinePayment = turfRate - cashPayment + 3;
-     // Adjust online payment
-    double totalAmount = turfRate + 3;
-
-    int onlinePaymentInPaise = (adjustedOnlinePayment * 100).toInt(); // Convert to paise
+    int onlinePaymentInPaise = (turfRate * 100).toInt(); // Convert to paise
 
     var options = {
       'key': 'rzp_test_wXPYQRUxFCeyIs',
@@ -53,29 +47,24 @@ class RazorpayService {
         'email': 'gaurav.kumar@example.com'
       },
       'external': {
-        'wallets': ['paytm','gpay','phonepe']
+        'wallets': ['paytm', 'gpay', 'phonepe']
       }
     };
 
     try {
       _razorpay.open(options);
-      print("Cash Payment to be made: $cashPayment");
     } catch (e) {
-      print(e.toString());
+      print("Error opening Razorpay: ${e.toString()}");
     }
   }
 
-  void joinPayment(double turfRate, int people) async {
-    double totalAmount = (turfRate / people) + 10;
-    double remainingAmount = turfRate - totalAmount;
-    double remainingAmountPerPerson = remainingAmount / people;
-    int amountInPaise = (totalAmount * 100).toInt();
+  void joinPayment(double turfRate, int remainingAmountPerPerson) async {
+    int amountInPaise = (turfRate * 100).toInt();
 
     var options = {
-      'key': 'YOUR_KEY_ID',
+      'key': 'YOUR_KEY_ID', // Replace with your actual key
       'amount': amountInPaise,
       'name': 'Turf Booking',
-      'remainingAmountPerPerson': remainingAmountPerPerson,
       'description': 'Payment for premium turf booking',
       'prefill': {
         'contact': '9000090000',
@@ -89,7 +78,7 @@ class RazorpayService {
     try {
       _razorpay.open(options);
     } catch (e) {
-      print(e.toString());
+      print("Error opening Razorpay: ${e.toString()}");
     }
   }
 }
