@@ -1,51 +1,9 @@
-// import 'package:flutter/material.dart';
-// import 'package:sporty/booking/bookings1.dart';
-// import 'package:sporty/booking/date.dart';
-// import 'package:sporty/payment/razorpay.dart';
-
-
-// // ignore: must_be_immutable
-// abstract class SinglePaymentView extends StatefulWidget implements BookingScreen {
-  
-//   const SinglePaymentView({super.key, required this.turfRate});
-//   //  required this.selectedDate, required this.selectedSlot, required this.selectedCourt, required this.playWithStrangers
-  
-//   final double turfRate;
-//   // final Date selectedDate;
-//   // final String selectedSlot;
-//   // final String selectedCourt;
-//   // final bool playWithStrangers;
-
-
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         const Text(
-//           'Payment Details',
-//           style: TextStyle(
-//             fontSize: 20,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         Text('Turf Rate: $turfRate'),
-//         const Text('Service Fee: 3'),
-//         Text("Offline payment: $RazorpayService().cashPayment"),
-//         Text("Payment Amount: $RazorpayService().adjustedOnlinePayment"),
-//         Text("Overall payment: $RazorpayService().singlePayment.totalAmount"),
-//         ElevatedButton(
-//           onPressed: () => RazorpayService().singlePayment(turfRate), // Example turf rate
-//           child: const Text('Pay Now'),
-//         ),
-//       ],
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:sporty/payment/razorpay.dart';
 
 class SinglePaymentView extends StatefulWidget {
   const SinglePaymentView({super.key, required this.turfRate});
-  
+
   final double turfRate;
 
   @override
@@ -63,75 +21,191 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
     double totalAmount = widget.turfRate + 3;
 
     return SafeArea(
-      child: Column(
-        children: [
-          const Text(
-              'Payment Details',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 255, 255, 255),
+      child: Container(
+        color: Colors.black,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white, size: 24,),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                const Text(
+                  'Your hosted game',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ],
+            ),
+            const Divider(),
+            const SizedBox(height: 20,),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 0, 0, 0),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Shuffle Sports, Chetpet',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      Text(
+                        'Jul 20 · 08:00 pm - 09:00 pm',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white54,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      Text(
+                        '1 Court',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white54,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              'Turf Rate: \$${widget.turfRate}',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(221, 255, 255, 255),
+            const Divider(),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Bill Details',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Slot Cost',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white54,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      Text(
+                        '₹ ${widget.turfRate.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white54,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Service Fee',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white54,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      Text(
+                        '₹ 3.00',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white54,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(color: Colors.white54),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Total',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      Text(
+                        '₹ ${totalAmount.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Service Fee: \$3',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(221, 255, 255, 255),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Offline Payment: \$${cashPayment}',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(221, 255, 255, 255),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Payment Amount: \$${adjustedOnlinePayment}',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(221, 255, 255, 255),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Overall Payment: \$${totalAmount}',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(221, 255, 255, 255),
-              ),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () => razorpayService.singlePayment(widget.turfRate), // Use the instance
-              child: const Text('Pay Now'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+            const SizedBox(height: 20),
+            Center(
+              child: TextButton(
+                onPressed: () => razorpayService.singlePayment(widget.turfRate),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.green,
+                ),
+                child: const Text(
+                  "Pay Now",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

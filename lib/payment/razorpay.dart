@@ -57,28 +57,4 @@ class RazorpayService {
       print("Error opening Razorpay: ${e.toString()}");
     }
   }
-
-  void joinPayment(double turfRate, int remainingAmountPerPerson) async {
-    int amountInPaise = (turfRate * 100).toInt();
-
-    var options = {
-      'key': 'YOUR_KEY_ID', // Replace with your actual key
-      'amount': amountInPaise,
-      'name': 'Turf Booking',
-      'description': 'Payment for premium turf booking',
-      'prefill': {
-        'contact': '9000090000',
-        'email': 'gaurav.kumar@example.com'
-      },
-      'external': {
-        'wallets': ['paytm', 'gpay', 'phonepe']
-      }
-    };
-
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      print("Error opening Razorpay: ${e.toString()}");
-    }
-  }
 }
