@@ -122,9 +122,7 @@ class _SportsFieldCardState extends State<SportsFieldCard> {
 class SportsFieldCardV2 extends StatelessWidget {
   final SportsField sportsField;
   final VoidCallback onTap;
-
   const SportsFieldCardV2({super.key, required this.sportsField, required this.onTap});
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
