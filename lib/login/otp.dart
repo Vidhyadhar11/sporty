@@ -40,18 +40,29 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   }
 
   Future<bool> verifyOTP(String phoneNumber, String otp) async {
-    final response = await http.post(
-      Uri.parse('https://9263-39-41-236-138.ngrok-free.app/verify'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'mobileno': '+91$phoneNumber',
-        'otp': otp,
-      }),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('https://c524-81-17-122-43.ngrok-free.app/verify'), // Updated URL
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'mobileno': '+91$phoneNumber',
+          'otp': otp,
+        }),
+      );
 
-    return response.statusCode == 200;
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        return responseData['success'] == true;
+      } else {
+        print('Failed to verify OTP. Status code: ${response.statusCode}'); // Debugging line
+        return false;
+      }
+    } catch (e) {
+      print('Error in HTTP request: $e'); // Debugging line
+      return false;
+    }
   }
 
   @override

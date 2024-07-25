@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart';
@@ -22,7 +23,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
-        children: [
+        children:[
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -37,14 +38,15 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
                 TextField(
                   controller: myController.phoneNumberController.value, // Add this line
                   keyboardType: TextInputType.phone,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(
-                        10), // Limit input to 10 digits
+                    LengthLimitingTextInputFormatter(10), // Limit input to 10 digits
                   ],
                   style: const TextStyle(color: Colors.white),
                   obscureText: true, // Hides entered digits with '*'
@@ -60,14 +62,14 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      _phoneNumberValid =
-                          value.length == 10; // Validate phone number format
-                      _maskedPhoneNumber =
-                          _getMaskedPhoneNumber(value); // Mask entered digits
+                      _phoneNumberValid =value.length == 10; // Validate phone number format
+                      _maskedPhoneNumber =_getMaskedPhoneNumber(value); // Mask entered digits
                     });
                   },
                 ),
+
                 const SizedBox(height: 8),
+
                 if (!_phoneNumberValid)
                   const Padding(
                     padding: EdgeInsets.only(top: 8),
@@ -76,13 +78,10 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
-                const SizedBox(
-                    height: 20), // Add some space before the new text
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    // Handle create account action here
-                    Get.to(() =>
-                        const RegisterScreen()); // Navigate to CreateAccountScreen
+                    Get.to(() =>const RegisterScreen());
                   },
                   child: const Text(
                     'Create Account',
@@ -97,6 +96,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
               ],
             ),
           ),
+
           Positioned(
             bottom: 20,
             right: 20,
@@ -106,12 +106,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
               },
               child: const Row(
                 children: [
-                  Text('Proceed',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Text('Proceed',style: TextStyle(color: Colors.green,fontSize: 16,fontWeight: FontWeight.bold,)),
                   SizedBox(width: 10),
                   Icon(Icons.arrow_forward, color: Colors.green),
                 ],
@@ -131,7 +126,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
     }
     return maskedText;
   }
-
+  
   // Handle proceed action (e.g., clear fields)
   void _handleProceed() async {
     if (_phoneNumberValid) {
@@ -164,7 +159,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   Future<Map<String, String>?> sendOTPToPhoneNumber(String phoneNumber) async {
     try {
       final response = await http.post(
-        Uri.parse('https://9263-39-41-236-138.ngrok-free.app'),
+        Uri.parse('https://c524-81-17-122-43.ngrok-free.app/sendotp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
