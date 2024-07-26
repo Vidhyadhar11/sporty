@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart';
-import 'package:sporty/uicomponents/mycontroller.dart';
+import 'package:sporty/models/mycontroller.dart';
 
 class EnterPhoneNumberScreen extends StatefulWidget {
   const EnterPhoneNumberScreen({super.key});

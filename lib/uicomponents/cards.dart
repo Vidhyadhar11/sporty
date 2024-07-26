@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
-import 'package:sporty/uicomponents/mycontroller.dart';
+import 'package:sporty/models/mycontroller.dart';
 
 
 // Define the SportsField class to handle both types of cards

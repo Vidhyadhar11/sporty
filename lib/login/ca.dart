@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:get/get.dart';
-import 'package:sporty/uicomponents/mycontroller.dart';
+import 'package:sporty/models/mycontroller.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
