@@ -262,7 +262,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://8181-39-41-158-47.ngrok-free.app/users'),
+        Uri.parse('https://3036-39-41-175-117.ngrok-free.app/users'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
