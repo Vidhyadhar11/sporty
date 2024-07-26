@@ -1,8 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:get/get.dart';
@@ -89,7 +91,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 10),
                         DropdownButtonFormField<String>(
-                          value: myController.intrestedsportsController.value.text,
+                          value: _sports.contains(myController.intrestedsportsController.value.text)
+                              ? myController.intrestedsportsController.value.text
+                              : _sports[0], // Ensure the value is in the list
                           items: _sports.map((String sport) {
                             return DropdownMenuItem<String>(
                               value: sport,
@@ -100,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              myController.intrestedsportsController.value.text = newValue ?? 'select';
+                              myController.intrestedsportsController.value.text = newValue!;
                             });
                           },
                           decoration: const InputDecoration(
@@ -120,7 +124,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 20),
                         DropdownButtonFormField<String>(
-                          value: myController.levelController.value.text,
+                          value: _levels.contains(myController.levelController.value.text)
+                              ? myController.levelController.value.text
+                              : _levels[0], // Ensure the value is in the list
                           items: _levels.map((String level) {
                             return DropdownMenuItem<String>(
                               value: level,
@@ -131,7 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              myController.levelController.value.text = newValue ?? 'select';
+                              myController.levelController.value.text = newValue!;
                             });
                           },
                           decoration: const InputDecoration(
@@ -201,8 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onPressed: _termsAccepted
                             ? () {
                                 // Handle sign up logic
-                                //Get.to(() => EnterPhoneNumberScreen());
-                                _handlesignup;
+                                _handlesignup();
                               }
                             : () {
                                 setState(() {
@@ -236,8 +241,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _handlesignup() {
-    //Get.to(() => EnterPhoneNumberScreen());
-    
+  void _handlesignup() async {
+    // Collect data from controllers
+    String firstName = myController.firstNameController.value.text;
+    String lastName = myController.lastNameController.value.text;
+    String age = myController.ageController.value.text;
+    String phoneNumber = myController.noController.value.text;
+    String interestedSports = myController.intrestedsportsController.value.text;
+    String level = myController.levelController.value.text;
+
+    // Prepare the data to be sent
+    Map<String, dynamic> requestData = {
+      'firstname': firstName,
+      'lastname': lastName,
+      'mobileno': phoneNumber,
+      'intrestedsports': interestedSports,
+      'level': level,
+      'age': int.parse(age), // Ensure age is sent as an integer
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://8181-39-41-158-47.ngrok-free.app/users'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestData),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        // Handle successful signup, e.g., navigate to another screen
+        Get.to(() => EnterPhoneNumberScreen());
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to sign up. Status code: ${response.statusCode}')),
+        );
+      }
+    } catch (e) {
+      print('Error in HTTP request: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred. Please try again.')),
+      );
+    }
   }
 }

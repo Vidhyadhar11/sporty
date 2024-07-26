@@ -11,8 +11,9 @@ import 'dart:convert';
 
 class EnterOTPScreen extends StatefulWidget {
   final TextEditingController sentOTPController;
+  final String orderId; // Add orderId parameter
 
-  const EnterOTPScreen({super.key, required this.sentOTPController});
+  const EnterOTPScreen({super.key, required this.sentOTPController, required this.orderId});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -25,10 +26,12 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   void _handleVerifyOTP() async {
     String otp =
         myController.otpControllers.map((controller) => controller.text).join();
-    String phoneNumber = widget.sentOTPController.text;// Assuming phone number is stored here
+    String phoneNumber = widget.sentOTPController.text; // Assuming phone number is stored here
 
-    bool isVerified = await verifyOTP(phoneNumber, otp);
+    // Show a loading indicator while checking OTP
+    bool isVerified = await verifyOTP(phoneNumber, otp, widget.orderId);
     if (isVerified) {
+      // Navigate to the next page only if OTP is verified
       Get.to(() => const HomePage());
     } else {
       for (var controller in myController.otpControllers) {
@@ -40,19 +43,19 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     }
   }
 
-  Future<bool> verifyOTP(String phoneNumber, String otp) async {
+  Future<bool> verifyOTP(String phoneNumber, String otp, String orderId) async {
     try {
       final response = await http.post(
         Uri.parse(
-            'https://c524-81-17-122-43.ngrok-free.app/verify'), // Updated URL
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+            'https://3036-39-41-175-117.ngrok-free.app/verify'), // Updated URL
         body: jsonEncode(<String, String>{
           'mobileno': '+91$phoneNumber',
+          'orderId': orderId, // Include orderId in the request body
           'otp': otp,
         }),
       );
+
+      await Future.delayed(const Duration(seconds: 3)); // Wait for 3 seconds
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
