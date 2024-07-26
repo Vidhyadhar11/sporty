@@ -10,7 +10,6 @@ class JoinPaymentView extends StatefulWidget {
   @override
   JoinPaymentViewState createState() => JoinPaymentViewState();
 
-  @override
   Widget build(BuildContext context) {
     // You can return a placeholder or an empty widget if needed.
     return Container();

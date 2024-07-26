@@ -270,9 +270,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
         // Handle successful signup, e.g., navigate to another screen
-        Get.to(() => EnterPhoneNumberScreen());
+        Get.to(() => const EnterPhoneNumberScreen());
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to sign up. Status code: ${response.statusCode}')),

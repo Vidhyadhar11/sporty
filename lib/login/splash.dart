@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:sporty/screens/login.dart';
 import 'package:sporty/login/onboarding.dart';
-import 'package:get/get.dart'; // Import your login screen
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
