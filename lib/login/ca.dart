@@ -17,7 +17,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final Mycontroller myController = Mycontroller(); // Create an instance
+   Mycontroller myController = Mycontroller(); // Create an instance
 
   bool _termsAccepted = false;
   bool _showError = false;
@@ -89,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 10),
                         DropdownButtonFormField<String>(
-                          value: myController.selectedSport.value,
+                          value: myController.intrestedsportsController.value.text,
                           items: _sports.map((String sport) {
                             return DropdownMenuItem<String>(
                               value: sport,
@@ -100,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              myController.selectedSport.value = newValue;
+                              myController.intrestedsportsController.value.text = newValue ?? 'select';
                             });
                           },
                           decoration: const InputDecoration(
@@ -120,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 20),
                         DropdownButtonFormField<String>(
-                          value: myController.selectedLevel.value,
+                          value: myController.levelController.value.text,
                           items: _levels.map((String level) {
                             return DropdownMenuItem<String>(
                               value: level,
@@ -131,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              myController.selectedLevel.value = newValue;
+                              myController.levelController.value.text = newValue ?? 'select';
                             });
                           },
                           decoration: const InputDecoration(
@@ -237,6 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _handlesignup() {
-    Get.to(() => EnterPhoneNumberScreen());
+    //Get.to(() => EnterPhoneNumberScreen());
+    
   }
 }

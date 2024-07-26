@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sporty/drawer/favorite.dart';
 import 'package:sporty/drawer/rewards.dart';
 import 'package:sporty/homepage/testpage.dart';
+import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/bookings1.dart';
@@ -269,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => const TestPage());
+                      Get.to(() => const RegisterScreen());
                     },
                     child: const Row(
                       children: [

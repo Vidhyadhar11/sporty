@@ -26,6 +26,9 @@ android {
     namespace "com.example.sporty"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    // defaultConfig {
+    //     multiDexEnabled true
+    // }
 
 
     compileOptions {
@@ -66,4 +69,5 @@ flutter {
 }
 
 dependencies {
+    //coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }

@@ -23,8 +23,9 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   final Mycontroller myController = Mycontroller();
 
   void _handleVerifyOTP() async {
-    String otp = myController.otpControllers.map((controller) => controller.text).join();
-    String phoneNumber = widget.sentOTPController.text; // Assuming phone number is stored here
+    String otp =
+        myController.otpControllers.map((controller) => controller.text).join();
+    String phoneNumber = widget.sentOTPController.text;// Assuming phone number is stored here
 
     bool isVerified = await verifyOTP(phoneNumber, otp);
     if (isVerified) {
@@ -42,7 +43,8 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   Future<bool> verifyOTP(String phoneNumber, String otp) async {
     try {
       final response = await http.post(
-        Uri.parse('https://c524-81-17-122-43.ngrok-free.app/verify'), // Updated URL
+        Uri.parse(
+            'https://c524-81-17-122-43.ngrok-free.app/verify'), // Updated URL
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -56,7 +58,8 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
         final responseData = jsonDecode(response.body);
         return responseData['success'] == true;
       } else {
-        print('Failed to verify OTP. Status code: ${response.statusCode}'); // Debugging line
+        print(
+            'Failed to verify OTP. Status code: ${response.statusCode}'); // Debugging line
         return false;
       }
     } catch (e) {
@@ -94,9 +97,12 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Obx(() => Row(
+                Obx(
+                  () => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(4, (index) => Container(
+                    children: List.generate(
+                      4,
+                      (index) => Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         width: 50,
                         height: 50,
@@ -113,7 +119,8 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                             LengthLimitingTextInputFormatter(1),
                           ],
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white, fontSize: 24),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 24),
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                           ),
