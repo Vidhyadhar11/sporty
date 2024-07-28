@@ -32,7 +32,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     bool isVerified = await verifyOTP(phoneNumber, otp, widget.orderId);
     if (isVerified) {
       // Navigate to the next page only if OTP is verified
-      Get.to(() => const HomePage());
+      Get.to(() =>  HomePage());
     } else {
       for (var controller in myController.otpControllers) {
         controller.clear();

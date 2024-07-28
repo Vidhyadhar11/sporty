@@ -24,7 +24,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 child: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                          onPressed: () {
-                  Get.to(() => const HomePage());
+                  Get.to(() => HomePage());
                          }
                         ),
               ),

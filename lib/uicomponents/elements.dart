@@ -82,7 +82,7 @@ class CustomNavBar extends StatelessWidget {
       onPressed: () {
         switch (index) {
           case 0:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
             break;
           case 1:
             Navigator.push(context, MaterialPageRoute(builder: (context) => SportsScreen()));
