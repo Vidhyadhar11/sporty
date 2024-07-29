@@ -3,6 +3,8 @@ import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/uicomponents/elements.dart'; 
 
 class CommunityScreen extends StatefulWidget {
+  const CommunityScreen({super.key});
+
   @override
   _CommunityScreenState createState() => _CommunityScreenState();
 }

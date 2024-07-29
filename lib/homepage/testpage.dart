@@ -9,23 +9,14 @@ class TestPage extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: [
+            IconButton(
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
             Container(
               color: Colors.black,
               child: const Center(
-                child: Text(
-                  'Navigation page',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Navigation page',style: TextStyle(color: Colors.white, fontSize: 24)),
               ),
             ),
           ],

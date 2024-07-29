@@ -1,8 +1,8 @@
-class SportsFieldApi {
-  final String imageUrl;
+class DetailsPageApi {
+  final String image;
   final String category;
   final String turfName;
-  final int courts; 
+  final int totalMember;
   final String location;
   final String description;
   final List<String> amenities;
@@ -10,11 +10,11 @@ class SportsFieldApi {
   final List<Map<String, dynamic>> slots;
   final int discounts;
 
-  SportsFieldApi({
-    required this.imageUrl,
+  DetailsPageApi({
+    required this.image,
     required this.category,
     required this.turfName,
-    required this.courts,
+    required this.totalMember,
     required this.location,
     required this.description,
     required this.amenities,
@@ -22,29 +22,22 @@ class SportsFieldApi {
     required this.slots,
     required this.discounts,
   });
-  
-  factory SportsFieldApi.fromsnapshot(Map<String, dynamic> json) {
-    // Handle the 'amenties' field which might be a string or an iterable
+
+  factory DetailsPageApi.fromJson(Map<String, dynamic> json) {
     List<String> amenities = [];
-    if (json['amenties'] != null) {
-      if (json['amenties'] is Iterable) {
-        for (var amenityList in json['amenties']) {
-          if (amenityList is Iterable) {
-            amenities.addAll(List<String>.from(amenityList));
-          } else {
-            amenities.add(amenityList.toString());
-          }
-        }
-      } else if (json['amenties'] is String) {
-        amenities.add(json['amenties']);
+    if (json['amenities'] != null) {
+      if (json['amenities'] is Iterable) {
+        amenities.addAll(List<String>.from(json['amenities']));
+      } else {
+        amenities.add(json['amenities']);
       }
     }
 
-    return SportsFieldApi(
-      imageUrl: json['images'] ?? '',
+    return DetailsPageApi(
+      image: json['image'] ?? '',
       category: json['category'] ?? '',
       turfName: json['turfname'] ?? '',
-      courts: json['court'] != null ? int.parse(json['court'].toString()) : 0,
+      totalMember: json['totalmember'] ?? 0,
       location: json['location'] ?? '',
       description: json['description'] ?? '',
       amenities: amenities,

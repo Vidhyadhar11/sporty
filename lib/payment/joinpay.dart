@@ -43,7 +43,7 @@ class JoinPaymentViewState extends State<JoinPaymentView> {
                 decoration: TextDecoration.none,)),
               ],
             ),
-            Divider(),
+            const Divider(),
             const SizedBox(height: 20,),
             Container(
               padding: const EdgeInsets.all(16.0),
@@ -95,8 +95,8 @@ class JoinPaymentViewState extends State<JoinPaymentView> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
-            Divider(),
+            const SizedBox(height: 20,),
+            const Divider(),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16.0),

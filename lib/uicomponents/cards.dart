@@ -29,6 +29,8 @@ class SportsField {
     this.players,
     this.maxPlayers,
   });
+
+  
 }
 
 // Define the first type of sports field card
