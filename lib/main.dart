@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
-      initialRoute: '/',
+      initialRoute: '/onboarding',
       getPages: [
         GetPage(name: '/onboarding', page: () => const SplashScreen()),
         GetPage(name: '/enter-phone', page: () => const EnterPhoneNumberScreen()),

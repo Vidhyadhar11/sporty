@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sporty/homepage/home.dart';
@@ -10,10 +8,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class EnterOTPScreen extends StatefulWidget {
-  final TextEditingController sentOTPController;
-  final String orderId; // Add orderId parameter
+  final TextEditingController phoneController;
+  final String orderId;
 
-  const EnterOTPScreen({super.key, required this.sentOTPController, required this.orderId});
+  const EnterOTPScreen({super.key, required this.orderId, required this.phoneController});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -23,16 +21,24 @@ class EnterOTPScreen extends StatefulWidget {
 class _EnterOTPScreenState extends State<EnterOTPScreen> {
   final Mycontroller myController = Mycontroller();
 
-  void _handleVerifyOTP() async {
-    String otp =
-        myController.otpControllers.map((controller) => controller.text).join();
-    String phoneNumber = widget.sentOTPController.text; // Assuming phone number is stored here
+  @override
+  void initState() {
+    super.initState();
+    // Print statements to check if data is received
+    print('Phone number received: ${widget.phoneController.text}');
+    print('Order ID received: ${widget.orderId}');
+  }
 
-    // Show a loading indicator while checking OTP
-    bool isVerified = await verifyOTP(phoneNumber, otp, widget.orderId);
+  void _handleVerifyOTP() async {
+    String otp = myController.otpControllers.map((controller) => controller.text).join();
+    String phoneNumber = widget.phoneController.text;
+    String orderId = widget.orderId;
+
+    print('Verifying OTP for phone number: $phoneNumber with order ID: $orderId and OTP: $otp');
+
+    bool isVerified = await verifyOTP(phoneNumber, otp, orderId);
     if (isVerified) {
-      // Navigate to the next page only if OTP is verified
-      Get.to(() =>  HomePage());
+      Get.to(() => HomePage());
     } else {
       for (var controller in myController.otpControllers) {
         controller.clear();
@@ -46,27 +52,29 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   Future<bool> verifyOTP(String phoneNumber, String otp, String orderId) async {
     try {
       final response = await http.post(
-        Uri.parse(
-            'https://3036-39-41-175-117.ngrok-free.app/verify'), // Updated URL
-        body: jsonEncode(<String, String>{
-          'mobileno': '+91$phoneNumber',
-          'orderId': orderId, // Include orderId in the request body
+        Uri.parse('https://f642-81-17-122-67.ngrok-free.app/verify'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'mobileno': phoneNumber,
+          'orderId': orderId,
           'otp': otp,
         }),
       );
 
-      await Future.delayed(const Duration(seconds: 3)); // Wait for 3 seconds
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         return responseData['success'] == true;
       } else {
-        print(
-            'Failed to verify OTP. Status code: ${response.statusCode}'); // Debugging line
+        print('Failed to verify OTP. Status code: ${response.statusCode}');
         return false;
       }
     } catch (e) {
-      print('Error in HTTP request: $e'); // Debugging line
+      print('Error in HTTP request: $e');
       return false;
     }
   }
