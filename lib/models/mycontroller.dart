@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
-import 'package:sporty/models/detailspageapi.dart';
 
 class Mycontroller extends GetxController {
   final Rx<TextEditingController> firstNameController = TextEditingController().obs;
@@ -16,6 +15,5 @@ class Mycontroller extends GetxController {
   Rx<String?> selectedLevel = 'select'.obs;
   var isFavorite = false.obs;
   var isLoading = true.obs;
-  var details = Rxn<DetailsPageApi>();
 
 }

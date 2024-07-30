@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sporty/models/detailspageapi.dart';
+import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/date.dart';
 // ignore: depend_on_referenced_packages
@@ -20,7 +20,7 @@ class DetailsPage extends StatefulWidget { // Change to StatefulWidget
 class _DetailsPageState extends State<DetailsPage> {
   late bool isFavorite;
   bool isLoading = true; // To track loading state
-  DetailsPageApi? details;
+  SportsFieldApi? details;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _DetailsPageState extends State<DetailsPage> {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         setState(() {
-          details = DetailsPageApi.fromJson(data);
+          details = SportsFieldApi.fromJson(data);
           isLoading = false;
         });
       } else {
@@ -70,7 +70,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             // Decode the base64 string to image
-                            image: MemoryImage(base64Decode(details!.image)),
+                            image: MemoryImage(base64Decode(details!.imageUrl)),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.circular(10),

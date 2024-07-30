@@ -53,4 +53,11 @@ class SportsFieldApi {
       discounts: json['discounts'] != null ? int.parse(json['discounts'].toString()) : 0,
     );
   }
+
+ static SportsFieldApi? fromJson(data) {
+    if (data is Map<String, dynamic>) {
+      return SportsFieldApi.fromJson(data);
+    }
+    return null;
+  }
 }
