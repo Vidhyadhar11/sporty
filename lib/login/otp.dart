@@ -35,15 +35,28 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
     print('Verifying OTP for phone number: $phoneNumber with order ID: $orderId and OTP: $otp');
 
-    bool isVerified = await verifyOTP(phoneNumber, otp, orderId);
-    if (isVerified) {
-      Get.to(() => HomePage());
-    } else {
-      for (var controller in myController.otpControllers) {
-        controller.clear();
+    try {
+      bool isVerified = await verifyOTP(phoneNumber, otp, orderId);
+      print('OTP verification result: $isVerified');
+
+      if (isVerified) {
+        print('OTP verified successfully. Navigating to HomePage...');
+        await Future.delayed(const Duration(milliseconds: 500)); // Add a delay to ensure all print statements are visible
+        await Get.off(() => HomePage());
+        print('Navigation to HomePage completed');
+      } else {
+        print('OTP verification failed. Clearing input fields...');
+        for (var controller in myController.otpControllers) {
+          controller.clear();
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid OTP')),
+        );
       }
+    } catch (e) {
+      print('Error during OTP verification: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid OTP')),
+        const SnackBar(content: Text('An error occurred. Please try again.')),
       );
     }
   }
@@ -51,7 +64,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   Future<bool> verifyOTP(String phoneNumber, String otp, String orderId) async {
     try {
       final response = await http.post(
-        Uri.parse('https://f642-81-17-122-67.ngrok-free.app/verify'),
+        Uri.parse('http://10.0.2.2:3000/verify'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -67,7 +80,13 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        return responseData['success'] == true;
+        print('Decoded response data: $responseData');
+        
+        // Check for either 'isOTPVerified' or 'message' key
+        bool isVerified = responseData['isOTPVerified'] == true || 
+                          responseData['message'] == "User verified successfully";
+        print('Is verified: $isVerified');
+        return isVerified;
       } else {
         print('Failed to verify OTP. Status code: ${response.statusCode}');
         return false;

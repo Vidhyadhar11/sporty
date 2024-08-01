@@ -318,7 +318,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   Future<Map<String, String>?> sendPhoneNumber(String phoneNumber) async {
     try {
       final response = await http.post(
-        Uri.parse('https://f642-81-17-122-67.ngrok-free.app/sendotp'),
+        Uri.parse('http://10.0.2.2:3000/sendotp'),
         headers: {
           'Content-Type': 'application/json',
         },
