@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sporty/homepage/home.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:sporty/models/mycontroller.dart';
 import 'package:http/http.dart' as http;

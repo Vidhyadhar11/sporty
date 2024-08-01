@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/models/controllerhome.dart';

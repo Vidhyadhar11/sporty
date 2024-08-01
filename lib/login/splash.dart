@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:sporty/screens/login.dart';
 import 'package:sporty/login/onboarding.dart';
 
 class SplashScreen extends StatelessWidget {

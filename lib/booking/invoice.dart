@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sporty/booking/pushnotification.dart';
 import 'package:sporty/booking/bookings1.dart';

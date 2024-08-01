@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporty/homepage/home.dart';
-import 'package:sporty/uicomponents/elements.dart'; // Import the ToggleButton widget
+import 'package:sporty/uicomponents/elements.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class BookingScreen extends StatefulWidget {
   @override
@@ -10,54 +12,91 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   bool showUpcoming = true;
+  bool isLoading = true;
+  List<dynamic> bookings = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchBookings();
+  }
+
+  Future<void> fetchBookings() async {
+    try {
+      final response = await http.get(Uri.parse('https://e952-39-41-236-138.ngrok-free.app/turfid'));
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        print('Bookings fetched successfully: $data');
+        setState(() {
+          bookings = data;
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load bookings');
+      }
+    } catch (e) {
+      print('Error fetching bookings: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                         onPressed: () {
-                  Get.to(() => HomePage());
-                         }
-                        ),
+        body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                      onPressed: () {
+                        Get.to(() => HomePage());
+                      },
+                    ),
+                  ),
+                  const Text(
+                    'Bookings',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ToggleButton(
+                    leftLabel: 'Previous',
+                    rightLabel: 'Upcoming',
+                    onToggle: (isLeftSelected) {
+                      setState(() {
+                        showUpcoming = !isLeftSelected;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: bookings.length,
+                    itemBuilder: (context, index) {
+                      var booking = bookings[index];
+                      return BookingCard(
+                        showUpcoming: showUpcoming,
+                        imageUrl: booking['imageUrl'],
+                        title: booking['title'],
+                        location: booking['location'],
+                        time: booking['time'],
+                      );
+                    },
+                  ),
+                ],
               ),
-              // Booking title below the back button
-              const Text(
-                'Bookings',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-              ToggleButton(
-                leftLabel: 'Previous',
-                rightLabel: 'Upcoming',
-                onToggle: (isLeftSelected) {
-                  setState(() {
-                    showUpcoming = !isLeftSelected;
-                  });
-                },
-              ),
-              const SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: 10, // Replace this with your actual count of items
-                itemBuilder: (context, index) {
-                  return BookingCard(showUpcoming);
-                },
-              ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }
@@ -65,50 +104,41 @@ class _BookingScreenState extends State<BookingScreen> {
 
 class BookingCard extends StatelessWidget {
   final bool showUpcoming;
+  final String imageUrl;
+  final String title;
+  final String location;
+  final String time;
 
-  BookingCard(this.showUpcoming);
+  const BookingCard({super.key, 
+    required this.showUpcoming,
+    required this.imageUrl,
+    required this.title,
+    required this.location,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.network('https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', width: 150, height: 150,),
+        Image.network(imageUrl, width: 150, height: 150),
         const SizedBox(width: 10),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              showUpcoming
-                  ? 'Star Strikers (Upcoming)'
-                  : 'Star Strikers (Previous)',
+              showUpcoming ? '$title (Upcoming)' : '$title (Previous)',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            const Text('KPHB, Hyderabad', style: TextStyle(color: Colors.white)),
-            const Text('20 Thursday 6pm-7pm', style: TextStyle(color: Colors.white)),
+            Text(location, style: const TextStyle(color: Colors.white)),
+            Text(time, style: const TextStyle(color: Colors.white)),
           ],
         ),
       ],
     );
-    // return Card(
-    //   color: Colors.black,
-    //   margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-    //   child: ListTile(
-    //     leading: Image.network('https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw'), // Use the local image
-    //     title: Text(
-    //       showUpcoming
-    //           ? 'Star Strikers (Upcoming)'
-    //           : 'Star Strikers (Previous)',
-    //       style: const TextStyle(
-    //         fontSize: 16,
-    //         fontWeight: FontWeight.bold,
-    //         color: Colors.white,
-    //         // decoration: TextDecoration.underline,
-    //       ),
-    //     ),
-     
-
   }
 }

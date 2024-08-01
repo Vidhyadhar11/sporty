@@ -1,56 +1,32 @@
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
-import 'package:sporty/homepage/details.dart';
 import 'package:sporty/homepage/testpage.dart';
+import 'package:sporty/models/controllerevent.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/uicomponents/cards.dart';
-
+import 'package:sporty/homepage/details.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _EventScreenState createState() => _EventScreenState();
 }
 
 class _EventScreenState extends State<EventScreen> {
+  final EventController controller = Get.put(EventController());
   bool isJoinSelected = true;
   String selectedFilter = 'Filter';
 
-  final List<SportsField> sportsFields = [
-    SportsField(
-      name: 'KPHB',
-      location: 'Hyderabad',
-      rating: 4.4,
-      price: 120,
-      imageUrl:
-          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
-      discount: '15% Off',
-      sportType: 'Football',
-      slot: '6pm-7pm',
-      players: 3,
-      maxPlayers: 8,
-    ),
-    SportsField(
-      name: 'KPHB',
-      location: 'Hyderabad',
-      rating: 4.4,
-      price: 120,
-      imageUrl:
-          'https://imgs.search.brave.com/zN2JDwLs9UxC0UGzY3mIqh_C1SxfAo6Vt5EUPwwRnMY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Ry/b3R1cmYuY29tL3N0/YXRpYy85NDMxNTZm/YmQ1ODg3NWEyMDZl/ZjdkMGMxMmJlY2Yz/NS8xM2U0My9VVFNB/LmpwZw', // Replace with your image URL
-      discount: '15% Off',
-      sportType: 'Football',
-      slot: '6pm-7pm',
-      players: 5,
-      maxPlayers: 8,
-    ),
-    // Add more SportsField objects as needed
-  ];
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchSportsFields();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('Building EventScreen...');
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -64,6 +40,7 @@ class _EventScreenState extends State<EventScreen> {
                 onToggle: (isLeftSelected) {
                   setState(() {
                     isJoinSelected = isLeftSelected;
+                    print('Toggled to ${isJoinSelected ? 'Join' : 'Competition'}');
                   });
                 },
               ),
@@ -84,37 +61,38 @@ class _EventScreenState extends State<EventScreen> {
                       onSelected: (String value) {
                         setState(() {
                           selectedFilter = value;
+                          print('Selected filter: $selectedFilter');
                         });
                       },
                       itemBuilder: (BuildContext context) {
                         return [
                           const PopupMenuItem<String>(
                             value: 'football',
-                            child:  Text('football',style: TextStyle(color: Colors.white)),
+                            child: Text('football', style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'tennis',
-                            child: Text('tennis',style: TextStyle(color: Colors.white)),
+                            child: Text('tennis', style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'badminton',
-                            child: Text('badminton',style: TextStyle(color: Colors.white)),
+                            child: Text('badminton', style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'golf',
-                            child: Text('golf',style: TextStyle(color: Colors.white)),
+                            child: Text('golf', style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'cricket',
-                            child: Text('cricket',style: TextStyle(color: Colors.white)),
+                            child: Text('cricket', style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'swimming',
-                            child: Text('swimming',style: TextStyle(color: Colors.white)),
+                            child: Text('swimming', style: TextStyle(color: Colors.white)),
                           ),
                           const PopupMenuItem<String>(
                             value: 'basketball',
-                            child: Text('basketball',style: TextStyle(color: Colors.white)),
+                            child: Text('basketball', style: TextStyle(color: Colors.white)),
                           ),
                         ];
                       },
@@ -136,7 +114,7 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                        Get.to(() => const TestPage());
+                      Get.to(() => const TestPage());
                     },
                     icon: const Icon(Icons.location_on, color: Colors.white),
                     label: const Text('Location', style: TextStyle(color: Colors.white)),
@@ -151,11 +129,18 @@ class _EventScreenState extends State<EventScreen> {
               ),
             ),
             // Use your existing event cards or other widgets here
-            Expanded(
-              child: isJoinSelected 
-                ? JoinEvents(sportsFields: sportsFields) 
-                : CompeteEvents(sportsFields: sportsFields),
-            ),
+            Obx(() {
+              print('Rebuilding UI based on controller state...');
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return Expanded(
+                  child: isJoinSelected
+                      ? JoinEvents(sportsFields: controller.sportsFields)
+                      : CompeteEvents(sportsFields: controller.sportsFields),
+                );
+              }
+            }),
           ],
         ),
         bottomNavigationBar: const CustomNavBar(currentIndex: 2),
@@ -165,7 +150,7 @@ class _EventScreenState extends State<EventScreen> {
 }
 
 class JoinEvents extends StatelessWidget {
-  final List<SportsField> sportsFields;
+  final List<EventSportsField> sportsFields;
 
   const JoinEvents({super.key, required this.sportsFields});
 
@@ -175,13 +160,13 @@ class JoinEvents extends StatelessWidget {
       itemCount: sportsFields.length,
       itemBuilder: (context, index) {
         return SportsFieldCardV2(
-          sportsField: sportsFields[index],
+          sportsField: sportsFields[index] as SportsField,
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DetailsPage(
-                  sportsField: sportsFields[index],
+                  sportsField: sportsFields[index] as SportsField,
                 ),
               ),
             );
@@ -193,7 +178,7 @@ class JoinEvents extends StatelessWidget {
 }
 
 class CompeteEvents extends StatelessWidget {
-  final List<SportsField> sportsFields;
+  final List<EventSportsField> sportsFields;
 
   const CompeteEvents({super.key, required this.sportsFields});
 
@@ -203,14 +188,14 @@ class CompeteEvents extends StatelessWidget {
       itemCount: sportsFields.length,
       itemBuilder: (context, index) {
         return SportsFieldCardV3(
-          sportsField: sportsFields[index],
+          sportsField: sportsFields[index] as SportsField, // Cast to SportsField
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DetailsPage(
-                  sportsField: sportsFields[index],
-                ),
+                  sportsField: sportsFields[index] as SportsField, // Cast to SportsField
+          ),
               ),
             );
           },

@@ -174,7 +174,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sporty/login/ca.dart';

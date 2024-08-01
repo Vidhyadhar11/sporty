@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:sporty/screens/login.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:get/get.dart';
 class Onboarding extends StatefulWidget {

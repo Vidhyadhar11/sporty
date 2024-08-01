@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/cards.dart';
 import 'package:sporty/booking/date.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -238,7 +237,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black, // Updated from primary
+                            backgroundColor: Colors.black,
                             padding: const EdgeInsets.symmetric(vertical: 15),
                           ),
                           onPressed: () {
