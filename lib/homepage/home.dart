@@ -2,12 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/models/controllerhome.dart';
+import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
 
-class HomePage extends StatelessWidget {
-  final SportsFieldController controller = Get.put(SportsFieldController());
-
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final SportsFieldController controller = Get.put(SportsFieldController());
+  TextEditingController searchController = TextEditingController();
+  List<SportsFieldApi> filteredSportsFields = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredSportsFields = controller.sportsFields;
+    searchController.addListener(_filterSportsFields);
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterSportsFields() {
+    String query = searchController.text.toLowerCase();
+    setState(() {
+      filteredSportsFields = controller.sportsFields.where((field) {
+        return field.turfName.toLowerCase().contains(query) ||
+            field.location.toLowerCase().contains(query) ||
+            field.category.toLowerCase().contains(query);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +81,20 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
+              controller: searchController,
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Search',
-                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.grey[800],
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
                 ),
+                hintText: 'Search',
+                hintStyle: const TextStyle(color: Colors.grey),
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
               ),
             ),
           ),
@@ -66,9 +104,9 @@ class HomePage extends StatelessWidget {
             } else {
               return Expanded(
                 child: ListView.builder(
-                  itemCount: controller.sportsFields.length,
+                  itemCount: filteredSportsFields.length,
                   itemBuilder: (context, index) {
-                    final field = controller.sportsFields[index];
+                    final field = filteredSportsFields[index];
                     return Card(
                       margin: const EdgeInsets.all(10.0),
                       child: Column(
