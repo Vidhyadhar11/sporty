@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporty/models/controllerhome.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/booking/date.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  bool isFavorite = false;
+  final LikedFieldsController likedController = Get.find<LikedFieldsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton(
+                          child: Obx(() => ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey[800],
                               shape: RoundedRectangleBorder(
@@ -153,15 +154,13 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                             ),
                             onPressed: () {
-                              setState(() {
-                                isFavorite = !isFavorite;
-                              });
+                              likedController.toggleLike(widget.sportsField);
                             },
                             child: Icon(
-                              isFavorite ? Icons.favorite : Icons.favorite_border,
+                              likedController.isLiked(widget.sportsField) ? Icons.favorite : Icons.favorite_border,
                               color: Colors.white,
                             ),
-                          ),
+                          )),
                         ),
                         SizedBox(width: 16),
                         Expanded(

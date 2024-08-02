@@ -37,15 +37,19 @@ class SportsFieldController extends GetxController {
 }
 
 class LikedFieldsController extends GetxController {
-  final RxList<SportsFieldApi> likedFields = <SportsFieldApi>[].obs;
+  final RxList<SportsFieldApi> _likedFields = <SportsFieldApi>[].obs;
+
+  List<SportsFieldApi> get likedFields => _likedFields;
+
+  bool isLiked(SportsFieldApi field) {
+    return _likedFields.any((likedField) => likedField.id == field.id);
+  }
 
   void toggleLike(SportsFieldApi field) {
-    field.isLiked = !field.isLiked;
-    if (field.isLiked) {
-      likedFields.add(field);
+    if (isLiked(field)) {
+      _likedFields.removeWhere((likedField) => likedField.id == field.id);
     } else {
-      likedFields.removeWhere((f) => f.turfName == field.turfName);
+      _likedFields.add(field);
     }
-    update();
   }
 }

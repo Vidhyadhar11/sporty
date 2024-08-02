@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/login/splash.dart';
+import 'package:sporty/models/controllerhome.dart';
 
 // import 'package:sporty/payment/singlepay.dart';
 
 void main() {
-
+  Get.put(LikedFieldsController());
   runApp(const MyApp());
 }
 

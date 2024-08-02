@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporty/drawer/drawercon.dart';
 import 'package:sporty/booking/bookings1.dart';
+import 'package:sporty/drawer/favorite.dart';
 import 'package:sporty/drawer/rewards.dart';
 import 'package:sporty/login/enterphn.dart';
 
@@ -80,6 +81,22 @@ class DrawerView extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(() => RewardsPage());
+              },
+            ),
+            ListTile(
+              title: const Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.star, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('liked', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+              onTap: () {
+                Get.to(() => FavoriteScreen());
               },
             ),
             const Spacer(),
