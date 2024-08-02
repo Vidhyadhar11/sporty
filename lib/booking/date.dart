@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:sporty/payment/singlepay.dart';
 import 'package:sporty/payment/joinpay.dart';
@@ -7,9 +8,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class BookingPage extends StatefulWidget {
-  const BookingPage({super.key, required this.turfRate});
+  const BookingPage({super.key, required this.turfRate, required this.turfId});
 
   final double turfRate;
+  final String turfId;
 
   @override
   _BookingPageState createState() => _BookingPageState();
@@ -32,6 +34,8 @@ class _BookingPageState extends State<BookingPage> {
     }
     return "";
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -298,59 +302,23 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  // Widget _buildNextButton() {
-  //   return Align(
-  //     alignment: Alignment.bottomRight,
-  //     child: GestureDetector(
-  //       onTap: () {
-  //         if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
-  //           if (playWithStrangers) {
-  //             // Navigate to JoinPaymentView
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => JoinPaymentView(
-  //                   turfRate: widget.turfRate,
-  //                   numberOfPeople: int.tryParse(_numberOfPeopleController.text) ?? 1, // Default to 1 if parsing fails
-  //                 ),
-  //               ),
-  //             );
-  //           } else {
-  //             // Navigate to SinglePaymentView
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => SinglePaymentView(
-  //                   turfRate: widget.turfRate,
-  //                 ),
-  //               ),
-  //             );
-  //           }
-  //         }
-  //       },
-  //       child: Container(
-  //         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-  //         child: const Icon(Icons.arrow_forward, color: Colors.green),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _buildNextButton() {
     return Align(
       alignment: Alignment.bottomRight,
       child: GestureDetector(
         onTap: () async {
           if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
+
             final bookingDetails = {
-              'userId': 'your_user_id', 
-              'turfId': 'your_turf_id', 
+              'userId': "",
+              'turfId': widget.turfId,
               'court': selectedCourtIndex! + 1,
               'playWithStranger': playWithStrangers,
-              'totalMembers': '6',
-              'remainingMembers': '3', 
+              'totalMembers': playWithStrangers ? int.parse(_numberOfPeopleController.text) : 1,
+              'remainingMembers': playWithStrangers ? int.parse(_numberOfPeopleController.text) - 1 : 0,
               'slot': _getSlotString(selectedSlotIndex!),
-              'date': "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
+              'date': "${selectedDate!.year}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}",
+              'price': widget.turfRate,
             };
 
             try {
@@ -367,6 +335,9 @@ class _BookingPageState extends State<BookingPage> {
               }
             } catch (e) {
               print('Error sending booking details: $e');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Failed to book: $e')),
+              );
             }
           }
         },
@@ -379,21 +350,35 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   String _getSlotString(int index) {
-    List<String> slots = ["8am-10am", "10am-12pm", "12pm-2pm", "6pm-7pm"];
+    List<String> slots = ["8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM", "6:00 PM"];
     return slots[index];
   }
 }
 
 Future<void> sendBookingDetails(Map<String, dynamic> bookingDetails) async {
-  final response = await http.post(
-    Uri.parse('http://localhost:3000/book'),
-    headers: {'Content-Type': 'application/json'},
-    body: json.encode(bookingDetails),
-  );
+  try {
+    print('Sending booking details: ${json.encode(bookingDetails)}');
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:3000/book'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(bookingDetails),
+    );
 
-  if (response.statusCode == 200) {
-    print('Booking details sent successfully');
-  } else {
-    throw Exception('Failed to send booking details');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      print('Booking details sent successfully');
+    } else {
+      var errorMessage = 'Failed to send booking details';
+      try {
+        var responseBody = json.decode(response.body);
+        errorMessage = responseBody['message'] ?? errorMessage;
+      } catch (_) {}
+      throw Exception('$errorMessage. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error in sendBookingDetails: $e');
+    throw Exception('Failed to send booking details: $e');
   }
 }

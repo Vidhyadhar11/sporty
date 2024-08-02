@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/login/splash.dart';
 
+// import 'package:sporty/payment/singlepay.dart';
+
 void main() {
+
   runApp(const MyApp());
 }
 

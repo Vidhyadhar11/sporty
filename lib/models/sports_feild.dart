@@ -9,6 +9,8 @@ class SportsFieldApi {
   final double rating;
   final List<Map<String, dynamic>> slots;
   final int discounts;
+  final String id;
+  bool isLiked;
 
   SportsFieldApi({
     required this.imageUrl,
@@ -21,6 +23,8 @@ class SportsFieldApi {
     required this.rating,
     required this.slots,
     required this.discounts,
+    required this.id,
+    this.isLiked = false,
   });
   
   factory SportsFieldApi.fromsnapshot(Map<String, dynamic> json) {
@@ -51,6 +55,8 @@ class SportsFieldApi {
       rating: json['rating'] != null ? double.parse(json['rating'].toString()) : 0.0,
       slots: json['slots'] != null ? List<Map<String, dynamic>>.from(json['slots']) : [],
       discounts: json['discounts'] != null ? int.parse(json['discounts'].toString()) : 0,
+      id: json['_id'] ?? '',
+      isLiked: false,
     );
   }
 

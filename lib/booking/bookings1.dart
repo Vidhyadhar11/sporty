@@ -23,7 +23,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   Future<void> fetchBookings() async {
     try {
-      final response = await http.get(Uri.parse('https://e952-39-41-236-138.ngrok-free.app/turfid'));
+      final response = await http.get(Uri.parse('https://10.0.2.2:3000/turfid'));
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         print('Bookings fetched successfully: $data');
