@@ -4,9 +4,16 @@ import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/models/controllerhome.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
+import 'package:sporty/drawer/favorite.dart';
+import 'package:sporty/drawer/rewards.dart';
+import 'package:sporty/login/enterphn.dart';
+import 'package:sporty/booking/bookings1.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http';
+import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,12 +23,15 @@ class _HomePageState extends State<HomePage> {
   final SportsFieldController controller = Get.put(SportsFieldController());
   TextEditingController searchController = TextEditingController();
   List<SportsFieldApi> filteredSportsFields = [];
+  String userName = '';
+  String interestedSports = '';
 
   @override
   void initState() {
     super.initState();
     filteredSportsFields = controller.sportsFields;
     searchController.addListener(_filterSportsFields);
+    _fetchUserDetails(); // Fetch user details on init
   }
 
   @override
@@ -39,6 +49,78 @@ class _HomePageState extends State<HomePage> {
             field.category.toLowerCase().contains(query);
       }).toList();
     });
+  }
+
+  Future<void> _fetchUserDetails() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://your-api-endpoint.com/user-details'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          userName = data['name'];
+          interestedSports = data['interestedSports'];
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to fetch user details. Status code: ${response.statusCode}')),
+        );
+      }
+    } catch (e) {
+      print('Error in HTTP request: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred. Please try again.')),
+      );
+    }
+  }
+
+  Future<void> _showImagePickerDialog() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose an option'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                GestureDetector(
+                  child: const Text('Take a photo'),
+                  onTap: () {
+                    _pickImage(ImageSource.camera);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  child: const Text('Choose from gallery'),
+                  onTap: () {
+                    _pickImage(ImageSource.gallery);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        // Handle the selected image file
+        // For example, you can display it or upload it to a server
+      });
+    }
   }
 
   @override
@@ -76,6 +158,114 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ],
+        ),
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.grey[800],
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: _showImagePickerDialog,
+                child: const CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage('https://imgs.search.brave.com/EcbeGlqXlo-1UsUTCdkF0yVSwJa2x_xL3p66MTvzPns/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtZ2xvYmFsLndl/YnNpdGUtZmlsZXMu/Y29tLzVlYzdkYWQy/ZTZmNjI5NWE5ZTJh/MjNkZC81ZWRmYTdj/NmY5NzhlNzUzNzJk/YzMzMmVfcHJvZmls/ZXBob3RvMS5qcGVn'),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text(userName, style: const TextStyle(color: Colors.white)),
+              const SizedBox(height: 10),
+              Text(interestedSports, style: const TextStyle(color: Colors.white)),
+              const SizedBox(height: 10),
+              const Divider(
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.book, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Bookings', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Get.to(() => BookingScreen());
+                },
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.star, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Rewards', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Get.to(() => RewardsPage());
+                },
+              ),
+              ListTile(
+                title: const Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.favorite, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Liked',
+                          style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Get.to(() => FavoriteScreen());
+                },
+              ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ListTile(
+                  title: const Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.logout, color: Colors.green),
+                        SizedBox(width: 8),
+                        Text('Logout', style: TextStyle(color: Colors.green)),
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    Get.to(() => EnterPhoneNumberScreen());
+                  },
+                ),
+              ),
+              const ListTile(
+                title: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.help, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text('Contact Support +91 9550249061', style: TextStyle(color: Colors.white,fontSize: 10.0)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -140,7 +330,7 @@ class _HomePageState extends State<HomePage> {
           }),
         ],
       ),
-       bottomNavigationBar: const CustomNavBar(
+      bottomNavigationBar: const CustomNavBar(
         currentIndex: 0,
       ),
     );

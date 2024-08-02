@@ -41,7 +41,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
       if (isVerified) {
         print('OTP verified successfully. Navigating to HomePage...');
-        await Future.delayed(const Duration(milliseconds: 500)); // Add a delay to ensure all print statements are visible
+        await Future.delayed(const Duration(milliseconds: 500));
         await Get.off(() => HomePage());
         print('Navigation to HomePage completed');
       } else {

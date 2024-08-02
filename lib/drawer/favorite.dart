@@ -24,34 +24,34 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.green, size: 24,),
-              onPressed: () => Navigator.pop(context), 
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.3,),
-              const Text("Liked",
-              style: TextStyle(color: Colors.green,
-              fontSize: 24,
-              decoration: TextDecoration.none,),)
-            ],
-          ),
-          Expanded( // Added Expanded to allow ListView to take available space
-            child: ListView.builder(
-              itemCount: favoritesList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(favoritesList[index].name), // Adjust according to your SportsField model
-                  // Add other properties of SportsField as needed
-                );
-              },
+    return Container(
+      color: Colors.black,
+      child: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                IconButton(
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.green, size: 24,),
+                onPressed: () => Navigator.pop(context), 
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.3,),
+                const Text("Liked", style: TextStyle(color: Colors.green, fontSize: 24, decoration: TextDecoration.none,),)
+              ],
             ),
-          ),
-        ],
+            Expanded( // Added Expanded to allow ListView to take available space
+              child: ListView.builder(
+                itemCount: favoritesList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(favoritesList[index].name), // Adjust according to your SportsField model
+                    // Add other properties of SportsField as needed
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
