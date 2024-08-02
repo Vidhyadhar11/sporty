@@ -298,31 +298,104 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     final field = filteredSportsFields[index];
                     return Card(
-                      margin: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: [
-                          Image.network(field.imageUrl),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(field.category, style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-                                Text('${field.turfName}, ${field.location}', style: const TextStyle(fontSize: 14.0)),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star, color: Colors.amber),
-                                    Text(field.rating.toString(), style: const TextStyle(fontSize: 14.0)),
-                                  ],
-                                ),
-                                Text('₹${field.courts}/hr', style: const TextStyle(fontSize: 14.0)),
-                                Text('${field.discounts}% Off', style: const TextStyle(fontSize: 14.0, color: Colors.red)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+  color: Colors.black,
+  margin: const EdgeInsets.all(10.0),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15.0),
+  ),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Stack(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+            child: Image.network(
+              field.imageUrl,
+              fit: BoxFit.cover,
+              height: 200,
+              width: double.infinity,
+            ),
+          ),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                field.category,
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                '${field.discounts}% Off',
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+      Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              field.turfName,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              field.location,
+              style: const TextStyle(color: Colors.grey, fontSize: 14.0),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.star, color: Colors.amber, size: 18),
+                const SizedBox(width: 4),
+                Text(
+                  field.rating.toString(),
+                  style: const TextStyle(color: Colors.white, fontSize: 14.0),
+                ),
+                const Spacer(),
+                Text(
+                  '₹${field.courts}/hr',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ],
+  ),
+);
                   },
                 ),
               );

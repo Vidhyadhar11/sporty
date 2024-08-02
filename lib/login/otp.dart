@@ -39,9 +39,10 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
       bool isVerified = await verifyOTP(phoneNumber, otp, orderId);
       print('OTP verification result: $isVerified');
 
+      await Future.delayed(const Duration(milliseconds: 500)); // Add a delay to ensure all print statements are visible
+
       if (isVerified) {
         print('OTP verified successfully. Navigating to HomePage...');
-        await Future.delayed(const Duration(milliseconds: 500));
         await Get.off(() => HomePage());
         print('Navigation to HomePage completed');
       } else {
@@ -63,6 +64,11 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
   Future<bool> verifyOTP(String phoneNumber, String otp, String orderId) async {
     try {
+      print('Sending verification request for:');
+      print('Phone: $phoneNumber');
+      print('OTP: $otp');
+      print('OrderID: $orderId');
+
       final response = await http.post(
         Uri.parse('http://10.0.2.2:3000/verify'),
         headers: {
@@ -76,17 +82,27 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
       );
 
       print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('Raw response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print('Decoded response data: $responseData');
         
-        // Check for either 'isOTPVerified' or 'message' key
-        bool isVerified = responseData['isOTPVerified'] == true || 
-                          responseData['message'] == "User verified successfully";
-        print('Is verified: $isVerified');
-        return isVerified;
+        if (responseData.containsKey('isOTPVerified')) {
+          bool isVerified = responseData['isOTPVerified'] == true;
+          print('isOTPVerified key found. Value: $isVerified');
+          if (!isVerified && responseData.containsKey('error')) {
+            print('Verification failed. Reason: ${responseData['error']}');
+          }
+          return isVerified;
+        } else if (responseData.containsKey('message')) {
+          bool isVerified = responseData['message'] == "User verified successfully";
+          print('message key found. Interpreted as verified: $isVerified');
+          return isVerified;
+        } else {
+          print('Unexpected response format');
+          return false;
+        }
       } else {
         print('Failed to verify OTP. Status code: ${response.statusCode}');
         return false;
