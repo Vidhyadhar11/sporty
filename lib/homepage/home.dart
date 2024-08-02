@@ -9,7 +9,7 @@ import 'package:sporty/drawer/rewards.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
