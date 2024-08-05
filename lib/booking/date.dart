@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 
-import 'package:table_calendar/table_calendar.dart';
 import 'package:sporty/payment/singlepay.dart';
 import 'package:sporty/payment/joinpay.dart';
+import 'package:sporty/models/phncontroller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:table_calendar/table_calendar.dart';
+
 class BookingPage extends StatefulWidget {
-  const BookingPage({super.key, required this.turfRate, required this.turfId});
+  BookingPage({
+    super.key, 
+    required this.turfRate, 
+    required this.turfId, 
+    this.slots = const [], // Provide a default empty list
+    required this.numberOfCourts,
+    this.turfName, // Make this optional
+  }) {
+    print('BookingPage constructor called with turfName: $turfName');
+  }
 
   final double turfRate;
   final String turfId;
+  final List<Map<String, dynamic>> slots;
+  final int numberOfCourts;
+  final String? turfName; // Make this nullable
 
   @override
   _BookingPageState createState() => _BookingPageState();
@@ -22,166 +36,76 @@ class _BookingPageState extends State<BookingPage> {
   int? selectedSlotIndex;
   int? selectedCourtIndex;
   bool playWithStrangers = false;
-  final TextEditingController _numberOfPeopleController = TextEditingController();
+  TextEditingController _totalMembersController = TextEditingController();
+  TextEditingController _remainingMembersController = TextEditingController();
 
-  DateTime _focusedDay = DateTime.now();
-  final DateTime _firstDay = DateTime(DateTime.now().year - 1);
-  final DateTime _lastDay = DateTime(DateTime.now().year + 1);
-
-  String get selectedMonth {
-    if (selectedDate != null) {
-      return "${selectedDate!.month}-${selectedDate!.year}";
-    }
-    return "";
-  }
-
-
+  List<Map<String, dynamic>> get slots => widget.slots;
+  int get numberOfCourts => widget.numberOfCourts;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        backgroundColor: Colors.black,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Date", style: TextStyle(color: Colors.green, fontSize: 20)),
-            const SizedBox(height: 16),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildDateSelection(),
-                    if (selectedDate != null) ...[
-                      const SizedBox(height: 20),
-                      _buildAvailableSlots(),
-                    ],
-                    if (selectedSlotIndex != null) ...[
-                      const SizedBox(height: 20),
-                      _buildCourtSelection(),
-                    ],
-                    if (selectedCourtIndex != null) ...[
-                      const SizedBox(height: 20),
-                      _buildPlayWithStrangers(),
-                      if (playWithStrangers) // Show TextField if checked
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: TextField(
-                            controller: _numberOfPeopleController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              labelText: 'Number of People',
-                              labelStyle: TextStyle(color: Colors.white),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-            if (selectedCourtIndex != null) _buildNextButton(),
-          ],
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    selectedDate = DateTime.now(); // Set the current date as selected by default
+    _totalMembersController = TextEditingController(text: '1');
+    _remainingMembersController = TextEditingController(text: '0');
   }
 
   Widget _buildDateSelection() {
-    return TableCalendar(
-      firstDay: _firstDay,
-      lastDay: _lastDay,
-      focusedDay: _focusedDay,
-      calendarFormat: CalendarFormat.week,
-      availableCalendarFormats: const {CalendarFormat.week: ''},
-      calendarStyle: const CalendarStyle(
-        outsideDaysVisible: false,
-      ),
-      headerStyle: const HeaderStyle(
-        formatButtonVisible: false,
-        titleTextStyle: TextStyle(color: Colors.white),
-        leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
-        rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
-      ),
-      daysOfWeekStyle: const DaysOfWeekStyle(
-        weekdayStyle: TextStyle(color: Colors.white),
-        weekendStyle: TextStyle(color: Colors.white),
-      ),
-      daysOfWeekHeight: 0,
-      onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          selectedDate = selectedDay;
-          _focusedDay = focusedDay;
-          selectedSlotIndex = null;
-          selectedCourtIndex = null;
-        });
-      },
-      selectedDayPredicate: (day) {
-        return isSameDay(selectedDate, day);
-      },
-      calendarBuilders: CalendarBuilders(
-        defaultBuilder: (context, date, _) {
-          return _buildDateBox(date, false);
-        },
-        selectedBuilder: (context, date, _) {
-          return _buildDateBox(date, true);
-        },
-        todayBuilder: (context, date, _) {
-          return _buildDateBox(date, false);
-        },
-      ),
-    );
-  }
-
-  Widget _buildDateBox(DateTime date, bool isSelected) {
-    return Container(
-      constraints: const BoxConstraints(
-        minWidth: 35,
-        minHeight: 40,
-      ),
-      decoration: BoxDecoration(
-        color: isSelected ? Colors.white : Colors.black,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.white),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '${date.day}',
-            style: TextStyle(
-              color: isSelected ? Colors.black : Colors.white,
-              fontSize: 16,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Select Date", style: TextStyle(color: Colors.green, fontSize: 18)),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 80,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 7,
+            itemBuilder: (context, index) {
+              final date = DateTime.now().add(Duration(days: index));
+              final isSelected = selectedDate != null && isSameDay(date, selectedDate!);
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedDate = date;
+                    selectedSlotIndex = null;
+                    selectedCourtIndex = null;
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: isSelected ? Colors.white : Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.white),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${date.day}',
+                        style: TextStyle(
+                          color: isSelected ? Colors.black : Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        _getWeekdayAbbreviation(date.weekday),
+                        style: TextStyle(
+                          color: isSelected ? Colors.black : Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-          Text(
-            _getWeekdayAbbreviation(date.weekday),
-            style: TextStyle(
-              color: isSelected ? Colors.black : Colors.white,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -207,7 +131,9 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   Widget _buildAvailableSlots() {
-    List<String> slots = ["8am-10am", "10am-12pm", "12pm-2pm", "6pm-7pm"];
+    if (slots.isEmpty) {
+      return const Text("No available slots", style: TextStyle(color: Colors.white));
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -232,7 +158,7 @@ class _BookingPageState extends State<BookingPage> {
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
-                  slots[index],
+                  "${slots[index]['time']}",
                   style: TextStyle(
                     color: selectedSlotIndex == index ? Colors.black : Colors.white,
                   ),
@@ -254,7 +180,7 @@ class _BookingPageState extends State<BookingPage> {
         Wrap(
           spacing: 10.0,
           runSpacing: 10.0,
-          children: List.generate(5, (index) {
+          children: List.generate(numberOfCourts, (index) {
             return GestureDetector(
               onTap: () {
                 setState(() {
@@ -308,31 +234,26 @@ class _BookingPageState extends State<BookingPage> {
       child: GestureDetector(
         onTap: () async {
           if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
-
             final bookingDetails = {
-              'userId': "",
+              'userId': getUserId(),
               'turfId': widget.turfId,
-              'court': selectedCourtIndex! + 1,
+              'court': (selectedCourtIndex! + 1).toString(),
               'playWithStranger': playWithStrangers,
-              'totalMembers': playWithStrangers ? int.parse(_numberOfPeopleController.text) : 1,
-              'remainingMembers': playWithStrangers ? int.parse(_numberOfPeopleController.text) - 1 : 0,
-              'slot': _getSlotString(selectedSlotIndex!),
-              'date': "${selectedDate!.year}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}",
-              'price': widget.turfRate,
+              'totalMembers': _totalMembersController.text.isNotEmpty ? _totalMembersController.text : '1',
+              'remainingMembers': _remainingMembersController.text.isNotEmpty ? _remainingMembersController.text : '0',
+              'slot': "${slots[selectedSlotIndex!]['time']}",
+              'date': "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
             };
-
             try {
-              await sendBookingDetails(bookingDetails);
-              if (playWithStrangers) {
-                Get.to(() => JoinPaymentView(
-                  turfRate: widget.turfRate,
-                  numberOfPeople: int.parse(_numberOfPeopleController.text),
-                ));
-              } else {
                 Get.to(() => SinglePaymentView(
-                  turfRate: widget.turfRate,
+                  turfId: widget.turfId,
+                  date: "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
+                  slot: slots[selectedSlotIndex!]['time'],
+                  turfRate: double.parse(slots[selectedSlotIndex!]['price'].toString()),
+                  court: (selectedCourtIndex! + 1).toString(),
+                  turfName: widget.turfName ?? 'Unknown Turf', // Provide a default value if null
                 ));
-              }
+                await sendBookingDetails(bookingDetails);
             } catch (e) {
               print('Error sending booking details: $e');
               ScaffoldMessenger.of(context).showSnackBar(
@@ -349,9 +270,102 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  String _getSlotString(int index) {
-    List<String> slots = ["8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM", "6:00 PM"];
-    return slots[index];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.black,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Date", style: TextStyle(color: Colors.green, fontSize: 20)),
+            const SizedBox(height: 16),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildDateSelection(),
+                    if (selectedDate != null) ...[
+                      const SizedBox(height: 20),
+                      _buildAvailableSlots(),
+                    ],
+                    if (selectedSlotIndex != null) ...[
+                      const SizedBox(height: 20),
+                      _buildCourtSelection(),
+                    ],
+                    if (selectedCourtIndex != null) ...[
+                      const SizedBox(height: 20),
+                      _buildPlayWithStrangers(),
+                      if (playWithStrangers)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _totalMembersController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Total Members',
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              SizedBox(width: 10), // Add some space between the fields
+                              Expanded(
+                                child: TextField(
+                                  controller: _remainingMembersController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Remaining Members',
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            if (selectedCourtIndex != null) _buildNextButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _totalMembersController.dispose();
+    _remainingMembersController.dispose();
+    super.dispose();
   }
 }
 
@@ -359,7 +373,7 @@ Future<void> sendBookingDetails(Map<String, dynamic> bookingDetails) async {
   try {
     print('Sending booking details: ${json.encode(bookingDetails)}');
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/book'),
+      Uri.parse('http://10.0.2.2:3000/booking'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(bookingDetails),
     );

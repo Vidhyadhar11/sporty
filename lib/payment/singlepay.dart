@@ -2,9 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:sporty/payment/razorpay.dart';
 
 class SinglePaymentView extends StatefulWidget {
-  const SinglePaymentView({super.key, required this.turfRate});
+  const SinglePaymentView({
+    super.key, 
+    required this.turfRate, 
+    required this.turfId, 
+    required this.date, 
+    required this.slot,
+    required this.court,
+    this.turfName, // Make this optional
+  });
 
   final double turfRate;
+  final String turfId;
+  final String date;
+  final String slot;
+  final String court;
+  final String? turfName; // Make this nullable
 
   @override
   _SinglePaymentViewState createState() => _SinglePaymentViewState();
@@ -13,12 +26,13 @@ class SinglePaymentView extends StatefulWidget {
 class _SinglePaymentViewState extends State<SinglePaymentView> {
   @override
   Widget build(BuildContext context) {
-    final RazorpayService razorpayService = RazorpayService(); // Create a single instance
-    double onlinePayment = (widget.turfRate * 0.3); // Calculate initial online payment amount
-    double remainingAmount = widget.turfRate - onlinePayment; // Calculate remaining amount
-    double cashPayment = (remainingAmount / 100).ceil() * 100; // Round up to nearest multiple of 100
-    double adjustedOnlinePayment = widget.turfRate - cashPayment + 3; // Adjust online payment
-    double totalAmount = widget.turfRate + 3;
+    final RazorpayService razorpayService = RazorpayService();
+    double onlinePayment = (widget.turfRate * 0.3);
+    double remainingAmount = widget.turfRate - onlinePayment;
+    double cashPayment = (remainingAmount / 100).ceil() * 100;
+    double serviceFee = 3.0;
+    double adjustedOnlinePayment = widget.turfRate - cashPayment + serviceFee;
+    double totalAmount = widget.turfRate + serviceFee;
 
     return SafeArea(
       child: Container(
@@ -63,28 +77,28 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Shuffle Sports, Chetpet',
-                        style: TextStyle(
+                        widget.turfName ?? 'Unknown Turf', // Provide a default value if null
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                           decoration: TextDecoration.none,
                         ),
                       ),
                       Text(
-                        'Jul 20 · 08:00 pm - 09:00 pm',
-                        style: TextStyle(
+                        '${widget.date} · ${widget.slot}',
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white54,
                           decoration: TextDecoration.none,
                         ),
                       ),
                       Text(
-                        '1 Court',
-                        style: TextStyle(
+                        'Court ${widget.court}',
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white54,
                           decoration: TextDecoration.none,
@@ -139,10 +153,10 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Service Fee',
                         style: TextStyle(
                           fontSize: 16,
@@ -151,8 +165,8 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
                         ),
                       ),
                       Text(
-                        '₹ 3.00',
-                        style: TextStyle(
+                        '₹ ${serviceFee.toStringAsFixed(2)}',
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white54,
                           decoration: TextDecoration.none,
@@ -190,7 +204,7 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
             const SizedBox(height: 20),
             Center(
               child: TextButton(
-                onPressed: () => razorpayService.singlePayment(widget.turfRate),
+                onPressed: () => razorpayService.singlePayment(totalAmount),
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.green,
                 ),

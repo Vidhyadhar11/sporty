@@ -82,10 +82,6 @@ class _DetailsPageState extends State<DetailsPage> {
                         Row(
                           children: [
                             Text(
-                              'KPHB, ',
-                              style: TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            Text(
                               widget.sportsField.location,
                               style: TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -119,8 +115,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                         SizedBox(height: 16),
                         Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
+                          spacing: 20,
+                          runSpacing: 20,
                           children: [
                             _buildAmenityItem(Icons.local_parking, 'Parking'),
                             _buildAmenityItem(Icons.wc, 'Rest Room'),
@@ -172,7 +168,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
-                              '₹${widget.sportsField.courts}/hr',
+                              '₹${widget.sportsField.slots[0]['price']}/hr',
                               style: TextStyle(color: Colors.white, fontSize: 16),
                               textAlign: TextAlign.center,
                             ),
@@ -193,7 +189,11 @@ class _DetailsPageState extends State<DetailsPage> {
                           padding: EdgeInsets.symmetric(vertical: 16),
                         ),
                         onPressed: () {
-                          Get.to(() => BookingPage(turfRate: widget.sportsField.courts.toDouble(), turfId: widget.sportsField.id));
+                          Get.to(() => BookingPage(turfRate: widget.sportsField.slots[0]['price'].toDouble(), 
+                          turfId: widget.sportsField.id, 
+                          slots: widget.sportsField.slots, 
+                          numberOfCourts: widget.sportsField.courts, 
+                          turfName: widget.sportsField.turfName));
                         },
                         child: Text('Book Now', style: TextStyle(color: Colors.green, fontSize: 18)),
                       ),

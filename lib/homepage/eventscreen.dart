@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:sporty/homepage/testpage.dart';
-import 'package:sporty/models/controllerevent.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/uicomponents/cards.dart';
@@ -15,25 +16,43 @@ class EventScreen extends StatefulWidget {
 }
 
 class _EventScreenState extends State<EventScreen> {
-  final EventController controller = Get.put(EventController());
   bool isJoinSelected = true;
   String selectedFilter = 'Filter';
+  List<dynamic> joinEvents = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    controller.fetchSportsField();
+    fetchJoinEvents();
+  }
+
+  Future<void> fetchJoinEvents() async {
+    try {
+      final response = await http.get(Uri.parse('http://10.0.2.2:3000/booking/playWithStrangers'));
+      if (response.statusCode == 200) {
+        setState(() {
+          joinEvents = json.decode(response.body);
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load join events');
+      }
+    } catch (e) {
+      print('Error fetching join events: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print('Building EventScreen...');
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Column(
           children: [
-            // Toggle Button
             Center(
               child: ToggleButton(
                 leftLabel: 'Join',
@@ -41,12 +60,10 @@ class _EventScreenState extends State<EventScreen> {
                 onToggle: (isLeftSelected) {
                   setState(() {
                     isJoinSelected = isLeftSelected;
-                    print('Toggled to ${isJoinSelected ? 'Join' : 'Competition'}');
                   });
                 },
               ),
             ),
-            // Conditional rendering of Filter and Location Row
             if (isJoinSelected)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -63,40 +80,23 @@ class _EventScreenState extends State<EventScreen> {
                         onSelected: (String value) {
                           setState(() {
                             selectedFilter = value;
-                            print('Selected filter: $selectedFilter');
                           });
                         },
                         itemBuilder: (BuildContext context) {
                           return [
-                            const PopupMenuItem<String>(
-                              value: 'football',
-                              child: Text('football', style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'tennis',
-                              child: Text('tennis', style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'badminton',
-                              child: Text('badminton', style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'golf',
-                              child: Text('golf', style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'cricket',
-                              child: Text('cricket', style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'swimming',
-                              child: Text('swimming', style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'basketball',
-                              child: Text('basketball', style: TextStyle(color: Colors.white)),
-                            ),
-                          ];
+                            'football',
+                            'tennis',
+                            'badminton',
+                            'golf',
+                            'cricket',
+                            'swimming',
+                            'basketball',
+                          ].map((String value) {
+                            return PopupMenuItem<String>(
+                              value: value,
+                              child: Text(value, style: TextStyle(color: Colors.white)),
+                            );
+                          }).toList();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -130,18 +130,11 @@ class _EventScreenState extends State<EventScreen> {
                   ],
                 ),
               ),
-            Obx(() {
-              print('Rebuilding UI based on controller state...');
-              if (controller.isLoading.value) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return Expanded(
-                  child: isJoinSelected
-                      ? JoinEvents(sportsFields: controller.sportsFields)
-                      : CompeteEvents(sportsFields: controller.sportsFields),
-                );
-              }
-            }),
+            Expanded(
+              child: isJoinSelected
+                  ? JoinEvents(joinEvents: joinEvents, isLoading: isLoading)
+                  : CompeteEvents(),
+            ),
           ],
         ),
         bottomNavigationBar: const CustomNavBar(currentIndex: 2),
@@ -151,38 +144,48 @@ class _EventScreenState extends State<EventScreen> {
 }
 
 class JoinEvents extends StatelessWidget {
-  final List<EventSportsField> sportsFields;
+  final List<dynamic> joinEvents;
+  final bool isLoading;
 
-  const JoinEvents({super.key, required this.sportsFields});
+  const JoinEvents({Key? key, required this.joinEvents, required this.isLoading}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: sportsFields.length,
-      itemBuilder: (context, index) {
-        return SportsFieldCardV2(
-          sportsField: sportsFields[index] as SportsField,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailsPage(
-                  sportsField: sportsFields[index] as SportsFieldApi,
-                ),
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      return ListView.builder(
+        itemCount: joinEvents.length,
+        itemBuilder: (context, index) {
+          var event = joinEvents[index];
+          return Card(
+            color: Colors.black,
+            child: ListTile(
+              title: Text(
+                event['turfName'] ?? 'Unknown Turf',
+                style: TextStyle(color: Colors.white),
               ),
-            );
-          },
-        );
-      },
-    );
+              subtitle: Text(
+                'Date: ${event['date']} | Slot: ${event['slot']}',
+                style: TextStyle(color: Colors.white70),
+              ),
+              trailing: Text(
+                'Remaining: ${event['remainingMembers']}',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {
+                // Navigate to details page or join page
+                // You can use Get.to() here
+              },
+            ),
+          );
+        },
+      );
+    }
   }
 }
 
 class CompeteEvents extends StatelessWidget {
-  final List<EventSportsField> sportsFields;
-
-  const CompeteEvents({super.key, required this.sportsFields});
-
   @override
   Widget build(BuildContext context) {
     return Center(

@@ -13,7 +13,8 @@ class BookingScreen extends StatefulWidget {
 class _BookingScreenState extends State<BookingScreen> {
   bool showUpcoming = true;
   bool isLoading = true;
-  List<dynamic> bookings = [];
+  List<dynamic> upcomingBookings = [];
+  List<dynamic> pastBookings = [];
 
   @override
   void initState() {
@@ -22,15 +23,22 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   Future<void> fetchBookings() async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
-      final response = await http.get(Uri.parse('https://10.0.2.2:3000/turfid'));
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        print('Bookings fetched successfully: $data');
+      final upcomingResponse = await http.get(Uri.parse('http://10.0.2.2:3000/booking/upcomingBookings'));
+      final pastResponse = await http.get(Uri.parse('http://10.0.2.2:3000/booking/pastBookings'));
+
+      if (upcomingResponse.statusCode == 200 && pastResponse.statusCode == 200) {
         setState(() {
-          bookings = data;
+          upcomingBookings = json.decode(upcomingResponse.body);
+          pastBookings = json.decode(pastResponse.body);
           isLoading = false;
         });
+        print('Upcoming bookings fetched successfully: $upcomingBookings');
+        print('Past bookings fetched successfully: $pastBookings');
       } else {
         throw Exception('Failed to load bookings');
       }
@@ -82,15 +90,16 @@ class _BookingScreenState extends State<BookingScreen> {
                   const SizedBox(height: 10),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: bookings.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: showUpcoming ? upcomingBookings.length : pastBookings.length,
                     itemBuilder: (context, index) {
-                      var booking = bookings[index];
+                      var booking = showUpcoming ? upcomingBookings[index] : pastBookings[index];
                       return BookingCard(
                         showUpcoming: showUpcoming,
-                        imageUrl: booking['imageUrl'],
-                        title: booking['title'],
-                        location: booking['location'],
-                        time: booking['time'],
+                        imageUrl: booking['imageUrl'] ?? 'https://via.placeholder.com/150',
+                        title: booking['turfName'] ?? 'Unknown Turf',
+                        location: booking['location'] ?? 'Unknown Location',
+                        time: '${booking['date'] ?? 'Unknown Date'} - ${booking['slot'] ?? 'Unknown Time'}',
                       );
                     },
                   ),
@@ -109,7 +118,8 @@ class BookingCard extends StatelessWidget {
   final String location;
   final String time;
 
-  const BookingCard({super.key, 
+  const BookingCard({
+    super.key, 
     required this.showUpcoming,
     required this.imageUrl,
     required this.title,
@@ -119,26 +129,37 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.network(imageUrl, width: 150, height: 150),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Card(
+      color: Colors.grey[900],
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Row(
           children: [
-            Text(
-              showUpcoming ? '$title (Upcoming)' : '$title (Previous)',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            Image.network(imageUrl, width: 100, height: 100, fit: BoxFit.cover),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    showUpcoming ? '$title (Upcoming)' : '$title (Previous)',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(location, style: const TextStyle(color: Colors.white70)),
+                  SizedBox(height: 4),
+                  Text(time, style: const TextStyle(color: Colors.white70)),
+                ],
               ),
             ),
-            Text(location, style: const TextStyle(color: Colors.white)),
-            Text(time, style: const TextStyle(color: Colors.white)),
           ],
         ),
-      ],
+      ),
     );
   }
 }

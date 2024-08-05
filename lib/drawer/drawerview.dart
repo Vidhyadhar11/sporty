@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/drawer/favorite.dart';
+import 'package:sporty/drawer/rewards.dart';
 import 'dart:convert';
 import 'package:sporty/models/phncontroller.dart';
 import 'dart:async';
@@ -182,6 +183,7 @@ class Drawerview extends StatelessWidget {
                   UserModel.mobileno,
                   style: TextStyle(color: Colors.white70),
                 ),
+                SizedBox(height: 10),
                 Divider(
                   color: Colors.white,
                 ),
@@ -195,6 +197,12 @@ class Drawerview extends StatelessWidget {
                 onPressed: () => Get.to(() => FavoriteScreen()),
                 child: Text('Favorites', style: TextStyle(color: Colors.white),),
               ),
+              SizedBox(height: 10),
+              TextButton(
+                onPressed: () => Get.to(() => RewardsPage()),
+                child: Text('Rewards', style: TextStyle(color: Colors.white),),
+              ),
+              SizedBox(height: 10),
               Spacer(),
               TextButton(
                 onPressed: () => Get.offAllNamed('/home'),

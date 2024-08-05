@@ -80,13 +80,13 @@ class _HomePageState extends State<HomePage> {
               'link',
               style: TextStyle(color: Colors.green),
             ),
-            const Spacer(),
-            IconButton(
-              icon: const Icon(Icons.notifications, color: Colors.white),
-              onPressed: () {
-                Get.to(() => const TestPage());
-              },
-            ),
+            // const Spacer(),
+            // IconButton(
+            //   icon: const Icon(Icons.notifications, color: Colors.white),
+            //   onPressed: () {
+            //     Get.to(() => const TestPage());
+            //   },
+            // ),
           ],
         ),
       ),
@@ -193,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       const Spacer(),
                                       Text(
-                                        '₹${field.courts}/hr',
+                                        '₹${field.slots[0]['price']}/hr',
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16.0,
