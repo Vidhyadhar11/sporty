@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sporty/drawer/drawercon.dart';
 import 'package:sporty/drawer/drawerview.dart';
 import 'package:sporty/homepage/details.dart';
 import 'package:sporty/homepage/testpage.dart';
 import 'package:sporty/models/controllerhome.dart';
+import 'package:sporty/models/phncontroller.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/drawer/favorite.dart';
@@ -13,7 +13,6 @@ import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 
 
@@ -26,7 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final SportsFieldController controller = Get.put(SportsFieldController());
-  final UserController userController = Get.put(UserController());
+  // final UserController userController = Get.put(UserController());
   TextEditingController searchController = TextEditingController();
   List<SportsFieldApi> filteredSportsFields = [];
 
@@ -35,7 +34,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     filteredSportsFields = controller.sportsFields;
     searchController.addListener(_filterSportsFields);
-    userController.fetchUserDetails();
   }
 
   @override
@@ -92,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      drawer: DrawerView(),
+      drawer: Drawerview(),
       body: Column(
         children: [
           Padding(
@@ -160,21 +158,6 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: Text(
                                       field.category,
-                                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 10,
-                                  right: 10,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Text(
-                                      '${field.discounts}% Off',
                                       style: const TextStyle(color: Colors.white, fontSize: 12),
                                     ),
                                   ),

@@ -5,111 +5,92 @@ import 'package:get/get.dart';
 import 'package:sporty/models/mycontroller.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/io_client.dart';
+import 'dart:io';
 
 class EnterOTPScreen extends StatefulWidget {
-  final TextEditingController phoneController;
   final String orderId;
+  final String phoneNumber;
 
-  const EnterOTPScreen({super.key, required this.orderId, required this.phoneController});
+  EnterOTPScreen({
+    super.key,
+    required this.orderId,
+    required this.phoneNumber,
+  });
 
   @override
-  // ignore: library_private_types_in_public_api
   _EnterOTPScreenState createState() => _EnterOTPScreenState();
 }
 
 class _EnterOTPScreenState extends State<EnterOTPScreen> {
   final Mycontroller myController = Mycontroller();
+  late TextEditingController _otpController;
 
   @override
   void initState() {
     super.initState();
+    _otpController = TextEditingController();
     // Print statements to check if data is received
-    print('Phone number received: ${widget.phoneController.text}');
+    print('Phone number received: ${widget.phoneNumber}');
     print('Order ID received: ${widget.orderId}');
   }
 
-  void _handleVerifyOTP() async {
-    String otp = myController.otpControllers.map((controller) => controller.text).join();
-    String phoneNumber = widget.phoneController.text;
-    String orderId = widget.orderId;
-
-    print('Verifying OTP for phone number: $phoneNumber with order ID: $orderId and OTP: $otp');
-
+  void _verifyOTP() async {
+    String enteredOTP = myController.otpControllers.map((c) => c.text).join();
+    print('Entered OTP: $enteredOTP');
     try {
-      bool isVerified = await verifyOTP(phoneNumber, otp, orderId);
-      print('OTP verification result: $isVerified');
-
-      await Future.delayed(const Duration(milliseconds: 500)); // Add a delay to ensure all print statements are visible
-
-      if (isVerified) {
-        print('OTP verified successfully. Navigating to HomePage...');
-        await Get.off(() => HomePage());
-        print('Navigation to HomePage completed');
+      final response = await verifyOTP(widget.phoneNumber, enteredOTP, widget.orderId);
+      print('Verification response: $response');
+      if (response != null && response['message'] == "User verified successfully") {
+        print('OTP verified successfully');
+        Get.offAll(() => HomePage());
       } else {
-        print('OTP verification failed. Clearing input fields...');
-        for (var controller in myController.otpControllers) {
-          controller.clear();
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid OTP')),
-        );
+        print('OTP verification failed');
+        Get.snackbar('Error', 'Invalid OTP. Please try again.',
+            snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
-      print('Error during OTP verification: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred. Please try again.')),
-      );
+      print('Error verifying OTP: $e');
+      Get.snackbar('Error', 'An error occurred. Please try again.',
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  Future<bool> verifyOTP(String phoneNumber, String otp, String orderId) async {
+  Future<Map<String, dynamic>?> verifyOTP(String phoneNumber, String otp, String orderId) async {
     try {
-      print('Sending verification request for:');
-      print('Phone: $phoneNumber');
-      print('OTP: $otp');
-      print('OrderID: $orderId');
+      final ioc = HttpClient();
+      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      final http = IOClient(ioc);
+
+      final url = 'http://10.0.2.2:3000/verify';
+      print('Sending request to: $url');
 
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/verify'),
+        Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
           'mobileno': phoneNumber,
-          'orderId': orderId,
           'otp': otp,
+          'orderId': orderId,
         }),
       );
 
       print('Response status: ${response.statusCode}');
-      print('Raw response body: ${response.body}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        print('Decoded response data: $responseData');
-        
-        if (responseData.containsKey('isOTPVerified')) {
-          bool isVerified = responseData['isOTPVerified'] == true;
-          print('isOTPVerified key found. Value: $isVerified');
-          if (!isVerified && responseData.containsKey('error')) {
-            print('Verification failed. Reason: ${responseData['error']}');
-          }
-          return isVerified;
-        } else if (responseData.containsKey('message')) {
-          bool isVerified = responseData['message'] == "User verified successfully";
-          print('message key found. Interpreted as verified: $isVerified');
-          return isVerified;
-        } else {
-          print('Unexpected response format');
-          return false;
-        }
+        final decodedResponse = jsonDecode(response.body);
+        print('Decoded response: $decodedResponse');
+        return decodedResponse;
       } else {
         print('Failed to verify OTP. Status code: ${response.statusCode}');
-        return false;
+        return null;
       }
     } catch (e) {
       print('Error in HTTP request: $e');
-      return false;
+      return null;
     }
   }
 
@@ -189,7 +170,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
             bottom: 20,
             right: 20,
             child: GestureDetector(
-              onTap: _handleVerifyOTP,
+              onTap: _verifyOTP,
               child: const Row(
                 children: [
                   Text(

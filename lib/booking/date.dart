@@ -22,7 +22,7 @@ class _BookingPageState extends State<BookingPage> {
   int? selectedSlotIndex;
   int? selectedCourtIndex;
   bool playWithStrangers = false;
-  final TextEditingController _numberOfPeopleController = TextEditingController(); // Controller for TextField
+  final TextEditingController _numberOfPeopleController = TextEditingController();
 
   DateTime _focusedDay = DateTime.now();
   final DateTime _firstDay = DateTime(DateTime.now().year - 1);

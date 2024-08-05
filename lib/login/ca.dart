@@ -9,6 +9,7 @@ import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:get/get.dart';
 import 'package:sporty/models/mycontroller.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -36,6 +37,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ];
 
   final List<String> _levels = ['select', 'beginner', 'intermediate', 'expert'];
+
+  String? selectedLocation;
+
+  final List<String> locations = [
+    'Pachalam', 'Elamakkara', 'Cheranallur', 'Palarivattom', 'Edapally', 'Kaloor',
+    'Marine Drive, Kochi', 'High Court Junction', 'Thevara', 'Panampilly Nagar',
+    'Gandhi Nagar, Kochi', 'Ravipuram', 'Pachalam', 'Kathrikadavu', 'Thammanam',
+    'Kadavanthra', 'Kaloor', 'Karanakodam', 'Ernakulam North', 'Ravipuram',
+    'Ernakulam South', 'Kalabhavan Road', 'Willingdon Island', 'Fort Kochi',
+    'Mattancherry', 'Thoppumpady', 'Palluruthy', 'Chellanam', 'Kumbalangi',
+    'Kattiparambu', 'Kundannoor', 'Edakochi', 'Maradu', 'Thaikoodam metro station',
+    'Chambakkara', 'Kakkanad', 'Vennala', 'Thrikkakara', 'Vyttila', 'Tripunithura',
+    'Piravom', 'Kalamassery', 'Aluva', 'Angamaly', 'North Paravur', 'Eloor',
+    'Koonammavu', 'Vaduthala', 'Vypin Island', 'Cherai', 'Kumbalam', 'Udayamperoor',
+    'Panangad', 'Eramallur', 'Vaikom', 'Kothamangalam', 'Perumbavoor', 'Eroor',
+    'Thiruvankulam', 'Kolenchery', 'Mamala', 'Kizhakkambalam', 'Piravom', 'Mulanthuruthy',
+    'Chottanikkara'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +192,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                         ),
                         const SizedBox(height: 10),
+                        _buildDropdownSearch(
+                          items: locations,
+                          label: 'Select Location',
+                          onChanged: (value) {
+                            setState(() {
+                              selectedLocation = value;
+                              myController.locationController.value.text = value ?? '';
+                            });
+                          },
+                          selectedItem: selectedLocation,
+                        ),
                         Row(
                           children: [
                             Checkbox(
@@ -241,6 +271,59 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Widget _buildDropdownSearch({
+    required List<String> items,
+    required String label,
+    required Function(String?) onChanged,
+    required String? selectedItem,
+  }) {
+    return DropdownSearch<String>(
+      popupProps: PopupProps.menu(
+        showSearchBox: true,
+        showSelectedItems: true,
+        searchFieldProps: TextFieldProps(
+          decoration: InputDecoration(
+            hintText: "Search $label",
+            hintStyle: TextStyle(color: Colors.white70),
+          ),
+          style: TextStyle(color: Colors.white),
+        ),
+        menuProps: MenuProps(
+          backgroundColor: Colors.grey[800],
+        ),
+        itemBuilder: (context, item, isSelected) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              item,
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+        },
+      ),
+      items: items,
+      dropdownDecoratorProps: DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey[900],
+          labelText: label,
+          labelStyle: TextStyle(color: Colors.white),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      onChanged: onChanged,
+      selectedItem: selectedItem,
+      dropdownBuilder: (context, selectedItem) {
+        return Text(
+          selectedItem ?? label,
+          style: TextStyle(color: Colors.white),
+        );
+      },
+    );
+  }
+
   void _handlesignup() async {
     // Collect data from controllers
     String firstName = myController.firstNameController.value.text;
@@ -249,6 +332,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String phoneNumber = myController.noController.value.text;
     String interestedSports = myController.intrestedsportsController.value.text;
     String level = myController.levelController.value.text;
+    String location = myController.locationController.value.text;
 
     // Prepare the data to be sent
     Map<String, dynamic> requestData = {
@@ -258,6 +342,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'intrestedsports': interestedSports,
       'level': level,
       'age': int.parse(age), // Ensure age is sent as an integer
+      'location': location,
     };
 
     try {

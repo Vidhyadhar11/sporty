@@ -11,6 +11,7 @@ class Mycontroller extends GetxController {
   final Rx<TextEditingController> levelController = TextEditingController().obs;
   final RxList<TextEditingController> otpControllers = List.generate(4, (index) => TextEditingController()).obs;
   final Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
+  final Rx<TextEditingController> locationController = TextEditingController().obs;
   Rx<String?> selectedSport = 'select'.obs;
   Rx<String?> selectedLevel = 'select'.obs;
   var isFavorite = false.obs;

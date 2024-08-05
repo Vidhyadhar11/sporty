@@ -8,11 +8,11 @@ class EventController extends GetxController {
 
   @override
   void onInit() {
-    fetchSportsFields();
+    fetchSportsField();
     super.onInit();
   }
 
-  void fetchSportsFields() async {
+  void fetchSportsField() async {
     print('Fetching sports fields...');
     try {
       isLoading(true);

@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:sporty/booking/bookings1.dart';
+import 'package:http/http.dart';
+import 'package:sporty/drawer/drawerview.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:sporty/login/enterphn.dart';
 import 'package:sporty/login/splash.dart';
 import 'package:sporty/models/controllerhome.dart';
-
-// import 'package:sporty/payment/singlepay.dart';
+import 'package:sporty/models/mycontroller.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Get.put(LikedFieldsController());
+  
+  // Initialize Mycontroller first
+  Get.put(Mycontroller());
+  
+  // Then initialize UserController
+  Get.put(UserController());
+  
   runApp(const MyApp());
 }
 
@@ -23,9 +31,9 @@ class MyApp extends StatelessWidget {
       title: 'Sporty App',
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/onboarding', page: () => const SplashScreen()),
+        GetPage(name: '/', page: () => const SplashScreen()),
         GetPage(name: '/enter-phone', page: () => const EnterPhoneNumberScreen()),
-        GetPage(name: '/', page: () => HomePage()),
+        GetPage(name: '/home', page: () => HomePage()),
       ],
     );
   }

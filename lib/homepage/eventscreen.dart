@@ -22,7 +22,7 @@ class _EventScreenState extends State<EventScreen> {
   @override
   void initState() {
     super.initState();
-    controller.fetchSportsFields();
+    controller.fetchSportsField();
   }
 
   @override
