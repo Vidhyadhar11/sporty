@@ -28,8 +28,8 @@ class _BookingScreenState extends State<BookingScreen> {
     });
 
     try {
-      final upcomingResponse = await http.get(Uri.parse('http://10.0.2.2:3000/booking/upcomingBookings'));
-      final pastResponse = await http.get(Uri.parse('http://10.0.2.2:3000/booking/pastBookings'));
+      final upcomingResponse = await http.get(Uri.parse('http://13.233.98.192:3000/booking/upcomingBookings'));
+      final pastResponse = await http.get(Uri.parse('http://13.233.98.192:3000/booking/pastBookings'));
 
       if (upcomingResponse.statusCode == 200 && pastResponse.statusCode == 200) {
         setState(() {

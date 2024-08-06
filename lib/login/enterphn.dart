@@ -146,7 +146,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
       print('Request body: $requestBody');
 
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/sendotp'),
+        Uri.parse('http://13.233.98.192:3000/sendotp'),
         headers: {
           'Content-Type': 'application/json',
         },

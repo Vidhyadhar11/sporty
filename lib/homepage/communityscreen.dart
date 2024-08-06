@@ -27,7 +27,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   Future<void> fetchPeople() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/users'));
+      final response = await http.get(Uri.parse('http://13.233.98.192:3000/users'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -47,7 +47,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   Future<void> fetchGroups() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/community-group'));
+      final response = await http.get(Uri.parse('http://13.233.98.192:3000/community-group'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {

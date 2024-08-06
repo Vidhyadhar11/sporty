@@ -16,7 +16,7 @@ class SportsFieldController extends GetxController {
   Future<void> fetchSportsFields() async {
     try {
       print('Fetching sports fields...');
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/turf'));
+      final response = await http.get(Uri.parse('http://13.233.98.192:3000/turf'));
       print('Response status: ${response.statusCode}');
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);

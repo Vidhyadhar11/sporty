@@ -62,7 +62,7 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
       ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
       final http = IOClient(ioc);
 
-      final url = 'http://10.0.2.2:3000/verify';
+      final url = 'http://13.233.98.192:3000/verify';
       print('Sending request to: $url');
 
       final response = await http.post(

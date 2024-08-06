@@ -373,7 +373,7 @@ Future<void> sendBookingDetails(Map<String, dynamic> bookingDetails) async {
   try {
     print('Sending booking details: ${json.encode(bookingDetails)}');
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/booking'),
+      Uri.parse('http://13.233.98.192:3000/booking'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(bookingDetails),
     );

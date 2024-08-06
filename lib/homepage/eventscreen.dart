@@ -29,7 +29,7 @@ class _EventScreenState extends State<EventScreen> {
 
   Future<void> fetchJoinEvents() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/booking/playWithStrangers'));
+      final response = await http.get(Uri.parse('http://13.233.98.192:3000/booking/playWithStrangers'));
       if (response.statusCode == 200) {
         setState(() {
           joinEvents = json.decode(response.body);

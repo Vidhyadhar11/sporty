@@ -68,13 +68,13 @@ class UserController extends GetxController {
   Future<void> fetchUserDetails() async {
     String phoneNumber = Phncontroller.phoneNumber;
     print('Fetching user details for phone number: $phoneNumber');
-    print('API URL: http://10.0.2.2:3000/users/$phoneNumber');
+    print('API URL: http://13.233.98.192:3000/users/$phoneNumber');
     isLoading.value = true;
     hasError.value = false;
     errorMessage.value = '';
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/users/$phoneNumber'),
+        Uri.parse('http://13.233.98.192:3000/users/$phoneNumber'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
