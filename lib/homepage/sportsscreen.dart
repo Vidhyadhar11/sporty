@@ -70,10 +70,10 @@ class _SportsScreenState extends State<SportsScreen> {
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(16.0),
                               bottomRight: Radius.circular(16.0),
                             ),
@@ -81,7 +81,7 @@ class _SportsScreenState extends State<SportsScreen> {
                           child: Text(
                             sports[index]['name']!,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            style: const TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ),

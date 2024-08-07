@@ -12,15 +12,15 @@ class FavoriteScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Liked Fields', style: TextStyle(color: Colors.green)),
+        title: const Text('Liked Fields', style: TextStyle(color: Colors.green)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.green),
+          icon: const Icon(Icons.arrow_back, color: Colors.green),
           onPressed: () => Get.back(),
         ),
       ),
       body: Obx(() {
         if (likedController.likedFields.isEmpty) {
-          return Center(child: Text('No liked fields yet'));
+          return const Center(child: Text('No liked fields yet'));
         }
         return ListView.builder(
           itemCount: likedController.likedFields.length,
@@ -28,10 +28,10 @@ class FavoriteScreen extends StatelessWidget {
             final field = likedController.likedFields[index];
             return ListTile(
               leading: Image.network(field.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
-              title: Text(field.turfName, style: TextStyle(color: Colors.white)),
-              subtitle: Text(field.location, style: TextStyle(color: Colors.white)),
+              title: Text(field.turfName, style: const TextStyle(color: Colors.white)),
+              subtitle: Text(field.location, style: const TextStyle(color: Colors.white)),
               trailing: IconButton(
-                icon: Icon(Icons.favorite, color: Colors.red),
+                icon: const Icon(Icons.favorite, color: Colors.red),
                 onPressed: () => likedController.toggleLike(field),
               ),
               onTap: () {

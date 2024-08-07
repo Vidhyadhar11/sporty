@@ -57,9 +57,9 @@ class _SportsListScreenState extends State<SportsListScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(widget.sportName, style: TextStyle(color: Colors.white)),
+        title: Text(widget.sportName, style: const TextStyle(color: Colors.white)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -71,11 +71,11 @@ class _SportsListScreenState extends State<SportsListScreen> {
               child: Expanded(
                 child: TextField(
                   controller: searchController,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
                     filled: true,
                     fillColor: Colors.grey[800],
                     border: OutlineInputBorder(
@@ -89,9 +89,9 @@ class _SportsListScreenState extends State<SportsListScreen> {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (filteredSportsFields.isEmpty) {
-                  return Center(child: Text('No ${widget.sportName} fields available', style: TextStyle(color: Colors.white)));
+                  return Center(child: Text('No ${widget.sportName} fields available', style: const TextStyle(color: Colors.white)));
                 } else {
                   return ListView.builder(
                     itemCount: filteredSportsFields.length,
@@ -103,7 +103,7 @@ class _SportsListScreenState extends State<SportsListScreen> {
                         },
                         child: Card(
                           color: Colors.black,
-                          margin: EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -119,41 +119,41 @@ class _SportsListScreenState extends State<SportsListScreen> {
                                     bottom: 10,
                                     right: 10,
                                     child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                       decoration: BoxDecoration(
                                         color: Colors.green,
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       child: Text(
                                         '${field.discounts}% Off',
-                                        style: TextStyle(color: Colors.white, fontSize: 12),
+                                        style: const TextStyle(color: Colors.white, fontSize: 12),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       '${field.turfName}, ${field.location}',
-                                      style: TextStyle(color: Colors.white, fontSize: 16),
+                                      style: const TextStyle(color: Colors.white, fontSize: 16),
                                     ),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Row(
                                       children: [
-                                        Icon(Icons.star, color: Colors.yellow, size: 16),
-                                        SizedBox(width: 4),
+                                        const Icon(Icons.star, color: Colors.yellow, size: 16),
+                                        const SizedBox(width: 4),
                                         Text(
                                           '${field.rating}',
-                                          style: TextStyle(color: Colors.white, fontSize: 14),
+                                          style: const TextStyle(color: Colors.white, fontSize: 14),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Text(
                                           '₹${field.courts}/hr',
-                                          style: TextStyle(color: Colors.white, fontSize: 14),
+                                          style: const TextStyle(color: Colors.white, fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -172,7 +172,7 @@ class _SportsListScreenState extends State<SportsListScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(currentIndex: 1),
+      bottomNavigationBar: const CustomNavBar(currentIndex: 1),
     );
   }
 }

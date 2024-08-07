@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/drawer/favorite.dart';
 import 'package:sporty/drawer/rewards.dart';
+import 'package:sporty/login/enterphn.dart';
 import 'dart:convert';
 import 'package:sporty/models/phncontroller.dart';
 import 'dart:async';
@@ -78,7 +79,7 @@ class UserController extends GetxController {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-      ).timeout(Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 10));
 
       print('Response status code: ${response.statusCode}');
       print('Response body: ${response.body}');
@@ -106,7 +107,7 @@ class UserController extends GetxController {
     if (_retryCount < maxRetries) {
       _retryCount++;
       print('Scheduling retry $_retryCount of $maxRetries in $retryDelay seconds');
-      _retryTimer = Timer(Duration(seconds: retryDelay), fetchUserDetails);
+      _retryTimer = Timer(const Duration(seconds: retryDelay), fetchUserDetails);
     } else {
       print('Max retries reached. User interaction required.');
     }
@@ -134,7 +135,7 @@ class Drawerview extends StatelessWidget {
       backgroundColor: Colors.black,
       child: Obx(() {
         if (controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.hasError.value) {
@@ -147,21 +148,21 @@ class Drawerview extends StatelessWidget {
               if (controller._retryCount >= UserController.maxRetries)
                 ElevatedButton(
                   onPressed: controller.manualRetry,
-                  child: Text('Retry Manually'),
+                  child: const Text('Retry Manually'),
                 ),
             ],
           );
         }
 
         if (UserModel.isEmpty) {
-          return Center(child: Text('No user data available'));
+          return const Center(child: Text('No user data available'));
         }
 
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
                       width: 80,
                       height: 80,
@@ -173,42 +174,42 @@ class Drawerview extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                   '${UserModel.firstname} ${UserModel.lastname}',
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   UserModel.mobileno,
-                  style: TextStyle(color: Colors.white70),
+                  style: const TextStyle(color: Colors.white70),
                 ),
-                SizedBox(height: 10),
-                Divider(
+                const SizedBox(height: 10),
+                const Divider(
                   color: Colors.white,
                 ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () => Get.to(() => BookingScreen()),
-                child: Text('Booking', style: TextStyle(color: Colors.white),),
+                child: const Text('Booking', style: TextStyle(color: Colors.white),),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () => Get.to(() => FavoriteScreen()),
-                child: Text('Favorites', style: TextStyle(color: Colors.white),),
-              ),
-              SizedBox(height: 10),
+                child: const Text('Favorites', style: TextStyle(color: Colors.white),),
+              ),  
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () => Get.to(() => RewardsPage()),
-                child: Text('Rewards', style: TextStyle(color: Colors.white),),
+                child: const Text('Rewards', style: TextStyle(color: Colors.white),),
               ),
-              SizedBox(height: 10),
-              Spacer(),
+              const SizedBox(height: 10),
+              const Spacer(),
               TextButton(
-                onPressed: () => Get.offAllNamed('/home'),
-                child: Text('Logout', style: TextStyle(color: Colors.green),),
+                onPressed: () => Get.to(() => const EnterPhoneNumberScreen()),
+                child: const Text('Logout', style: TextStyle(color: Colors.green),),
               ),
-              Text('Version 1.0.0', style: TextStyle(color: Colors.white),),
+              const Text('Version 1.0.0', style: TextStyle(color: Colors.white),),
             ],
           ),
         );

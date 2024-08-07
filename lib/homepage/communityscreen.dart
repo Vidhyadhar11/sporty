@@ -188,7 +188,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 launchUrl(Uri.parse(group['groupLink']));
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('No group link available')),
+                  const SnackBar(content: Text('No group link available')),
                 );
               }
             },

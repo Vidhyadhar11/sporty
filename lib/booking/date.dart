@@ -73,8 +73,8 @@ class _BookingPageState extends State<BookingPage> {
                   });
                 },
                 child: Container(
-                  margin: EdgeInsets.only(right: 10),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
                     color: isSelected ? Colors.white : Colors.black,
                     borderRadius: BorderRadius.circular(10),
@@ -328,7 +328,7 @@ class _BookingPageState extends State<BookingPage> {
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),
-                              SizedBox(width: 10), // Add some space between the fields
+                              const SizedBox(width: 10), // Add some space between the fields
                               Expanded(
                                 child: TextField(
                                   controller: _remainingMembersController,

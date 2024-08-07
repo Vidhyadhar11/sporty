@@ -24,7 +24,7 @@ class _DetailsPageState extends State<DetailsPage> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -46,14 +46,14 @@ class _DetailsPageState extends State<DetailsPage> {
                         bottom: 10,
                         left: 10,
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
                             widget.sportsField.category,
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: const TextStyle(color: Colors.white, fontSize: 12),
                           ),
                         ),
                       ),
@@ -61,14 +61,14 @@ class _DetailsPageState extends State<DetailsPage> {
                         bottom: 10,
                         right: 10,
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text(
                             '${widget.sportsField.discounts}% Off',
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: const TextStyle(color: Colors.white, fontSize: 12),
                           ),
                         ),
                       ),
@@ -83,37 +83,37 @@ class _DetailsPageState extends State<DetailsPage> {
                           children: [
                             Text(
                               widget.sportsField.location,
-                              style: TextStyle(color: Colors.white, fontSize: 16),
+                              style: const TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
-                            Icon(Icons.star, color: Colors.yellow, size: 20),
-                            SizedBox(width: 4),
+                            const Icon(Icons.star, color: Colors.yellow, size: 20),
+                            const SizedBox(width: 4),
                             Text(
                               '${widget.sportsField.rating}',
-                              style: TextStyle(color: Colors.white, fontSize: 16),
+                              style: const TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ],
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Text(
                           widget.sportsField.turfName,
-                          style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                          style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           widget.sportsField.description,
                           style: TextStyle(color: Colors.grey[600], fontSize: 14),
                         ),
-                        SizedBox(height: 24),
-                        Text(
+                        const SizedBox(height: 24),
+                        const Text(
                           'Amenities',
                           style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Wrap(
                           spacing: 20,
                           runSpacing: 20,
@@ -135,7 +135,7 @@ class _DetailsPageState extends State<DetailsPage> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 color: Colors.black.withOpacity(0.8),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -158,25 +158,25 @@ class _DetailsPageState extends State<DetailsPage> {
                             ),
                           )),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           flex: 2,
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                             decoration: BoxDecoration(
                               color: Colors.grey[800],
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
                               '₹${widget.sportsField.slots[0]['price']}/hr',
-                              style: TextStyle(color: Colors.white, fontSize: 16),
+                              style: const TextStyle(color: Colors.white, fontSize: 16),
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -184,9 +184,9 @@ class _DetailsPageState extends State<DetailsPage> {
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: Colors.green),
+                            side: const BorderSide(color: Colors.green),
                           ),
-                          padding: EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         onPressed: () {
                           Get.to(() => BookingPage(turfRate: widget.sportsField.slots[0]['price'].toDouble(), 
@@ -195,7 +195,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           numberOfCourts: widget.sportsField.courts, 
                           turfName: widget.sportsField.turfName));
                         },
-                        child: Text('Book Now', style: TextStyle(color: Colors.green, fontSize: 18)),
+                        child: const Text('Book Now', style: TextStyle(color: Colors.green, fontSize: 18)),
                       ),
                     ),
                   ],
@@ -212,8 +212,8 @@ class _DetailsPageState extends State<DetailsPage> {
     return Column(
       children: [
         Icon(icon, color: Colors.white, size: 24),
-        SizedBox(height: 4),
-        Text(label, style: TextStyle(color: Colors.white, fontSize: 12)),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ],
     );
   }

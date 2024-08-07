@@ -94,7 +94,7 @@ class _EventScreenState extends State<EventScreen> {
                           ].map((String value) {
                             return PopupMenuItem<String>(
                               value: value,
-                              child: Text(value, style: TextStyle(color: Colors.white)),
+                              child: Text(value, style: const TextStyle(color: Colors.white)),
                             );
                           }).toList();
                         },
@@ -163,15 +163,15 @@ class JoinEvents extends StatelessWidget {
             child: ListTile(
               title: Text(
                 event['turfName'] ?? 'Unknown Turf',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               subtitle: Text(
                 'Date: ${event['date']} | Slot: ${event['slot']}',
-                style: TextStyle(color: Colors.white70),
+                style: const TextStyle(color: Colors.white70),
               ),
               trailing: Text(
                 'Remaining: ${event['remainingMembers']}',
-                style: TextStyle(color: Colors.green),
+                style: const TextStyle(color: Colors.green),
               ),
               onTap: () {
                 // Navigate to details page or join page
@@ -188,7 +188,7 @@ class JoinEvents extends StatelessWidget {
 class CompeteEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'Coming Soon',
         style: TextStyle(

@@ -37,7 +37,7 @@ class _OnboardingState extends State<Onboarding> with SingleTickerProviderStateM
     _animation = Tween<double>(begin: 0.0, end: 10.0).animate(_animationController);
 
     // Hide arrow after 3 seconds
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         setState(() {
           _showArrow = false;
@@ -72,7 +72,7 @@ class _OnboardingState extends State<Onboarding> with SingleTickerProviderStateM
                       builder: (context, child) {
                         return Transform.translate(
                           offset: Offset(_animation.value, 0),
-                          child: Icon(
+                          child: const Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
                             size: 30,

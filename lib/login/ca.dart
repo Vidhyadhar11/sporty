@@ -284,19 +284,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
         searchFieldProps: TextFieldProps(
           decoration: InputDecoration(
             hintText: "Search $label",
-            hintStyle: TextStyle(color: Colors.white70),
+            hintStyle: const TextStyle(color: Colors.white70),
           ),
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         menuProps: MenuProps(
           backgroundColor: Colors.grey[800],
         ),
         itemBuilder: (context, item, isSelected) {
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
               item,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           );
         },
@@ -307,7 +307,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           filled: true,
           fillColor: Colors.grey[900],
           labelText: label,
-          labelStyle: TextStyle(color: Colors.white),
+          labelStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -318,7 +318,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       dropdownBuilder: (context, selectedItem) {
         return Text(
           selectedItem ?? label,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         );
       },
     );

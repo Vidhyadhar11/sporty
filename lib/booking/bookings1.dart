@@ -65,7 +65,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                       onPressed: () {
-                        Get.to(() => HomePage());
+                        Get.to(() => const HomePage());
                       },
                     ),
                   ),
@@ -90,7 +90,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   const SizedBox(height: 10),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: showUpcoming ? upcomingBookings.length : pastBookings.length,
                     itemBuilder: (context, index) {
                       var booking = showUpcoming ? upcomingBookings[index] : pastBookings[index];
@@ -131,9 +131,9 @@ class BookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.grey[900],
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Image.network(imageUrl, width: 100, height: 100, fit: BoxFit.cover),
@@ -150,9 +150,9 @@ class BookingCard extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(location, style: const TextStyle(color: Colors.white70)),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(time, style: const TextStyle(color: Colors.white70)),
                 ],
               ),

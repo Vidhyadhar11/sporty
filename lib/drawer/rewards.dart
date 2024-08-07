@@ -21,7 +21,7 @@ class RewardsPage extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'Coming Soon',
           style: TextStyle(
