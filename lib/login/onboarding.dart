@@ -17,7 +17,6 @@ class _OnboardingState extends State<Onboarding> with SingleTickerProviderStateM
     'assets/Soccer-bro.png',
     'assets/basketball player-bro.png',
     'assets/swimming.png',
-    'assets/Tennis-bro.png',
     'assets/Golf-bro.png',
     'assets/Grand slam-bro.png',
   ];

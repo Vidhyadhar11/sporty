@@ -19,9 +19,8 @@ class _SportsScreenState extends State<SportsScreen> {
     {'name': 'Soccer', 'image': 'assets/Soccer-bro.png'},
     {'name': 'Basketball', 'image': 'assets/basketball player-bro.png'},
     {'name': 'Swimming', 'image': 'assets/swimming.png'},
-    {'name': 'Tennis', 'image': 'assets/Tennis-bro.png'},
+    {'name': 'Tennis', 'image': 'assets/Grand slam-bro.png'},
     {'name': 'Golf', 'image': 'assets/Golf-bro.png'},
-    {'name': 'Grand Slam', 'image': 'assets/Grand slam-bro.png'},
   ];
 
   void _onSportSelected(String sportName) {
@@ -37,8 +36,7 @@ class _SportsScreenState extends State<SportsScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+            Center(
               child: Text(
                 'Select Sport',
                 style: TextStyle(color: Colors.white, fontSize: 24),

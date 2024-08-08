@@ -115,7 +115,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
 
       try {
         final response = await sendPhoneNumber('+91$phoneNumber');
-        if (response != null) {
+        if (response != null && response.containsKey('orderId')) {
           String orderId = response['orderId']!;
           Get.to(() => EnterOTPScreen(
             orderId: orderId,
@@ -124,7 +124,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
           print('Phone number sent successfully');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Server error. Please try again later.')),
+            SnackBar(content: Text('Failed to get orderId from server response')),
           );
         }
       } catch (e) {
@@ -161,11 +161,12 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
         if (responseData.containsKey('orderId')) {
           return {'orderId': responseData['orderId']};
         } else {
-          print('Response data does not contain required keys');
+          print('Response data does not contain orderId');
           return null;
         }
       } else {
         print('Failed to send phone number. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
         return null;
       }
     } catch (e) {
