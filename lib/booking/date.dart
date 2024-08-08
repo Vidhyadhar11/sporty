@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sporty/payment/singlepay.dart';
-import 'package:sporty/payment/joinpay.dart';
+// import 'package:sporty/payment/joinpay.dart';
 import 'package:sporty/models/phncontroller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

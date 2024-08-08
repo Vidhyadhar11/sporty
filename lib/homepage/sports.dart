@@ -8,7 +8,7 @@ import 'package:sporty/homepage/details.dart';
 class SportsListScreen extends StatefulWidget {
   final String sportName;
 
-  const SportsListScreen({Key? key, required this.sportName}) : super(key: key);
+  const SportsListScreen({super.key, required this.sportName});
 
   @override
   _SportsListScreenState createState() => _SportsListScreenState();

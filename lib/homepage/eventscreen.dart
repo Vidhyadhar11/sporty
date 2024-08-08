@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:sporty/homepage/testpage.dart';
-import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
-import 'package:sporty/uicomponents/cards.dart';
-import 'package:sporty/homepage/details.dart';
+// import 'package:sporty/homepage/testpage.dart';
+// import 'package:get/get.dart';
+// import 'package:sporty/models/sports_feild.dart';
+// import 'package:sporty/uicomponents/cards.dart';
+// import 'package:sporty/homepage/details.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -19,6 +19,7 @@ class _EventScreenState extends State<EventScreen> {
   bool isJoinSelected = true;
   String selectedFilter = 'Filter';
   List<dynamic> joinEvents = [];
+  List<dynamic> filteredEvents = [];
   bool isLoading = true;
 
   @override
@@ -33,6 +34,7 @@ class _EventScreenState extends State<EventScreen> {
       if (response.statusCode == 200) {
         setState(() {
           joinEvents = json.decode(response.body);
+          applyFilter();
           isLoading = false;
         });
       } else {
@@ -44,6 +46,18 @@ class _EventScreenState extends State<EventScreen> {
         isLoading = false;
       });
     }
+  }
+
+  void applyFilter() {
+    setState(() {
+      if (selectedFilter == 'Filter') {
+        filteredEvents = joinEvents;
+      } else {
+        filteredEvents = joinEvents.where((event) {
+          return event['sport'] == selectedFilter;
+        }).toList();
+      }
+    });
   }
 
   @override
@@ -80,6 +94,7 @@ class _EventScreenState extends State<EventScreen> {
                         onSelected: (String value) {
                           setState(() {
                             selectedFilter = value;
+                            applyFilter();
                           });
                         },
                         itemBuilder: (BuildContext context) {
@@ -114,25 +129,12 @@ class _EventScreenState extends State<EventScreen> {
                         ),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () {
-                        Get.to(() => const TestPage());
-                      },
-                      icon: const Icon(Icons.location_on, color: Colors.white),
-                      label: const Text('Location', style: TextStyle(color: Colors.white)),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
             Expanded(
               child: isJoinSelected
-                  ? JoinEvents(joinEvents: joinEvents, isLoading: isLoading)
+                  ? JoinEvents(joinEvents: filteredEvents, isLoading: isLoading)
                   : CompeteEvents(),
             ),
           ],

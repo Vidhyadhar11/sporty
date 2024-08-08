@@ -4,6 +4,8 @@ import 'package:sporty/homepage/sports.dart';
 import 'package:sporty/uicomponents/elements.dart';
 
 class SportsScreen extends StatefulWidget {
+  const SportsScreen({super.key});
+
   @override
   _SportsScreenState createState() => _SportsScreenState();
 }

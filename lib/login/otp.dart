@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:get/get.dart';
 import 'package:sporty/models/mycontroller.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:http/io_client.dart';
 import 'dart:io';
