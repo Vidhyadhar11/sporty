@@ -22,6 +22,7 @@ class _SportsListScreenState extends State<SportsListScreen> {
   @override
   void initState() {
     super.initState();
+    print('SportsListScreen initialized with sport: ${widget.sportName}'); // Debugging statement
     _filterSportFields();
     searchController.addListener(_filterSportsFields);
   }
@@ -68,20 +69,18 @@ class _SportsListScreenState extends State<SportsListScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Expanded(
-                child: TextField(
-                  controller: searchController,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                    filled: true,
-                    fillColor: Colors.grey[800],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
+              child: TextField(
+                controller: searchController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.grey[800],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
                   ),
                 ),
               ),

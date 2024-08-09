@@ -24,6 +24,7 @@ class _SportsScreenState extends State<SportsScreen> {
   ];
 
   void _onSportSelected(String sportName) {
+    print('Sport selected: $sportName'); // Debugging statement
     // Navigate to the new SportsScreen with the selected sport name
     Get.to(() => SportsListScreen(sportName: sportName));
   }
