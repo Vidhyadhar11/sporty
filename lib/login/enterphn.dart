@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart';
 import 'package:sporty/models/phncontroller.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 class EnterPhoneNumberScreen extends StatefulWidget {
   const EnterPhoneNumberScreen({super.key});
@@ -16,6 +17,23 @@ class EnterPhoneNumberScreen extends StatefulWidget {
 
 class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   bool _phoneNumberValid = true;
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    SystemNavigator.pop(); // This will close the app
+    return true; // Prevent the default back button behavior
+  }
 
   @override
   Widget build(BuildContext context) {

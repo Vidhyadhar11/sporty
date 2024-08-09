@@ -36,7 +36,7 @@ class _SportsScreenState extends State<SportsScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: Text(
                 'Select Sport',
                 style: TextStyle(color: Colors.white, fontSize: 24),
