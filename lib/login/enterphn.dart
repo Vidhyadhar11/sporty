@@ -125,12 +125,10 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
           )),
     );
   }
-
   void _handleProceed() async {
     if (_phoneNumberValid) {
       String phoneNumber = Phncontroller.phoneNumber;
       print('Phone number: $phoneNumber');
-
       try {
         final response = await sendPhoneNumber('+91$phoneNumber');
         if (response != null && response.containsKey('orderId')) {
@@ -142,10 +140,11 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
           print('Phone number sent successfully');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to get orderId from server response')),
+            SnackBar(content: Text('Failed to get response from server ')),
           );
         }
-      } catch (e) {
+      } 
+      catch (e) {
         print('Error sending phone number: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('An error occurred: $e')),

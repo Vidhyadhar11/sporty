@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:get/get.dart';
 import 'package:sporty/models/mycontroller.dart';
-// import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:http/io_client.dart';
 import 'dart:io';
@@ -94,6 +93,46 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     }
   }
 
+  Future<void> _resendOTP() async {
+    try {
+      final ioc = HttpClient();
+      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      final http = IOClient(ioc);
+
+      const url = 'http://13.233.98.192:3000/resendotp';
+      print('Sending request to: $url');
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'mobileno': widget.phoneNumber,
+          'orderId': widget.orderId,
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('Resend OTP response data: $responseData');
+        Get.snackbar('Success', 'OTP has been resent.',
+            snackPosition: SnackPosition.BOTTOM);
+      } else {
+        print('Failed to resend OTP. Status code: ${response.statusCode}');
+        Get.snackbar('Error', 'Failed to resend OTP. Please try again.',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      print('Error in HTTP request: $e');
+      Get.snackbar('Error', 'An error occurred. Please try again.',
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
   @override
   void dispose() {
     for (var controller in myController.otpControllers) {
@@ -160,6 +199,19 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                           },
                         ),
                       ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: _resendOTP,
+                  child: const Text(
+                    'Resend OTP',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
