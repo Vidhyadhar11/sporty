@@ -1,4 +1,4 @@
-package com.example.sporty
+package com.playlink
 
 import io.flutter.embedding.android.FlutterActivity
 
