@@ -1,23 +1,53 @@
-import 'package:flutter/material.dart';
-import 'package:sporty/login/onboarding.dart';
+import 'dart:async';
 
-class SplashScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sporty/homepage/home.dart';
+import 'package:sporty/login/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SplashScreen extends StatefulWidget {
+
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Navigate to the login screen after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
-       Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Onboarding()),
-        );
-           });
+  State<SplashScreen> createState() => _SplashScreenState();
+}
 
+class _SplashScreenState extends State<SplashScreen> {
+  String? finalPhoneNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  Future checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? phoneNumber = prefs.getString('phoneNumber');
+    
+    var obtainedPhoneNumber = phoneNumber;
+    setState(() {
+      finalPhoneNumber = obtainedPhoneNumber;
+    });
+    // Navigate after checking status
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => finalPhoneNumber == null ? const Onboarding() : const HomePage()
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.asset('assets/playlink.png', height: 250), // Corrected file path
+        child: Image.asset('assets/playlink.png', height: 250),
       ),
     );
   }

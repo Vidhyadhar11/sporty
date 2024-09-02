@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporty/login/ca.dart';
 import 'package:sporty/login/otp.dart';
 import 'package:sporty/models/phncontroller.dart';
@@ -128,7 +129,10 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   void _handleProceed() async {
     if (_phoneNumberValid) {
       String phoneNumber = Phncontroller.phoneNumber;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('phoneNumber', phoneNumber);
       print('Phone number: $phoneNumber');
+
       try {
         final response = await sendPhoneNumber('+91$phoneNumber');
         if (response != null && response.containsKey('orderId')) {
