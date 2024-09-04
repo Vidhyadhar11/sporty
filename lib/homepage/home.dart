@@ -5,15 +5,6 @@ import 'package:sporty/models/controllerhome.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/homepage/details.dart';
-// import 'package:sporty/homepage/testpage.dart';
-// import 'package:sporty/models/phncontroller.dart';
-// import 'package:sporty/drawer/favorite.dart';
-// import 'package:sporty/drawer/rewards.dart';
-// import 'package:sporty/login/enterphn.dart';
-// import 'package:sporty/booking/bookings1.dart';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
-
 
 
 class HomePage extends StatefulWidget {
@@ -25,20 +16,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final SportsFieldController controller = Get.put(SportsFieldController());
-  // final UserController userController = Get.put(UserController());
   TextEditingController searchController = TextEditingController();
   List<SportsFieldApi> filteredSportsFields = [];
+  ScrollController _scrollController = ScrollController();
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
     filteredSportsFields = controller.sportsFields;
     searchController.addListener(_filterSportsFields);
+    _scrollController.addListener(_loadMoreFields);
   }
 
   @override
   void dispose() {
     searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -53,6 +47,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _loadMoreFields() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && !_isLoadingMore) {
+      setState(() {
+        _isLoadingMore = true;
+      });
+      // Simulate a network request to fetch more data
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          filteredSportsFields.addAll(List.from(filteredSportsFields)); // Example to duplicate current items
+          _isLoadingMore = false;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,33 +69,19 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        automaticallyImplyLeading: false, // Ensure this is set to false
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Builder(
               builder: (context) => IconButton(
-                icon: const Icon(Icons.menu,
-                    color: Colors.white), // Set the color to white
+                icon: const Icon(Icons.menu, color: Colors.white),
                 onPressed: () {
-                  Scaffold.of(context).openDrawer(); 
+                  Scaffold.of(context).openDrawer();
                 },
               ),
             ),
-            const Text(
-              'Play',
-              style: TextStyle(color: Colors.white),
-            ),
-            const Text(
-              'link',
-              style: TextStyle(color: Colors.green),
-            ),
-            // const Spacer(),
-            // IconButton(
-            //   icon: const Icon(Icons.notifications, color: Colors.white),
-            //   onPressed: () {
-            //     Get.to(() => const TestPage());
-            //   },
-            // ),
+            const Text('Play', style: TextStyle(color: Colors.white)),
+            const Text('link', style: TextStyle(color: Colors.green)),
           ],
         ),
       ),
@@ -117,9 +112,14 @@ class _HomePageState extends State<HomePage> {
             } else {
               return Expanded(
                 child: ListView.builder(
+                  controller: _scrollController,
                   itemCount: filteredSportsFields.length,
                   itemBuilder: (context, index) {
-                    final field = filteredSportsFields[index];
+                    if (filteredSportsFields.isEmpty) {
+                      print(filteredSportsFields.length);
+                      return Center(child: Text("No fields available"));
+                    }
+                    final field = filteredSportsFields.elementAt(index);
                     return GestureDetector(
                       onTap: () {
                         Get.to(() => DetailsPage(sportsField: field));

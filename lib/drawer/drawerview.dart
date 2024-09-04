@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporty/booking/bookings1.dart';
 import 'package:sporty/drawer/favorite.dart';
 import 'package:sporty/drawer/rewards.dart';
 import 'package:sporty/login/enterphn.dart';
-import 'dart:convert';
-import 'package:sporty/models/phncontroller.dart';
-import 'dart:async';
 
 class UserModel {
   static String id = '';
@@ -67,7 +68,8 @@ class UserController extends GetxController {
   }
 
   Future<void> fetchUserDetails() async {
-    String phoneNumber = Phncontroller.phoneNumber;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? phoneNumber = prefs.getString('phoneNumber');
     print('Fetching user details for phone number: $phoneNumber');
     print('API URL: http://13.233.98.192:3000/users/$phoneNumber');
     isLoading.value = true;
@@ -206,7 +208,11 @@ class Drawerview extends StatelessWidget {
               const SizedBox(height: 10),
               const Spacer(),
               TextButton(
-                onPressed: () => Get.to(() => const EnterPhoneNumberScreen()),
+                onPressed: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.remove('phoneNumber');
+                  Get.to(() => const EnterPhoneNumberScreen());
+                },
                 child: const Text('Logout', style: TextStyle(color: Colors.green),),
               ),
               const Text('Version 1.0.0', style: TextStyle(color: Colors.white),),

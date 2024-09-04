@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.playlink" // Use lowercase for consistency
+    namespace "com.playlink"
     compileSdk 34
 
     compileOptions {
@@ -49,8 +49,8 @@ android {
         applicationId "com.playlink"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.2"
     }
 
     signingConfigs {
