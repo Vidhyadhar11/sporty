@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sporty/models/phncontroller.dart';
+import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/payment/razorpay.dart';
 
 class SinglePaymentView extends StatefulWidget {
@@ -9,15 +11,19 @@ class SinglePaymentView extends StatefulWidget {
     required this.date, 
     required this.slot,
     required this.court,
-    this.turfName, // Make this optional
+    this.turfName,
+    required this.ownerMobileNumber,
   });
+
+  static double turfrate = 0.0;
 
   final double turfRate;
   final String turfId;
   final String date;
   final String slot;
   final String court;
-  final String? turfName; // Make this nullable
+  final String? turfName;
+  final String ownerMobileNumber;
 
   @override
   _SinglePaymentViewState createState() => _SinglePaymentViewState();
@@ -27,12 +33,8 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
   @override
   Widget build(BuildContext context) {
     final RazorpayService razorpayService = RazorpayService();
-    double onlinePayment = (widget.turfRate * 0.3);
-    double remainingAmount = widget.turfRate - onlinePayment;
-    double cashPayment = (remainingAmount / 100).ceil() * 100;
-    double serviceFee = 3.0;
-    double adjustedOnlinePayment = widget.turfRate - cashPayment + serviceFee;
-    double totalAmount = widget.turfRate + serviceFee;
+    double totalAmount = widget.turfRate;
+    String ownerMobileNumber = widget.ownerMobileNumber;
 
     return SafeArea(
       child: Container(
@@ -152,28 +154,6 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Service Fee',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white54,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        '₹ ${serviceFee.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white54,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
                   const Divider(color: Colors.white54),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,10 +181,14 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
             Center(
               child: TextButton(
-                onPressed: () => razorpayService.singlePayment(totalAmount),
+                onPressed: () {
+                  razorpayService.singlePayment(totalAmount,
+                  ownerMobileNumber,
+                  widget.turfName ?? 'Unknown Turf',
+                  );
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.green,
                 ),

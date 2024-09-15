@@ -14,9 +14,10 @@ class BookingPage extends StatefulWidget {
     super.key, 
     required this.turfRate, 
     required this.turfId, 
-    this.slots = const [], // Provide a default empty list
+    this.slots = const [],
     required this.numberOfCourts,
     this.turfName, // Make this optional
+    required this.ownerMobileNumber,
   }) {
     print('BookingPage constructor called with turfName: $turfName');
   }
@@ -26,7 +27,7 @@ class BookingPage extends StatefulWidget {
   final List<Map<String, dynamic>> slots;
   final int numberOfCourts;
   final String? turfName; // Make this nullable
-
+  final String ownerMobileNumber;
   @override
   _BookingPageState createState() => _BookingPageState();
 }
@@ -243,6 +244,7 @@ class _BookingPageState extends State<BookingPage> {
               'remainingMembers': _remainingMembersController.text.isNotEmpty ? _remainingMembersController.text : '0',
               'slot': "${slots[selectedSlotIndex!]['time']}",
               'date': "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
+              'ownerMobileNumber': widget.ownerMobileNumber,
             };
             try {
                 Get.to(() => SinglePaymentView(
@@ -251,7 +253,8 @@ class _BookingPageState extends State<BookingPage> {
                   slot: slots[selectedSlotIndex!]['time'],
                   turfRate: double.parse(slots[selectedSlotIndex!]['price'].toString()),
                   court: (selectedCourtIndex! + 1).toString(),
-                  turfName: widget.turfName ?? 'Unknown Turf', // Provide a default value if null
+                  turfName: widget.turfName ?? 'Unknown Turf',
+                  ownerMobileNumber: widget.ownerMobileNumber,
                 ));
                 await sendBookingDetails(bookingDetails);
             } catch (e) {

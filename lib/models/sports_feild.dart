@@ -11,6 +11,7 @@ class SportsFieldApi {
   final int discounts;
   final String id;
   bool isLiked;
+  final String ownerMobileNumber; // Add this line
 
   SportsFieldApi({
     required this.imageUrl,
@@ -24,11 +25,11 @@ class SportsFieldApi {
     required this.slots,
     required this.discounts,
     required this.id,
-    this.isLiked = false,
+    this.isLiked = false, 
+    required this.ownerMobileNumber, // Update this line
   });
   
   factory SportsFieldApi.fromsnapshot(Map<String, dynamic> json) {
-    // Handle the 'amenties' field which might be a string or an iterable
     List<String> amenities = [];
     if (json['amenties'] != null) {
       if (json['amenties'] is Iterable) {
@@ -52,6 +53,7 @@ class SportsFieldApi {
       location: json['location'] ?? '',
       description: json['description'] ?? '',
       amenities: amenities,
+      ownerMobileNumber: json['ownerMobileNo'] ?? '',
       rating: json['rating'] != null ? double.parse(json['rating'].toString()) : 0.0,
       slots: json['slots'] != null ? List<Map<String, dynamic>>.from(json['slots']) : [],
       discounts: json['discounts'] != null ? int.parse(json['discounts'].toString()) : 0,

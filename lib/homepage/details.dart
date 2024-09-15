@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 class DetailsPage extends StatefulWidget {
   final SportsFieldApi sportsField;
 
-  const DetailsPage({Key? key, required this.sportsField}) : super(key: key);
+  const DetailsPage({super.key, required this.sportsField});
+
+  
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -15,6 +17,26 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   final LikedFieldsController likedController = Get.find<LikedFieldsController>();
+  // static String? ownerMobileNumber=widget.sportsField.ownerMobileNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.sportsField.ownerMobileNumber.toString());
+    print(widget.sportsField.turfName.toString());
+    print(widget.sportsField.id.toString());
+    print(widget.sportsField.slots[0]['price'].toString());
+    print(widget.sportsField.slots[0]['time'].toString());
+    print(widget.sportsField.courts.toString());
+    print(widget.sportsField.discounts.toString());
+    print(widget.sportsField.imageUrl.toString());
+    print(widget.sportsField.location.toString());
+    print(widget.sportsField.description.toString());
+    print(widget.sportsField.amenities.toString());
+    print(widget.sportsField.rating.toString());
+    print(widget.sportsField.slots.toString());
+    print(widget.sportsField.isLiked.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +215,9 @@ class _DetailsPageState extends State<DetailsPage> {
                           turfId: widget.sportsField.id, 
                           slots: widget.sportsField.slots, 
                           numberOfCourts: widget.sportsField.courts, 
-                          turfName: widget.sportsField.turfName));
+                          turfName: widget.sportsField.turfName,
+                          ownerMobileNumber: widget.sportsField.ownerMobileNumber.toString()
+                          ));
                         },
                         child: const Text('Book Now', style: TextStyle(color: Colors.green, fontSize: 18)),
                       ),
