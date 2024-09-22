@@ -1,4 +1,6 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sporty/drawer/drawerview.dart';
 import 'package:sporty/models/controllerhome.dart';
@@ -27,13 +29,20 @@ class _HomePageState extends State<HomePage> {
     filteredSportsFields = controller.sportsFields;
     searchController.addListener(_filterSportsFields);
     _scrollController.addListener(_loadMoreFields);
+    BackButtonInterceptor.add(myInterceptor);
   }
 
   @override
   void dispose() {
     searchController.dispose();
     _scrollController.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    SystemNavigator.pop();
+    return true;//prevent from default back button
   }
 
   void _filterSportsFields() {
@@ -52,10 +61,19 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _isLoadingMore = true;
       });
-      // Simulate a network request to fetch more data
+
+      // Show a Snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('New turfs coming soon!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      // Prevent further scrolling by not adding more items
       Future.delayed(const Duration(seconds: 1), () {
         setState(() {
-          filteredSportsFields.addAll(List.from(filteredSportsFields)); // Example to duplicate current items
+          //filteredSportsFields.addAll(List.from(filteredSportsFields)); // Example to duplicate current items
           _isLoadingMore = false;
         });
       });
@@ -117,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     if (filteredSportsFields.isEmpty) {
                       print(filteredSportsFields.length);
-                      return Center(child: Text("No fields available"));
+                      return const Center(child: Text("No fields available"));
                     }
                     final field = filteredSportsFields.elementAt(index);
                     return GestureDetector(
