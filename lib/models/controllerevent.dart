@@ -16,11 +16,14 @@ class EventController extends GetxController {
     print('Fetching sports fields...');
     try {
       isLoading(true);
-      final response = await http.get(Uri.parse('http://13.233.98.192:3000/sportsfields'));
+      final response =
+          await http.get(Uri.parse('http://65.1.5.180:3000/sportsfields'));
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         print('Fetched data: $data');
-        sportsFields.value = (data as List).map((field) => EventSportsField.fromJson(field)).toList();
+        sportsFields.value = (data as List)
+            .map((field) => EventSportsField.fromJson(field))
+            .toList();
       } else {
         throw Exception('Failed to load sports fields');
       }

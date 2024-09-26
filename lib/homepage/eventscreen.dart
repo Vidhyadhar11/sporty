@@ -30,20 +30,22 @@ class _EventScreenState extends State<EventScreen> {
     fetchJoinEvents();
     BackButtonInterceptor.add(myInterceptor);
   }
-   @override
+
+  @override
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    Get.toNamed('/home');  // Navigate to home screen
+    Get.toNamed('/home'); // Navigate to home screen
     return true; // Prevent the default back button behavior
   }
 
   Future<void> fetchJoinEvents() async {
     try {
-      final response = await http.get(Uri.parse('http://13.233.98.192:3000/booking/playWithStrangers'));
+      final response = await http
+          .get(Uri.parse('http://65.1.5.180:3000/booking/playWithStrangers'));
       if (response.statusCode == 200) {
         setState(() {
           joinEvents = json.decode(response.body);
@@ -93,7 +95,8 @@ class _EventScreenState extends State<EventScreen> {
             ),
             if (isJoinSelected)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -122,7 +125,8 @@ class _EventScreenState extends State<EventScreen> {
                           ].map((String value) {
                             return PopupMenuItem<String>(
                               value: value,
-                              child: Text(value, style: const TextStyle(color: Colors.white)),
+                              child: Text(value,
+                                  style: const TextStyle(color: Colors.white)),
                             );
                           }).toList();
                         },
@@ -131,12 +135,15 @@ class _EventScreenState extends State<EventScreen> {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(selectedFilter, style: const TextStyle(color: Colors.white)),
-                              const Icon(Icons.arrow_drop_down, color: Colors.white),
+                              Text(selectedFilter,
+                                  style: const TextStyle(color: Colors.white)),
+                              const Icon(Icons.arrow_drop_down,
+                                  color: Colors.white),
                             ],
                           ),
                         ),
@@ -162,7 +169,9 @@ class JoinEvents extends StatelessWidget {
   final List<dynamic> joinEvents;
   final bool isLoading;
 
-  const JoinEvents({Key? key, required this.joinEvents, required this.isLoading}) : super(key: key);
+  const JoinEvents(
+      {Key? key, required this.joinEvents, required this.isLoading})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

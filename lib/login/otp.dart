@@ -38,9 +38,11 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     String enteredOTP = myController.otpControllers.map((c) => c.text).join();
     print('Entered OTP: $enteredOTP');
     try {
-      final response = await verifyOTP(widget.phoneNumber, enteredOTP, widget.orderId);
+      final response =
+          await verifyOTP(widget.phoneNumber, enteredOTP, widget.orderId);
       print('Verification response: $response');
-      if (response != null && response['message'] == "User verified successfully") {
+      if (response != null &&
+          response['message'] == "User verified successfully") {
         print('OTP verified successfully');
         Get.offAll(() => const HomePage());
       } else {
@@ -55,13 +57,15 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     }
   }
 
-  Future<Map<String, dynamic>?> verifyOTP(String phoneNumber, String otp, String orderId) async {
+  Future<Map<String, dynamic>?> verifyOTP(
+      String phoneNumber, String otp, String orderId) async {
     try {
       final ioc = HttpClient();
-      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      ioc.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
       final http = IOClient(ioc);
 
-      const url = 'http://13.233.98.192:3000/verify';
+      const url = 'http://65.1.5.180:3000/verify';
       print('Sending request to: $url');
 
       final response = await http.post(
@@ -96,10 +100,11 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   Future<void> _resendOTP() async {
     try {
       final ioc = HttpClient();
-      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      ioc.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
       final http = IOClient(ioc);
 
-      const url = 'http://13.233.98.192:3000/resendotp';
+      const url = 'http://65.1.5.180:3000/resendotp';
       print('Sending request to: $url');
 
       final response = await http.post(

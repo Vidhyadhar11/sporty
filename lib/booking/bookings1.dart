@@ -28,10 +28,13 @@ class _BookingScreenState extends State<BookingScreen> {
     });
 
     try {
-      final upcomingResponse = await http.get(Uri.parse('http://13.233.98.192:3000/booking/upcomingBookings'));
-      final pastResponse = await http.get(Uri.parse('http://13.233.98.192:3000/booking/pastBookings'));
+      final upcomingResponse = await http
+          .get(Uri.parse('http://65.1.5.180:3000/booking/upcomingBookings'));
+      final pastResponse = await http
+          .get(Uri.parse('http://65.1.5.180:3000/booking/pastBookings'));
 
-      if (upcomingResponse.statusCode == 200 && pastResponse.statusCode == 200) {
+      if (upcomingResponse.statusCode == 200 &&
+          pastResponse.statusCode == 200) {
         setState(() {
           upcomingBookings = json.decode(upcomingResponse.body);
           pastBookings = json.decode(pastResponse.body);
@@ -56,56 +59,63 @@ class _BookingScreenState extends State<BookingScreen> {
       child: Scaffold(
         backgroundColor: Colors.black,
         body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                      onPressed: () {
-                        Get.to(() => const HomePage());
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back_ios,
+                            color: Colors.white),
+                        onPressed: () {
+                          Get.to(() => const HomePage());
+                        },
+                      ),
+                    ),
+                    const Text(
+                      'Bookings',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ToggleButton(
+                      leftLabel: 'Previous',
+                      rightLabel: 'Upcoming',
+                      onToggle: (isLeftSelected) {
+                        setState(() {
+                          showUpcoming = !isLeftSelected;
+                        });
                       },
                     ),
-                  ),
-                  const Text(
-                    'Bookings',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(height: 10),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: showUpcoming
+                          ? upcomingBookings.length
+                          : pastBookings.length,
+                      itemBuilder: (context, index) {
+                        var booking = showUpcoming
+                            ? upcomingBookings[index]
+                            : pastBookings[index];
+                        return BookingCard(
+                          showUpcoming: showUpcoming,
+                          imageUrl: booking['imageUrl'] ??
+                              'https://via.placeholder.com/150',
+                          title: booking['turfName'] ?? 'Unknown Turf',
+                          location: booking['location'] ?? 'Unknown Location',
+                          time:
+                              '${booking['date'] ?? 'Unknown Date'} - ${booking['slot'] ?? 'Unknown Time'}',
+                        );
+                      },
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  ToggleButton(
-                    leftLabel: 'Previous',
-                    rightLabel: 'Upcoming',
-                    onToggle: (isLeftSelected) {
-                      setState(() {
-                        showUpcoming = !isLeftSelected;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: showUpcoming ? upcomingBookings.length : pastBookings.length,
-                    itemBuilder: (context, index) {
-                      var booking = showUpcoming ? upcomingBookings[index] : pastBookings[index];
-                      return BookingCard(
-                        showUpcoming: showUpcoming,
-                        imageUrl: booking['imageUrl'] ?? 'https://via.placeholder.com/150',
-                        title: booking['turfName'] ?? 'Unknown Turf',
-                        location: booking['location'] ?? 'Unknown Location',
-                        time: '${booking['date'] ?? 'Unknown Date'} - ${booking['slot'] ?? 'Unknown Time'}',
-                      );
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
       ),
     );
   }
@@ -119,7 +129,7 @@ class BookingCard extends StatelessWidget {
   final String time;
 
   const BookingCard({
-    super.key, 
+    super.key,
     required this.showUpcoming,
     required this.imageUrl,
     required this.title,

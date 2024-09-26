@@ -126,6 +126,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
           )),
     );
   }
+
   void _handleProceed() async {
     if (_phoneNumberValid) {
       String phoneNumber = Phncontroller.phoneNumber;
@@ -138,17 +139,16 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
         if (response != null && response.containsKey('orderId')) {
           String orderId = response['orderId']!;
           Get.to(() => EnterOTPScreen(
-            orderId: orderId,
-            phoneNumber: '+91$phoneNumber',
-          ));
+                orderId: orderId,
+                phoneNumber: '+91$phoneNumber',
+              ));
           print('Phone number sent successfully');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Failed to get response from server ')),
           );
         }
-      } 
-      catch (e) {
+      } catch (e) {
         print('Error sending phone number: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('An error occurred: $e')),
@@ -167,7 +167,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
       print('Request body: $requestBody');
 
       final response = await http.post(
-        Uri.parse('http://13.233.98.192:3000/sendotp'),
+        Uri.parse('http://65.1.5.180:3000/sendotp'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -186,7 +186,8 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
           return null;
         }
       } else {
-        print('Failed to send phone number. Status code: ${response.statusCode}');
+        print(
+            'Failed to send phone number. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
         return null;
       }

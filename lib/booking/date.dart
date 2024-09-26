@@ -11,9 +11,9 @@ import 'package:table_calendar/table_calendar.dart';
 
 class BookingPage extends StatefulWidget {
   BookingPage({
-    super.key, 
-    required this.turfRate, 
-    required this.turfId, 
+    super.key,
+    required this.turfRate,
+    required this.turfId,
     this.slots = const [],
     required this.numberOfCourts,
     this.turfName, // Make this optional
@@ -46,7 +46,8 @@ class _BookingPageState extends State<BookingPage> {
   @override
   void initState() {
     super.initState();
-    selectedDate = DateTime.now(); // Set the current date as selected by default
+    selectedDate =
+        DateTime.now(); // Set the current date as selected by default
     _totalMembersController = TextEditingController(text: '1');
     _remainingMembersController = TextEditingController(text: '0');
   }
@@ -55,7 +56,8 @@ class _BookingPageState extends State<BookingPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Select Date", style: TextStyle(color: Colors.green, fontSize: 18)),
+        const Text("Select Date",
+            style: TextStyle(color: Colors.green, fontSize: 18)),
         const SizedBox(height: 10),
         SizedBox(
           height: 80,
@@ -64,7 +66,8 @@ class _BookingPageState extends State<BookingPage> {
             itemCount: 7,
             itemBuilder: (context, index) {
               final date = DateTime.now().add(Duration(days: index));
-              final isSelected = selectedDate != null && isSameDay(date, selectedDate!);
+              final isSelected =
+                  selectedDate != null && isSameDay(date, selectedDate!);
               return GestureDetector(
                 onTap: () {
                   setState(() {
@@ -75,7 +78,8 @@ class _BookingPageState extends State<BookingPage> {
                 },
                 child: Container(
                   margin: const EdgeInsets.only(right: 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
                     color: isSelected ? Colors.white : Colors.black,
                     borderRadius: BorderRadius.circular(10),
@@ -133,12 +137,14 @@ class _BookingPageState extends State<BookingPage> {
 
   Widget _buildAvailableSlots() {
     if (slots.isEmpty) {
-      return const Text("No available slots", style: TextStyle(color: Colors.white));
+      return const Text("No available slots",
+          style: TextStyle(color: Colors.white));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Available Slots", style: TextStyle(color: Colors.green, fontSize: 18)),
+        const Text("Available Slots",
+            style: TextStyle(color: Colors.green, fontSize: 18)),
         const SizedBox(height: 10),
         Wrap(
           spacing: 10.0,
@@ -153,15 +159,19 @@ class _BookingPageState extends State<BookingPage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedSlotIndex == index ? Colors.white : Colors.black,
+                  color:
+                      selectedSlotIndex == index ? Colors.white : Colors.black,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.white),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   "${slots[index]['time']}",
                   style: TextStyle(
-                    color: selectedSlotIndex == index ? Colors.black : Colors.white,
+                    color: selectedSlotIndex == index
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
               ),
@@ -176,7 +186,8 @@ class _BookingPageState extends State<BookingPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Court", style: TextStyle(color: Colors.green, fontSize: 18)),
+        const Text("Court",
+            style: TextStyle(color: Colors.green, fontSize: 18)),
         const SizedBox(height: 10),
         Wrap(
           spacing: 10.0,
@@ -190,15 +201,19 @@ class _BookingPageState extends State<BookingPage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedCourtIndex == index ? Colors.white : Colors.black,
+                  color:
+                      selectedCourtIndex == index ? Colors.white : Colors.black,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.white),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   (index + 1).toString(),
                   style: TextStyle(
-                    color: selectedCourtIndex == index ? Colors.black : Colors.white,
+                    color: selectedCourtIndex == index
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
               ),
@@ -213,7 +228,8 @@ class _BookingPageState extends State<BookingPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text("Play with Strangers", style: TextStyle(color: Colors.green, fontSize: 18)),
+        const Text("Play with Strangers",
+            style: TextStyle(color: Colors.green, fontSize: 18)),
         Switch(
           value: playWithStrangers,
           onChanged: (value) {
@@ -234,29 +250,38 @@ class _BookingPageState extends State<BookingPage> {
       alignment: Alignment.bottomRight,
       child: GestureDetector(
         onTap: () async {
-          if (selectedDate != null && selectedSlotIndex != null && selectedCourtIndex != null) {
+          if (selectedDate != null &&
+              selectedSlotIndex != null &&
+              selectedCourtIndex != null) {
             final bookingDetails = {
               'userId': getUserId(),
               'turfId': widget.turfId,
               'court': (selectedCourtIndex! + 1).toString(),
               'playWithStranger': playWithStrangers,
-              'totalMembers': _totalMembersController.text.isNotEmpty ? _totalMembersController.text : '1',
-              'remainingMembers': _remainingMembersController.text.isNotEmpty ? _remainingMembersController.text : '0',
+              'totalMembers': _totalMembersController.text.isNotEmpty
+                  ? _totalMembersController.text
+                  : '1',
+              'remainingMembers': _remainingMembersController.text.isNotEmpty
+                  ? _remainingMembersController.text
+                  : '0',
               'slot': "${slots[selectedSlotIndex!]['time']}",
-              'date': "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
+              'date':
+                  "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
               'ownerMobileNumber': widget.ownerMobileNumber,
             };
             try {
-                Get.to(() => SinglePaymentView(
-                  turfId: widget.turfId,
-                  date: "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
-                  slot: slots[selectedSlotIndex!]['time'],
-                  turfRate: double.parse(slots[selectedSlotIndex!]['price'].toString()),
-                  court: (selectedCourtIndex! + 1).toString(),
-                  turfName: widget.turfName ?? 'Unknown Turf',
-                  ownerMobileNumber: widget.ownerMobileNumber,
-                ));
-                await sendBookingDetails(bookingDetails);
+              Get.to(() => SinglePaymentView(
+                    turfId: widget.turfId,
+                    date:
+                        "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
+                    slot: slots[selectedSlotIndex!]['time'],
+                    turfRate: double.parse(
+                        slots[selectedSlotIndex!]['price'].toString()),
+                    court: (selectedCourtIndex! + 1).toString(),
+                    turfName: widget.turfName ?? 'Unknown Turf',
+                    ownerMobileNumber: widget.ownerMobileNumber,
+                  ));
+              await sendBookingDetails(bookingDetails);
             } catch (e) {
               print('Error sending booking details: $e');
               ScaffoldMessenger.of(context).showSnackBar(
@@ -290,7 +315,8 @@ class _BookingPageState extends State<BookingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Date", style: TextStyle(color: Colors.green, fontSize: 20)),
+            const Text("Date",
+                style: TextStyle(color: Colors.green, fontSize: 20)),
             const SizedBox(height: 16),
             Expanded(
               child: SingleChildScrollView(
@@ -322,16 +348,20 @@ class _BookingPageState extends State<BookingPage> {
                                     labelText: 'Total Members',
                                     labelStyle: TextStyle(color: Colors.white),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white),
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
                                     ),
                                   ),
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),
-                              const SizedBox(width: 10), // Add some space between the fields
+                              const SizedBox(
+                                  width:
+                                      10), // Add some space between the fields
                               Expanded(
                                 child: TextField(
                                   controller: _remainingMembersController,
@@ -340,10 +370,12 @@ class _BookingPageState extends State<BookingPage> {
                                     labelText: 'Remaining Members',
                                     labelStyle: TextStyle(color: Colors.white),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white),
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
                                     ),
                                   ),
                                   style: const TextStyle(color: Colors.white),
@@ -376,7 +408,7 @@ Future<void> sendBookingDetails(Map<String, dynamic> bookingDetails) async {
   try {
     print('Sending booking details: ${json.encode(bookingDetails)}');
     final response = await http.post(
-      Uri.parse('http://13.233.98.192:3000/booking'),
+      Uri.parse('http://65.1.5.180:3000/booking'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(bookingDetails),
     );

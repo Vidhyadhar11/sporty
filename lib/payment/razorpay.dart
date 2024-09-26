@@ -6,7 +6,6 @@
 // import 'package:sporty/payment/singlepay.dart';
 // import 'package:flutter/foundation.dart';
 
-
 // class RazorpayService {
 //   late Razorpay _razorpay;
 
@@ -32,8 +31,8 @@
 //     final ownermobileNumber = SportsFieldApi.ownerMobileNumber;
 //     final requestData = <String, dynamic>{
 //       'paymentId': paymentId,
-//       'ownerMobileNumber': ownermobileNumber,  
-//       'amount': (SinglePaymentView.turfrate).toInt().toString(), 
+//       'ownerMobileNumber': ownermobileNumber,
+//       'amount': (SinglePaymentView.turfrate).toInt().toString(),
 //     };
 
 //     // Log the data before sending it to the server
@@ -43,12 +42,10 @@
 //     print(response.toString());
 //   }
 
-
-
 //   Future<void> _sendPaymentDetailsToServer(Map<String, dynamic> requestData) async {
 //     try {
 //       final response = await http.post(
-//         Uri.parse('http://13.233.98.192:3000/payments/turf'),
+//         Uri.parse('http://65.1.5.180:3000/payments/turf'),
 //         headers: <String, String>{
 //           'Content-Type': 'application/json; charset=UTF-8',
 //         },
@@ -152,13 +149,14 @@ class RazorpayService {
 
     compute(_sendPaymentDetailsToServer, requestData);
     print(response.toString());
-    Get.offAll(()=>BookingScreen());
+    Get.offAll(() => BookingScreen());
   }
 
-  Future<void> _sendPaymentDetailsToServer(Map<String, dynamic> requestData) async {
+  Future<void> _sendPaymentDetailsToServer(
+      Map<String, dynamic> requestData) async {
     try {
       final response = await http.post(
-        Uri.parse('http://13.233.98.192:3000/payments/turf'),
+        Uri.parse('http://65.1.5.180:3000/payments/turf'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -170,7 +168,8 @@ class RazorpayService {
       if (response.statusCode == 201) {
         print('Payment details successfully sent to the server.');
       } else {
-        print('Failed to send payment details. Status code: ${response.statusCode}');
+        print(
+            'Failed to send payment details. Status code: ${response.statusCode}');
         print('Error message from server: ${response.body}');
       }
     } catch (e) {
@@ -190,7 +189,8 @@ class RazorpayService {
     return '#${color.value}';
   }
 
-  void singlePayment(double turfRate, String ownerMobileNumber, String turfName) async {
+  void singlePayment(
+      double turfRate, String ownerMobileNumber, String turfName) async {
     this.ownerMobileNumber = ownerMobileNumber;
     this.turfRate = turfRate;
 
@@ -201,14 +201,9 @@ class RazorpayService {
       'amount': onlinePaymentInPaise,
       'name': turfName,
       'description': 'Payment for standard turf booking',
-      'prefill': {
-        'contact': ownerMobileNumber,
-        'email': 'example@domain.com'
-      },
+      'prefill': {'contact': ownerMobileNumber, 'email': 'example@domain.com'},
       'wallets': ['paytm', 'gpay', 'phonepe'],
-      'theme': {
-        'color': colorToHex(Colors.green)
-      }
+      'theme': {'color': colorToHex(Colors.green)}
     };
 
     try {
@@ -218,4 +213,3 @@ class RazorpayService {
     }
   }
 }
-

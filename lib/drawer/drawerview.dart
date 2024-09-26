@@ -71,13 +71,13 @@ class UserController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? phoneNumber = prefs.getString('phoneNumber');
     print('Fetching user details for phone number: $phoneNumber');
-    print('API URL: http://13.233.98.192:3000/users/$phoneNumber');
+    print('API URL: http://65.1.5.180:3000/users/$phoneNumber');
     isLoading.value = true;
     hasError.value = false;
     errorMessage.value = '';
     try {
       final response = await http.get(
-        Uri.parse('http://13.233.98.192:3000/users/$phoneNumber'),
+        Uri.parse('http://65.1.5.180:3000/users/$phoneNumber'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -93,7 +93,8 @@ class UserController extends GetxController {
         print('User ID set: ${UserModel.getUserId()}');
         _resetRetry();
       } else {
-        throw Exception('Failed to fetch user details. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to fetch user details. Status code: ${response.statusCode}');
       }
     } catch (e) {
       print('Error in HTTP request: $e');
@@ -108,8 +109,10 @@ class UserController extends GetxController {
   void _scheduleRetry() {
     if (_retryCount < maxRetries) {
       _retryCount++;
-      print('Scheduling retry $_retryCount of $maxRetries in $retryDelay seconds');
-      _retryTimer = Timer(const Duration(seconds: retryDelay), fetchUserDetails);
+      print(
+          'Scheduling retry $_retryCount of $maxRetries in $retryDelay seconds');
+      _retryTimer =
+          Timer(const Duration(seconds: retryDelay), fetchUserDetails);
     } else {
       print('Max retries reached. User interaction required.');
     }
@@ -146,7 +149,8 @@ class Drawerview extends StatelessWidget {
             children: [
               Text('Error: ${controller.errorMessage.value}'),
               if (controller._retryCount < UserController.maxRetries)
-                Text('Retrying... (${controller._retryCount + 1}/${UserController.maxRetries})'),
+                Text(
+                    'Retrying... (${controller._retryCount + 1}/${UserController.maxRetries})'),
               if (controller._retryCount >= UserController.maxRetries)
                 ElevatedButton(
                   onPressed: controller.manualRetry,
@@ -166,56 +170,72 @@ class Drawerview extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(UserModel.profile),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                  '${UserModel.firstname} ${UserModel.lastname}',
-                  style: const TextStyle(color: Colors.white),
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(UserModel.profile),
+                  ),
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  UserModel.mobileno,
-                  style: const TextStyle(color: Colors.white70),
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  color: Colors.white,
-                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                '${UserModel.firstname} ${UserModel.lastname}',
+                style: const TextStyle(color: Colors.white),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                UserModel.mobileno,
+                style: const TextStyle(color: Colors.white70),
+              ),
+              const SizedBox(height: 10),
+              const Divider(
+                color: Colors.white,
+              ),
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () => Get.to(() => BookingScreen()),
-                child: const Text('Booking', style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  'Booking',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () => Get.to(() => FavoriteScreen()),
-                child: const Text('Favorites', style: TextStyle(color: Colors.white),),
-              ),  
+                child: const Text(
+                  'Favorites',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () => Get.to(() => RewardsPage()),
-                child: const Text('Rewards', style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  'Rewards',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               const SizedBox(height: 10),
               const Spacer(),
               TextButton(
                 onPressed: () async {
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
                   await prefs.remove('phoneNumber');
                   Get.to(() => const EnterPhoneNumberScreen());
                 },
-                child: const Text('Logout', style: TextStyle(color: Colors.green),),
+                child: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.green),
+                ),
               ),
-              const Text('Version 1.0.0', style: TextStyle(color: Colors.white),),
+              const Text(
+                'Version 1.0.0',
+                style: TextStyle(color: Colors.white),
+              ),
             ],
           ),
         );

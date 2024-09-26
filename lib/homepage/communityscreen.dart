@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';  
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:sporty/homepage/testpage.dart';
 
 class CommunityScreen extends StatefulWidget {
@@ -27,7 +27,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   Future<void> fetchPeople() async {
     try {
-      final response = await http.get(Uri.parse('http://13.233.98.192:3000/users'));
+      final response =
+          await http.get(Uri.parse('http://65.1.5.180:3000/users'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -47,7 +48,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   Future<void> fetchGroups() async {
     try {
-      final response = await http.get(Uri.parse('http://13.233.98.192:3000/community-group'));
+      final response =
+          await http.get(Uri.parse('http://65.1.5.180:3000/community-group'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -68,10 +70,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
   void launchWhatsApp(String phoneNumber) async {
     // Remove any non-digit characters from the phone number
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\D'), '');
-    
+
     // Construct the WhatsApp URL
     final whatsappUrl = "https://wa.me/$phoneNumber";
-    
+
     if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
       await launchUrl(Uri.parse(whatsappUrl));
     } else {
@@ -106,7 +108,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
             Expanded(
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : showPeople ? buildPeopleList() : buildGroupsList(),
+                  : showPeople
+                      ? buildPeopleList()
+                      : buildGroupsList(),
             ),
           ],
         ),
@@ -141,7 +145,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
               } else {
                 // Show a message if the phone number is not available
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Phone number not available for ${person['firstname']}')),
+                  SnackBar(
+                      content: Text(
+                          'Phone number not available for ${person['firstname']}')),
                 );
               }
             },

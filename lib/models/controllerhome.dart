@@ -16,14 +16,15 @@ class SportsFieldController extends GetxController {
   Future<void> fetchSportsFields() async {
     try {
       print('Fetching sports fields...');
-      final response = await http.get(Uri.parse('http://13.233.98.192:3000/turf'));
+      final response = await http.get(Uri.parse('http://65.1.5.180:3000/turf'));
       print('Response status: ${response.statusCode}');
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
         print('Raw data: $data');
-        sportsFields.value = data.map((json) => SportsFieldApi.fromsnapshot(json)).toList();
+        sportsFields.value =
+            data.map((json) => SportsFieldApi.fromsnapshot(json)).toList();
         isLoading.value = false;
-        
+
         print('Fetched sports fields: ${sportsFields.value}');
       } else {
         throw Exception('Failed to load sports fields');

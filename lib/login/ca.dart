@@ -20,7 +20,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-   Mycontroller myController = Mycontroller(); // Create an instance
+  Mycontroller myController = Mycontroller(); // Create an instance
 
   bool _termsAccepted = false;
   bool _showError = false;
@@ -41,18 +41,70 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? selectedLocation;
 
   final List<String> locations = [
-    'Pachalam', 'Elamakkara', 'Cheranallur', 'Palarivattom', 'Edapally', 'Kaloor',
-    'Marine Drive, Kochi', 'High Court Junction', 'Thevara', 'Panampilly Nagar',
-    'Gandhi Nagar, Kochi', 'Ravipuram', 'Pachalam', 'Kathrikadavu', 'Thammanam',
-    'Kadavanthra', 'Kaloor', 'Karanakodam', 'Ernakulam North', 'Ravipuram',
-    'Ernakulam South', 'Kalabhavan Road', 'Willingdon Island', 'Fort Kochi',
-    'Mattancherry', 'Thoppumpady', 'Palluruthy', 'Chellanam', 'Kumbalangi',
-    'Kattiparambu', 'Kundannoor', 'Edakochi', 'Maradu', 'Thaikoodam metro station',
-    'Chambakkara', 'Kakkanad', 'Vennala', 'Thrikkakara', 'Vyttila', 'Tripunithura',
-    'Piravom', 'Kalamassery', 'Aluva', 'Angamaly', 'North Paravur', 'Eloor',
-    'Koonammavu', 'Vaduthala', 'Vypin Island', 'Cherai', 'Kumbalam', 'Udayamperoor',
-    'Panangad', 'Eramallur', 'Vaikom', 'Kothamangalam', 'Perumbavoor', 'Eroor',
-    'Thiruvankulam', 'Kolenchery', 'Mamala', 'Kizhakkambalam', 'Piravom', 'Mulanthuruthy',
+    'Pachalam',
+    'Elamakkara',
+    'Cheranallur',
+    'Palarivattom',
+    'Edapally',
+    'Kaloor',
+    'Marine Drive, Kochi',
+    'High Court Junction',
+    'Thevara',
+    'Panampilly Nagar',
+    'Gandhi Nagar, Kochi',
+    'Ravipuram',
+    'Pachalam',
+    'Kathrikadavu',
+    'Thammanam',
+    'Kadavanthra',
+    'Kaloor',
+    'Karanakodam',
+    'Ernakulam North',
+    'Ravipuram',
+    'Ernakulam South',
+    'Kalabhavan Road',
+    'Willingdon Island',
+    'Fort Kochi',
+    'Mattancherry',
+    'Thoppumpady',
+    'Palluruthy',
+    'Chellanam',
+    'Kumbalangi',
+    'Kattiparambu',
+    'Kundannoor',
+    'Edakochi',
+    'Maradu',
+    'Thaikoodam metro station',
+    'Chambakkara',
+    'Kakkanad',
+    'Vennala',
+    'Thrikkakara',
+    'Vyttila',
+    'Tripunithura',
+    'Piravom',
+    'Kalamassery',
+    'Aluva',
+    'Angamaly',
+    'North Paravur',
+    'Eloor',
+    'Koonammavu',
+    'Vaduthala',
+    'Vypin Island',
+    'Cherai',
+    'Kumbalam',
+    'Udayamperoor',
+    'Panangad',
+    'Eramallur',
+    'Vaikom',
+    'Kothamangalam',
+    'Perumbavoor',
+    'Eroor',
+    'Thiruvankulam',
+    'Kolenchery',
+    'Mamala',
+    'Kizhakkambalam',
+    'Piravom',
+    'Mulanthuruthy',
     'Chottanikkara'
   ];
 
@@ -110,8 +162,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 10),
                         DropdownButtonFormField<String>(
-                          value: _sports.contains(myController.intrestedsportsController.value.text)
-                              ? myController.intrestedsportsController.value.text
+                          value: _sports.contains(myController
+                                  .intrestedsportsController.value.text)
+                              ? myController
+                                  .intrestedsportsController.value.text
                               : _sports[0], // Ensure the value is in the list
                           items: _sports.map((String sport) {
                             return DropdownMenuItem<String>(
@@ -123,7 +177,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              myController.intrestedsportsController.value.text = newValue!;
+                              myController.intrestedsportsController.value
+                                  .text = newValue!;
                             });
                           },
                           decoration: const InputDecoration(
@@ -143,7 +198,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 20),
                         DropdownButtonFormField<String>(
-                          value: _levels.contains(myController.levelController.value.text)
+                          value: _levels.contains(
+                                  myController.levelController.value.text)
                               ? myController.levelController.value.text
                               : _levels[0], // Ensure the value is in the list
                           items: _levels.map((String level) {
@@ -156,7 +212,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              myController.levelController.value.text = newValue!;
+                              myController.levelController.value.text =
+                                  newValue!;
                             });
                           },
                           decoration: const InputDecoration(
@@ -198,7 +255,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onChanged: (value) {
                             setState(() {
                               selectedLocation = value;
-                              myController.locationController.value.text = value ?? '';
+                              myController.locationController.value.text =
+                                  value ?? '';
                             });
                           },
                           selectedItem: selectedLocation,
@@ -347,7 +405,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://13.233.98.192:3000/users'),
+        Uri.parse('http://65.1.5.180:3000/users'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -359,7 +417,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Get.to(() => const EnterPhoneNumberScreen());
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to sign up. Status code: ${response.statusCode}')),
+          SnackBar(
+              content: Text(
+                  'Failed to sign up. Status code: ${response.statusCode}')),
         );
       }
     } catch (e) {
