@@ -130,8 +130,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
   void _handleProceed() async {
     if (_phoneNumberValid) {
       String phoneNumber = Phncontroller.phoneNumber;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('phoneNumber', phoneNumber);
+      
       print('Phone number: $phoneNumber');
 
       try {

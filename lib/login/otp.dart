@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporty/homepage/home.dart';
 import 'package:get/get.dart';
 import 'package:sporty/models/mycontroller.dart';
@@ -67,6 +68,8 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
 
       const url = 'http://65.1.5.180:3000/verify';
       print('Sending request to: $url');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('phoneNumber', phoneNumber);
 
       final response = await http.post(
         Uri.parse(url),
