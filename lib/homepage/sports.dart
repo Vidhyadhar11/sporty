@@ -4,7 +4,7 @@ import 'package:sporty/models/controllerhome.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/homepage/details.dart';
-import 'package:back_button_interceptor/back_button_interceptor.dart';
+//import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 class SportsListScreen extends StatefulWidget {
   final String sportName;
@@ -29,21 +29,21 @@ class _SportsListScreenState extends State<SportsListScreen> {
     _filterSportFields();
     searchController.addListener(_filterSportsFields);
     //_scrollController.addListener(_loadMoreFields);
-    BackButtonInterceptor.add(myInterceptor);
+    //BackButtonInterceptor.add(myInterceptor);
   }
 
   @override
   void dispose() {
     searchController.dispose();
     _scrollController.dispose();
-    BackButtonInterceptor.remove(myInterceptor);
+    //BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
 
-  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    Get.toNamed('/home'); // Navigate to home screen
-    return true; // Prevent the default back button behavior
-  }
+  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+  //   Get.toNamed('/home'); // Navigate to home screen
+  //   return true; // Prevent the default back button behavior
+  // }
 
   void _filterSportFields() {
     setState(() {
