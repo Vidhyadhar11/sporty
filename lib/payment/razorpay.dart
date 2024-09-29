@@ -110,14 +110,19 @@ import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:sporty/booking/bookings1.dart';
-import 'package:sporty/payment/singlepay.dart';
 import 'package:flutter/foundation.dart';
-import 'package:sporty/models/sports_feild.dart';
+import 'package:sporty/booking/invoice.dart';
+// import 'package:sporty/payment/singlepay.dart';
+// import 'package:sporty/models/sports_feild.dart';
 
 class RazorpayService {
   late Razorpay _razorpay;
   late String ownerMobileNumber;
-  late double turfRate; // Add this variable to store the turf rate
+  late double turfRate;
+  late String court;
+  late String slot;
+  late String date;
+  late String turId;
 
   RazorpayService() {
     init();
@@ -149,7 +154,13 @@ class RazorpayService {
 
     compute(_sendPaymentDetailsToServer, requestData);
     print(response.toString());
-    Get.offAll(() => BookingScreen());
+    Get.offAll(() => InvoicePage(
+          selectedDate: date,
+          selectedSlot: slot,
+          selectedCourt: court,
+          BookingId: paymentId!,
+          amount: int.parse(turfRate.toInt().toString())
+        ));
   }
 
   Future<void> _sendPaymentDetailsToServer(
@@ -189,10 +200,14 @@ class RazorpayService {
     return '#${color.value}';
   }
 
-  void singlePayment(
-      double turfRate, String ownerMobileNumber, String turfName) async {
+  void singlePayment(double turfRate, String ownerMobileNumber, String turfName,
+      String turfId, String date, String slot, String court) async {
     this.ownerMobileNumber = ownerMobileNumber;
     this.turfRate = turfRate;
+    this.turId = turfId;
+    this.slot = slot;
+    this.court = court;
+    this.date = date;
 
     int onlinePaymentInPaise = (turfRate * 100).toInt();
 

@@ -166,7 +166,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         Expanded(
                           child: Obx(() => ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[800],
+                              backgroundColor: const Color.fromARGB(255, 153, 133, 133),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),

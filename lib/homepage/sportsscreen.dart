@@ -1,4 +1,3 @@
-//import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporty/homepage/sports.dart';
@@ -24,25 +23,6 @@ class _SportsScreenState extends State<SportsScreen> {
     {'name': 'Golf', 'image': 'assets/Golf-bro.png'},
   ];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   BackButtonInterceptor.add(myInterceptor);
-  // }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    //BackButtonInterceptor.remove(myInterceptor);
-    super.dispose();
-  }
-
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   Get.toNamed('/home');  // Navigate to home screen
-  //   return true; // Prevent the default back button behavior
-  // }
-
-  
   void _onSportSelected(String sportName) {
     print('Sport selected: $sportName'); // Debugging statement
     // Navigate to the new SportsScreen with the selected sport name
