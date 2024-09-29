@@ -170,8 +170,7 @@ class JoinEvents extends StatelessWidget {
   final bool isLoading;
 
   const JoinEvents(
-      {Key? key, required this.joinEvents, required this.isLoading})
-      : super(key: key);
+      {super.key, required this.joinEvents, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {

@@ -22,20 +22,20 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.sportsField.ownerMobileNumber.toString());
-    print(widget.sportsField.turfName.toString());
-    print(widget.sportsField.id.toString());
-    print(widget.sportsField.slots[0]['price'].toString());
-    print(widget.sportsField.slots[0]['time'].toString());
-    print(widget.sportsField.courts.toString());
-    print(widget.sportsField.discounts.toString());
-    print(widget.sportsField.imageUrl.toString());
-    print(widget.sportsField.location.toString());
-    print(widget.sportsField.description.toString());
-    print(widget.sportsField.amenities.toString());
-    print(widget.sportsField.rating.toString());
-    print(widget.sportsField.slots.toString());
-    print(widget.sportsField.isLiked.toString());
+    // print(widget.sportsField.ownerMobileNumber.toString());
+    // print(widget.sportsField.turfName.toString());
+    // print(widget.sportsField.id.toString());
+    // print(widget.sportsField.slots[0]['price'].toString());
+    // print(widget.sportsField.slots[0]['time'].toString());
+    // print(widget.sportsField.courts.toString());
+    // print(widget.sportsField.discounts.toString());
+    // print(widget.sportsField.imageUrl.toString());
+    // print(widget.sportsField.location.toString());
+    // print(widget.sportsField.description.toString());
+    // print(widget.sportsField.amenities.toString());
+    // print(widget.sportsField.rating.toString());
+    // print(widget.sportsField.slots.toString());
+    // print(widget.sportsField.isLiked.toString());
   }
 
   @override

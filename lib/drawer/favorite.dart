@@ -20,7 +20,7 @@ class FavoriteScreen extends StatelessWidget {
       ),
       body: Obx(() {
         if (likedController.likedFields.isEmpty) {
-          return const Center(child: Text('No liked fields yet'));
+          return const Center(child: Text('No liked fields yet', style: TextStyle(color: Colors.white)));
         }
         return ListView.builder(
           itemCount: likedController.likedFields.length,

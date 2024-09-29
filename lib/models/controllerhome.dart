@@ -39,18 +39,57 @@ class SportsFieldController extends GetxController {
 
 class LikedFieldsController extends GetxController {
   final RxList<SportsFieldApi> _likedFields = <SportsFieldApi>[].obs;
+  final String userId = '8374013715'; // Replace with actual user ID
 
   List<SportsFieldApi> get likedFields => _likedFields;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchLikedFields();
+  }
 
   bool isLiked(SportsFieldApi field) {
     return _likedFields.any((likedField) => likedField.id == field.id);
   }
 
-  void toggleLike(SportsFieldApi field) {
+  void toggleLike(SportsFieldApi field) async {
     if (isLiked(field)) {
       _likedFields.removeWhere((likedField) => likedField.id == field.id);
     } else {
       _likedFields.add(field);
+    }
+    await updateLikedFieldsInApi();
+  }
+
+  Future<void> fetchLikedFields() async {
+    try {
+      final response = await http.get(Uri.parse('http://65.1.5.180:3000/users/toggle-fav/$userId'));
+      if (response.statusCode == 200) {
+        var fields = json.decode(response.body) as List;
+        _likedFields.value = fields.map((field) => SportsFieldApi.fromJsonMap(field)).toList() as List<SportsFieldApi>;
+      } else {
+        // Handle error
+        print('Failed to fetch liked fields');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> updateLikedFieldsInApi() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://65.1.5.180:3000/users/toggle-fav/$userId'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(_likedFields.map((field) => field.toJson()).toList()),
+      );
+      if (response.statusCode != 200) {
+        // Handle error
+        print('Failed to update liked fields');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 }

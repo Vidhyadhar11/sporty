@@ -62,7 +62,37 @@ class SportsFieldApi {
     );
   }
 
- static SportsFieldApi? fromJson(data) {
+  // Add this method
+  factory SportsFieldApi.fromJson(Map<String, dynamic> json) {
+    return SportsFieldApi(
+      imageUrl: json['images'] ?? '',
+      category: '', // Default value since it's not provided by the API
+      turfName: json['turfname'] ?? '',
+      courts: 0, // Default value since it's not provided by the API
+      location: json['location'] ?? '',
+      description: '', // Default value since it's not provided by the API
+      amenities: [], // Default value since it's not provided by the API
+      ownerMobileNumber: '', // Default value since it's not provided by the API
+      rating: 0.0, // Default value since it's not provided by the API
+      slots: [], // Default value since it's not provided by the API
+      discounts: 0, // Default value since it's not provided by the API
+      id: json['_id'] ?? '',
+      isLiked: json['isLiked'] ?? false,
+    );
+  }
+
+  // Add this method
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'images': imageUrl,
+      'turfname': turfName,
+      'location': location,
+    };
+  }
+
+  // Rename this method to avoid conflict
+  static SportsFieldApi? fromJsonMap(data) {
     if (data is Map<String, dynamic>) {
       return SportsFieldApi.fromJson(data);
     }

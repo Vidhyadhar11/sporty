@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sporty/models/phncontroller.dart';
-import 'package:sporty/models/sports_feild.dart';
+// import 'package:sporty/models/phncontroller.dart';
+// import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/payment/razorpay.dart';
 
 class SinglePaymentView extends StatefulWidget {
