@@ -1,6 +1,4 @@
-//import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sporty/uicomponents/elements.dart';
@@ -28,19 +26,7 @@ class _EventScreenState extends State<EventScreen> {
   void initState() {
     super.initState();
     fetchJoinEvents();
-    //BackButtonInterceptor.add(myInterceptor);
   }
-
-  // @override
-  // void dispose() {
-  //   //BackButtonInterceptor.remove(myInterceptor);
-  //   super.dispose();
-  // }
-
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   Get.toNamed('/home'); // Navigate to home screen
-  //   return true; // Prevent the default back button behavior
-  // }
 
   Future<void> fetchJoinEvents() async {
     try {

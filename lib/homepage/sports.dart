@@ -4,7 +4,6 @@ import 'package:sporty/models/controllerhome.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/uicomponents/elements.dart';
 import 'package:sporty/homepage/details.dart';
-//import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 class SportsListScreen extends StatefulWidget {
   final String sportName;
@@ -19,8 +18,6 @@ class _SportsListScreenState extends State<SportsListScreen> {
   final SportsFieldController controller = Get.put(SportsFieldController());
   TextEditingController searchController = TextEditingController();
   List<SportsFieldApi> filteredSportsFields = [];
-  ScrollController _scrollController = ScrollController();
-  bool _isLoadingMore = false;
 
   @override
   void initState() {
@@ -28,22 +25,13 @@ class _SportsListScreenState extends State<SportsListScreen> {
     print('SportsListScreen initialized with sport: ${widget.sportName}'); // Debugging statement
     _filterSportFields();
     searchController.addListener(_filterSportsFields);
-    //_scrollController.addListener(_loadMoreFields);
-    //BackButtonInterceptor.add(myInterceptor);
   }
 
   @override
   void dispose() {
     searchController.dispose();
-    _scrollController.dispose();
-    //BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
-
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   Get.toNamed('/home'); // Navigate to home screen
-  //   return true; // Prevent the default back button behavior
-  // }
 
   void _filterSportFields() {
     setState(() {
@@ -72,8 +60,8 @@ class _SportsListScreenState extends State<SportsListScreen> {
         backgroundColor: Colors.black,
         title: Text(widget.sportName, style: const TextStyle(color: Colors.white)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false), // Navigate to home screen
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: SafeArea(
@@ -105,7 +93,6 @@ class _SportsListScreenState extends State<SportsListScreen> {
                   return Center(child: Text('No ${widget.sportName} fields available', style: const TextStyle(color: Colors.white)));
                 } else {
                   return ListView.builder(
-                    controller: _scrollController,
                     itemCount: filteredSportsFields.length,
                     itemBuilder: (context, index) {
                       final field = filteredSportsFields[index];

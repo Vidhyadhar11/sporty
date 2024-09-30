@@ -186,6 +186,10 @@ class _SinglePaymentViewState extends State<SinglePaymentView> {
                 onPressed: () {
                   razorpayService.singlePayment(totalAmount,
                   ownerMobileNumber,
+                   widget.turfId,
+                    widget.date,
+                    widget.slot,
+                    widget.court,
                   widget.turfName ?? 'Unknown Turf',
                   );
                 },
