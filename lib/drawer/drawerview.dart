@@ -37,7 +37,6 @@ class UserModel {
 
   static bool get isEmpty => id.isEmpty;
 
-  // Add a method to get the user ID
   static String getUserId() {
     return id;
   }
@@ -50,9 +49,8 @@ class UserController extends GetxController {
   Timer? _retryTimer;
   int _retryCount = 0;
   static const int maxRetries = 3;
-  static const int retryDelay = 5; // seconds
+  static const int retryDelay = 5;
 
-  // Add a getter for the user ID
   String get userId => UserModel.getUserId();
 
   @override
@@ -204,7 +202,7 @@ class Drawerview extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: () => Get.to(() => FavoriteScreen()),
+                onPressed: () => Get.to(() => FavoritesPage()),
                 child: const Text(
                   'Favorites',
                   style: TextStyle(color: Colors.white),

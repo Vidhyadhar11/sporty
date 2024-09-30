@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporty/models/controllerhome.dart';
 import 'package:sporty/models/sports_feild.dart';
 import 'package:sporty/booking/date.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class DetailsPage extends StatefulWidget {
   final SportsFieldApi sportsField;
@@ -164,22 +168,54 @@ class _DetailsPageState extends State<DetailsPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: Obx(() => ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 153, 133, 133),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                            child: Obx(() => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey[800],
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
                               ),
-                            ),
-                            onPressed: () {
-                              likedController.toggleLike(widget.sportsField);
-                            },
-                            child: Icon(
-                              likedController.isLiked(widget.sportsField) ? Icons.favorite : Icons.favorite_border,
-                              color: Colors.white,
-                            ),
-                          )),
-                        ),
+                              onPressed: () async {
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                String phoneNumber = prefs.getString('phoneNumber') ?? '';
+
+                                if (phoneNumber.isNotEmpty) {
+                                  final url = Uri.parse('http://65.1.5.180:3000/users/favourites');
+                                  final body = json.encode({
+                                    'turfId': widget.sportsField.id,
+                                    'mobile': phoneNumber,
+                                  });
+
+                                  try {
+                                    // Send POST request
+                                    final response = await http.post(
+                                      url,
+                                      headers: {'Content-Type': 'application/json'},
+                                      body: body,
+                                    );
+
+                                    if (response.statusCode == 200) {
+                                      likedController.toggleLike(widget.sportsField);
+                                      print('Favourites updated successfully');
+                                    } else {
+                                      print('Failed to update favourites: ${response.statusCode}');
+                                      print('Response body: ${response.body}');
+                                    }
+                                  } catch (e) {
+                                    print('Error: $e');
+                                  }
+                                } else {
+                                  print('Phone number not found');
+                                }
+                              },
+                              child: Icon(
+                                likedController.isLiked(widget.sportsField)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: Colors.white,
+                              ),
+                            )),
+                          ),
                         const SizedBox(width: 16),
                         Expanded(
                           flex: 2,

@@ -39,7 +39,7 @@ class SportsFieldController extends GetxController {
 
 class LikedFieldsController extends GetxController {
   final RxList<SportsFieldApi> _likedFields = <SportsFieldApi>[].obs;
-  final String userId = '8374013715'; // Replace with actual user ID
+  final String userId = '8374013715';
 
   List<SportsFieldApi> get likedFields => _likedFields;
 
