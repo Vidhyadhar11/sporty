@@ -29,21 +29,21 @@ class _HomePageState extends State<HomePage> {
     filteredSportsFields = controller.sportsFields;
     searchController.addListener(_filterSportsFields);
     _scrollController.addListener(_loadMoreFields);
-    BackButtonInterceptor.add(myInterceptor);
+    // BackButtonInterceptor.add(myInterceptor);
   }
 
   @override
   void dispose() {
     searchController.dispose();
     _scrollController.dispose();
-    BackButtonInterceptor.remove(myInterceptor);
+    // BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
 
-  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    SystemNavigator.pop();
-    return true;//prevent from default back button
-  }
+  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+  //   SystemNavigator.pop();
+  //   return true;//prevent from default back button
+  // }
 
   void _filterSportsFields() {
     String query = searchController.text.toLowerCase();
