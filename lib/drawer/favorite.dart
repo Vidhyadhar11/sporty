@@ -186,6 +186,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:sporty/homepage/details.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -244,32 +245,40 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Favourite Turfs'),
-          backgroundColor: Colors.green,
-        ),
         backgroundColor: Colors.black,
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: favoriteTurfs.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No favourites found.',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )
-              : ListView.builder(
-                  itemCount: favoriteTurfs.length,
-                  itemBuilder: (context, index) {
-                    final turf = favoriteTurfs[index];
-                    return TurfCard(
-                      turfName: turf['turfname'],
-                      location: turf['location'],
-                      imageUrl: turf['images'],
-                    );
-                  },
-                ),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: const Text('Liked Fields', style: TextStyle(color: Colors.green)),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.green),
+            onPressed: () => Get.back(),
+          ),
         ),
+        body: favoriteTurfs.isEmpty
+            ? const Center(
+                child: Text('No liked fields yet', style: TextStyle(color: Colors.white)),
+              )
+            : ListView.builder(
+                itemCount: favoriteTurfs.length,
+                itemBuilder: (context, index) {
+                  final turf = favoriteTurfs[index];
+                  return ListTile(
+                    leading: Image.network(turf['images'], width: 50, height: 50, fit: BoxFit.cover),
+                    title: Text(turf['turfname'], style: const TextStyle(color: Colors.white)),
+                    subtitle: Text(turf['location'], style: const TextStyle(color: Colors.white)),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.favorite, color: Colors.red),
+                      onPressed: () {
+                        // Implement toggle like logic here
+                      },
+                    ),
+                    onTap: () {
+                      // Implement navigation to details page here
+                      Get.to(() => DetailsPage(sportsField: turf ));
+                    },
+                  );
+                },
+              ),
       ),
     );
   }

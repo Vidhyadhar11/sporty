@@ -147,7 +147,7 @@ class RazorpayService {
     final requestData = <String, dynamic>{
       'paymentId': paymentId,
       'ownerMobileNo': ownerMobileNumber,
-      'amount': turfRate.toInt().toString(), // Use the stored turf rate
+      'amount': turfRate.toInt().toString(),
     };
 
     print("Sending payment details: $requestData");
@@ -183,7 +183,7 @@ class RazorpayService {
             'Failed to send payment details. Status code: ${response.statusCode}');
         print('Error message from server: ${response.body}');
       }
-    } catch (e) {
+    } catch (e){
       print('Error sending payment details: $e');
     }
   }

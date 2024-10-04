@@ -11,7 +11,7 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
-  bool showUpcoming = true;
+  bool showUpcoming = true; // Ensure this is set to true
   bool isLoading = true;
   List<dynamic> upcomingBookings = [];
   List<dynamic> pastBookings = [];
