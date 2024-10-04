@@ -122,7 +122,7 @@ class RazorpayService {
   late String court;
   late String slot;
   late String date;
-  late String turId;
+  late String turfId;
 
   RazorpayService() {
     init();
@@ -202,12 +202,20 @@ class RazorpayService {
 
   void singlePayment(double turfRate, String ownerMobileNumber, String turfName,
       String turfId, String date, String slot, String court) async {
-    this.ownerMobileNumber = ownerMobileNumber;
     this.turfRate = turfRate;
-    this.turId = turfId;
+    this.ownerMobileNumber = ownerMobileNumber;
+    this.turfId = turfId;
+    this.date = date;
     this.slot = slot;
     this.court = court;
-    this.date = date;
+
+
+    print("slot is $slot");
+    print("turfRate is $turfRate");
+    print("turfId is $turfId");
+    print("court is $court");
+    print("date is $date");
+
 
     int onlinePaymentInPaise = (turfRate * 100).toInt();
 

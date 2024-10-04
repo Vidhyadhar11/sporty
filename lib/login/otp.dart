@@ -58,6 +58,14 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
     }
   }
 
+  String formatPhoneNumber(String phoneNumber) {
+        // Remove the +91 prefix if present
+        if (phoneNumber.startsWith('+91')) {
+            return phoneNumber.substring(3);
+        }
+        return phoneNumber;
+    }
+
   Future<Map<String, dynamic>?> verifyOTP(
       String phoneNumber, String otp, String orderId) async {
     try {
@@ -69,7 +77,8 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
       const url = 'http://65.1.5.180:3000/verify';
       print('Sending request to: $url');
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('phoneNumber', phoneNumber);
+      var phoneNumber1 =formatPhoneNumber(phoneNumber);
+      await prefs.setString('phoneNumber', phoneNumber1);
 
       final response = await http.post(
         Uri.parse(url),

@@ -203,9 +203,21 @@ class _FavoritesPageState extends State<FavoritesPage> {
     fetchFavoriteTurfs();
   }
 
+  String formatPhoneNumber(String phoneNumber) {
+        // Remove the +91 prefix if present
+        if (phoneNumber.startsWith('+91')) {
+            return phoneNumber.substring(3);
+        }
+        return phoneNumber;
+    }
+
   Future<void> fetchFavoriteTurfs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String phoneNumber = prefs.getString('phoneNumber') ?? '';
+
+    if (phoneNumber != null) {
+            phoneNumber = formatPhoneNumber(phoneNumber);
+        }
 
     if (phoneNumber.isNotEmpty) {
       final url = 'http://65.1.5.180:3000/users/favs/$phoneNumber';

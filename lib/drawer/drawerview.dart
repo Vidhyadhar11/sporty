@@ -65,11 +65,25 @@ class UserController extends GetxController {
     super.onClose();
   }
 
+  String formatPhoneNumber(String phoneNumber) {
+        // Remove the +91 prefix if present
+        if (phoneNumber.startsWith('+91')) {
+            return phoneNumber.substring(3);
+        }
+        return phoneNumber;
+    }
+
   Future<void> fetchUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? phoneNumber = prefs.getString('phoneNumber');
+
+    if (phoneNumber != null) {
+            phoneNumber = formatPhoneNumber(phoneNumber);
+        }
+    
     print('Fetching user details for phone number: $phoneNumber');
     print('API URL: http://65.1.5.180:3000/users/$phoneNumber');
+
     isLoading.value = true;
     hasError.value = false;
     errorMessage.value = '';

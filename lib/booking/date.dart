@@ -272,8 +272,7 @@ class _BookingPageState extends State<BookingPage> {
             try {
               Get.to(() => SinglePaymentView(
                     turfId: widget.turfId,
-                    date:
-                        "${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
+                    date:"${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}",
                     slot: slots[selectedSlotIndex!]['time'],
                     turfRate: double.parse(
                         slots[selectedSlotIndex!]['price'].toString()),
@@ -282,6 +281,11 @@ class _BookingPageState extends State<BookingPage> {
                     ownerMobileNumber: widget.ownerMobileNumber,
                   ));
               await sendBookingDetails(bookingDetails);
+              print("slot is $slots[selectedSlotIndex!]['time']");
+              print("turfRate is $double.parse(slots[selectedSlotIndex!]['price'].toString()),");
+              print("turfId is $widget.turfId");
+              print((selectedCourtIndex! + 1).toString());
+              print("date is ${selectedDate!.month}-${selectedDate!.day}-${selectedDate!.year}");
             } catch (e) {
               print('Error sending booking details: $e');
               ScaffoldMessenger.of(context).showSnackBar(
